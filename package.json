@@ -1,0 +1,23 @@
+{
+  "name": "capstone-petfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eswoodard/node-capstone-petfolio.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eswoodard/node-capstone-petfolio/issues"
+  },
+  "homepage": "https://github.com/eswoodard/node-capstone-petfolio#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
