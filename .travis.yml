@@ -4,6 +4,6 @@ deploy:
   provider: heroku
   api_key:
     secure: cThgFKVy5kBWouRO5XxixINPcwJdPnSSr5wyHg5s+SoqCd/KvTXKJFSAsKB7VGbupPxmPS5dAuh/Sczx2tUY4Mr4ccFfX+UaseFAqJbrErPH7vyYlWQN9K0iBuGh+zb8qWjkiy1AYvAIRcB5qwNnlyb6BRA86wvV5FC4Y7mL6RqvKRfHoTMh9Cu9tfV2qA/LpefR6nmPcOEBEauYl8aO/q7qUuzRymnEkFxHbuDEBfkm1ZcQ/bNFKZtCpVNFyt9OpO8zflEHg8FcQgTx/WPdh/PzdlYHnJ2kAxLcnZdHPZGGZrfCHz33jP9xGF8p4b4T/+Yvosmgc3pEVxBcuoNrhi7WKNXrmM2P5oaVg13EasT6/ysKXnGe8e5KYaQQ6CkLBV/8x75eMSpJa0Oyp57F0VH/ALh7z2CDffJb7hrPGmkTVs4gOD0+nhQO0JW8Y4XGl3nHP2lfEBZpLoxMPEPQmrVkTrm6D2PNwOBYo22yH6kCPY+M1auKqPDKj/M5Uqga4R0LE2VUKHU+sJCWY0k9PhwWF7IBM/76XUoUvqthDqZpuaByGx6K72+TL681ybBrS1tej0jFIfTFlecJso9JzZSzid2P+if8OZE7ASmPs12BoyEyMzVj5tk14E8KyDWR9SaN/B33tplnpfTD1H+rjkdREr60K3jPcfkf5vjQtNc=
-  app: limitless-sea-35754
+  app: node-capstone-petfolio
   on:
     repo: eswoodard/node-capstone-petfolio
