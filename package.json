@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/eswoodard/node-capstone-petfolio#readme",
   "dependencies": {
+    "eslint": "^5.1.0",
     "express": "^4.16.3"
   },
   "devDependencies": {
