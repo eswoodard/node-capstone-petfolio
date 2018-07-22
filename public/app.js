@@ -1,6 +1,5 @@
-console.log(STORE)
 
-function renderAppInfo () {
+function renderAppInfo() {
   $('.app-body').html(`
   <div class="app-info">
     <p class="app-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet tellus cras adipiscing. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit amet. Dictum non consectetur a erat nam. Dictum at tempor commodo ullamcorper a lacus vestibulum sed.</p>
@@ -8,58 +7,82 @@ function renderAppInfo () {
   <div class="account-btns">
     <button class="sign-in-btn button" type="submit">Sign In</button>
     <p>Don't have an account?  Create one now:</p>
-    <button class="create-account-btn">Create Account</button>
+    <button class="new-account-btn">Create New Account</button>
   </div>
-  `
-  )
+  ` );
 }
 
-function renderSignInForm () {
+function renderSignInForm() {
   return `
    <div class="sign-in-form">
-    <h2>Sign In<h2>
-    <form action="/server.js">
+    <h2>Sign In</h2>
+    <form>
       <label for="username">Username</label>
       <input type="text" placeholder="name@domain.com" name="username" required></br>
       <label for="password">Password</label>
       <input type="password" placeholder="Enter Password" name="password" required></br>
       <button type="submit">Login</button>
     </form>
-  </div>`
+  </div>`;
 }
 
-function displaySignInForm () {
-  $('.sign-in-btn').on('click', event => {
-    event.preventDefault()
-    $('.app-body').html(renderSignInForm)
-  })
+function displaySignInForm() {
+  $('.sign-in-btn').on('click', (event) => {
+    event.preventDefault();
+    $('.app-body').html(renderSignInForm);
+  });
 }
 
-function renderCreateAccountForm () {
+function renderCreateAccountForm() {
   return `
-  <div class="create-account-form">
+  <div class="create-account">
     <h2>Create Account</h2>
-    <form action="/server.js">
+    <form class="create-account-form">
       <label for="firstName">First Name</label>
-      <input type="text" placeholder="Jane" name="firstName" required></br>
+      <input type="text" placeholder="Jane" name="firstName"></br>
       <label for="lastName">Last Name</label>
-      <input type="text" placeholder="Doe"  name="lastName" required></br>
+      <input type="text" placeholder="Doe"  name="lastName"></br>
       <label for="username">Username</label>
-      <input type="text" placeholder="name@domain.com" name="username" required></br>
+      <input type="text" placeholder="name@domain.com" name="username"></br>
       <label for="password">Password</label>
-      <input type="password" placeholder="Enter Password" name="password" required></br>
+      <input type="password" placeholder="Enter Password" name="password"></br>
       <label for="confirm-password">Confirm Password</label>
-      <input type="password" placeholder="Re-enter Password" name="confirm-password" required></br>
-      <button type="submit">Create Account</button>
+      <input type="password" placeholder="Re-enter Password" name="confirm-password"></br>
+      <button class="create-account-btn" type="submit">Create Account</button>
    </form>
- </div>`
+ </div>`;
 }
 
-function displayCreateAccountForm () {
-  $('.create-account-btn').on('click', event => {
-    event.preventDefault()
-    $('.app-body').html(renderCreateAccountForm)
-  })
+function displayCreateAccountForm() {
+  $('.new-account-btn').on('click', (event) => {
+    event.preventDefault();
+    $('.app-body').html(renderCreateAccountForm);
+    displayWelcomePage();
+  });
+}
+
+function renderWelcomePage() {
+  console.log('renderWelcomePage ran');
+  const user = USERS.userData[0];
+  return `
+    <div class="welcome-page">
+      <h3>Welcome ${user.firstName}!</h3>
+      <p>This is your overview page.  When you add a new pet profile it will appear here.</p>
+      <div class="container">
+        <div class="placeholder-album"></div>
+        <div class="placeholder-album"></div>
+        <div class="placeholder-album"></div>
+      <div>
+      <button class="add-profile-btn" type="submit">Add Profile</button>
+    </div>
+ `;
+}
+
+function displayWelcomePage() {
+  $('.create-account-btn').on('click', (event) => {
+    event.preventDefault();
+    $('.app-body').html(renderWelcomePage);
+  });
 }
 
 // function renderPetList() {
@@ -75,11 +98,12 @@ function displayCreateAccountForm () {
 //   petList.innerHTML = listHtml;
 // }
 
-function handleAppLoad () {
-  renderAppInfo()
-  displaySignInForm()
-  displayCreateAccountForm()
+function handleAppLoad() {
+  renderAppInfo();
+  displaySignInForm();
+  displayCreateAccountForm();
+
   // renderPetList();
 }
 
-$(handleAppLoad)
+$(handleAppLoad);

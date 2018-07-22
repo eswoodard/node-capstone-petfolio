@@ -15,7 +15,7 @@ h1 {
   color: black;
 }
 
-.account-btns, .sign-in-form, .create-account-form {
+.account-btns, .sign-in-form, .create-account-form, .welcome-page {
   margin-top: 5rem;
   text-align: center;
 }
@@ -28,4 +28,16 @@ input {
 }
 input:focus {
   border: 3px solid black
+}
+
+.placeholder-album {
+  height: 200px;
+  width: 200px;
+  border: 2px solid ;
+  margin: 2rem;
+  float: left;
+}
+
+.welcome-page {
+  margin: 0 auto;
 }
