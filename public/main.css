@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 5%;
+}
+h1 {
+  font-size: 4rem;
+  text-align: center;
+}
+
+.web-title {
+  text-decoration: none;
+  color: black;
+}
+
+.account-btns, .sign-in-form, .create-account-form {
+  margin-top: 5rem;
+  text-align: center;
+}
+input {
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 2px solid grey;
+  outline: none;
+}
+input:focus {
+  border: 3px solid black
+}
