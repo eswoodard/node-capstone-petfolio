@@ -41,3 +41,23 @@ input:focus {
 .welcome-page {
   margin: 0 auto;
 }
+
+.avatar {
+  height: 200px;
+}
+
+.pets-list {
+  position: relative;
+  text-align: center;
+  color: white;
+  float: left;
+  margin: .5rem;
+  /* display: inline-block; */
+}
+.text-overlay {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+}

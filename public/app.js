@@ -14,14 +14,14 @@ function renderAppInfo() {
 
 function renderSignInForm() {
   return `
-   <div class="sign-in-form">
+   <div class="sign-in">
     <h2>Sign In</h2>
-    <form>
+    <form class="sign-in-form">
       <label for="username">Username</label>
-      <input type="text" placeholder="name@domain.com" name="username" required></br>
+      <input type="text" placeholder="name@domain.com" name="username" id="userName" required></br>
       <label for="password">Password</label>
       <input type="password" placeholder="Enter Password" name="password" required></br>
-      <button type="submit">Login</button>
+      <button class ="login-btn" type="submit">Login</button>
     </form>
   </div>`;
 }
@@ -30,7 +30,9 @@ function displaySignInForm() {
   $('.sign-in-btn').on('click', (event) => {
     event.preventDefault();
     $('.app-body').html(renderSignInForm);
+    submitLogInInfo();
   });
+
 }
 
 function renderCreateAccountForm() {
@@ -57,17 +59,17 @@ function displayCreateAccountForm() {
   $('.new-account-btn').on('click', (event) => {
     event.preventDefault();
     $('.app-body').html(renderCreateAccountForm);
-    displayWelcomePage();
+    submitNewAccountInfo();
   });
 }
 
 function renderWelcomePage() {
   console.log('renderWelcomePage ran');
-  const user = USERS.userData[0];
+  const user = STORE.userData[0];
   return `
     <div class="welcome-page">
       <h3>Welcome ${user.firstName}!</h3>
-      <p>This is your overview page.  When you add a new pet profile it will appear here.</p>
+      <p>This is your overview page.  Your pets will appear here.</p>
       <div class="container">
         <div class="placeholder-album"></div>
         <div class="placeholder-album"></div>
@@ -78,32 +80,59 @@ function renderWelcomePage() {
  `;
 }
 
-function displayWelcomePage() {
+function submitNewAccountInfo() {
   $('.create-account-btn').on('click', (event) => {
+    // will sent post request to API, create new user account, return confirmation
     event.preventDefault();
     $('.app-body').html(renderWelcomePage);
   });
 }
 
-// function renderPetList() {
-//   const listHtml=STORE.pets.map(pet => {
-//     return `
-//     <li>
-//       <p>Name: ${pet.name}</p>
-//       <img src="${pet.media[0]}"/>
-//     </li>`
-//   }).join('');
-//   console.log(listHtml);
-//   const petList = document.querySelector('.pet-list');
-//   petList.innerHTML = listHtml;
-// }
+function submitLogInInfo() {
+  $('.sign-in-form').submit(event => {
+    // will send post request to API to validate user credentials, return confirmation or error
+    event.preventDefault();
+    const userTarget = $(event.currentTarget).find('#userName');
+    const user = userTarget.val();
+    getUserByUsername(user);
+  });
+}
+
+function getUserByUsername(user) {
+  for(let i=0; i < STORE.userData.length; i++) {
+
+    if(user === STORE.userData[i].userName){
+      console.log(user);
+      console.log(STORE.userData[i].userName);
+      console.log('they match!');
+      let pets =STORE.userData[i].pets;
+      console.log(pets);
+      renderPetList(pets);
+
+    }
+
+  }
+}
+
+function renderPetList(pet) {
+  console.log('renderPetList ran');
+  console.log(pet);
+  const listHtml=pet.map(pet => {
+    return `
+    <div class="pets-list">
+      <img class="avatar" src="${pet.avatar}"/>
+      <div class="text-overlay">${pet.name}</div>
+    </div>`
+  }).join('');
+  console.log(listHtml);
+  const petList = document.querySelector('.app-body');
+  petList.innerHTML = listHtml;
+}
 
 function handleAppLoad() {
   renderAppInfo();
   displaySignInForm();
   displayCreateAccountForm();
-
-  // renderPetList();
 }
 
 $(handleAppLoad);
