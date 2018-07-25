@@ -5,6 +5,9 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 5%;
 }
+/* div {
+  border: green 1px solid;
+} */
 h1 {
   font-size: 4rem;
   text-align: center;
@@ -15,7 +18,7 @@ h1 {
   color: black;
 }
 
-.account-btns, .sign-in-form, .create-account-form, .welcome-page {
+.account-btns, .sign-in-form, .create-account-form, .welcome-page, .add-profile-btn {
   margin-top: 5rem;
   text-align: center;
 }
@@ -52,7 +55,6 @@ input:focus {
   color: white;
   float: left;
   margin: .5rem;
-  /* display: inline-block; */
 }
 .text-overlay {
   position: absolute;
@@ -60,4 +62,12 @@ input:focus {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
+}
+
+.photo-album-list {
+  border: 3px black solid;
+}
+
+.album-photo {
+  height: 400px;
 }
