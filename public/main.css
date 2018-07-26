@@ -1,0 +1,73 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 5%;
+}
+/* div {
+  border: green 1px solid;
+} */
+h1 {
+  font-size: 4rem;
+  text-align: center;
+}
+
+.web-title {
+  text-decoration: none;
+  color: black;
+}
+
+.account-btns, .sign-in-form, .create-account-form, .welcome-page, .add-profile-btn {
+  margin-top: 5rem;
+  text-align: center;
+}
+input {
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  border: 2px solid grey;
+  outline: none;
+}
+input:focus {
+  border: 3px solid black
+}
+
+.placeholder-album {
+  height: 200px;
+  width: 200px;
+  border: 2px solid ;
+  margin: 2rem;
+  float: left;
+}
+
+.welcome-page {
+  margin: 0 auto;
+}
+
+.avatar {
+  height: 200px;
+}
+
+.pets-list {
+  position: relative;
+  text-align: center;
+  color: white;
+  float: left;
+  margin: .5rem;
+}
+.text-overlay {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+}
+
+.photo-album-list {
+  border: 3px black solid;
+}
+
+.album-photo {
+  height: 400px;
+}
