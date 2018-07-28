@@ -16,12 +16,12 @@ function renderSignInForm() {
   return `
    <div class="sign-in">
     <h2>Sign In</h2>
-    <form class="sign-in-form">
+    <form action="/auth/login" method="post" class="sign-in-form">
       <label for="username">Username</label>
       <input type="text" placeholder="name@domain.com" name="username" id="userName" required></br>
       <label for="password">Password</label>
       <input type="password" placeholder="Enter Password" name="password" required></br>
-      <button class ="login-btn" type="submit">Login</button>
+      <input type="submit" value="Login" class ="button" type="submit">
     </form>
   </div>`;
 }
@@ -38,7 +38,7 @@ function renderCreateAccountForm() {
   return `
   <div class="create-account">
     <h2>Create Account</h2>
-    <form class="create-account-form">
+    <form action="/auth/signup" method="post" class="create-account-form">
       <label for="firstName">First Name</label>
       <input type="text" placeholder="Jane" name="firstName"></br>
       <label for="lastName">Last Name</label>
@@ -47,9 +47,7 @@ function renderCreateAccountForm() {
       <input type="text" placeholder="name@domain.com" name="username"></br>
       <label for="password">Password</label>
       <input type="password" placeholder="Enter Password" name="password"></br>
-      <label for="confirm-password">Confirm Password</label>
-      <input type="password" placeholder="Re-enter Password" name="confirm-password"></br>
-      <button class="create-account-btn" type="submit">Create Account</button>
+      <input type="submit" class="button" value="Create Account">
    </form>
  </div>`;
 }
