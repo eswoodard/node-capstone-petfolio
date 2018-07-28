@@ -21,7 +21,7 @@ function renderSignInForm() {
       <input type="text" placeholder="name@domain.com" name="username" id="userName" required></br>
       <label for="password">Password</label>
       <input type="password" placeholder="Enter Password" name="password" required></br>
-      <input type="submit" value="Login" class ="button" type="submit">
+      <button class = "sign-in-btn" type="submit">Login</button>
     </form>
   </div>`;
 }
@@ -46,8 +46,7 @@ function renderCreateAccountForm() {
       <label for="username">Username</label>
       <input type="text" placeholder="name@domain.com" name="username"></br>
       <label for="password">Password</label>
-      <input type="password" placeholder="Enter Password" name="password"></br>
-      <input type="submit" class="button" value="Create Account">
+      <button class="new-account-btn" type="submit">Create Account</button>
    </form>
  </div>`;
 }
