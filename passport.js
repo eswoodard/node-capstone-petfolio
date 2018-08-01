@@ -46,15 +46,17 @@ module.exports = function (passport) {
       algorithms: ['HS256'],
     },
     (payload, done) => {
-      User.findOne({ id: jwt_payload.sub }, (err, user) => {
-        if (err) {
-          return done(err, false);
-        }
-        if (user) {
-          return done(null, user);
-        }
-        return done(null, false);
-      });
+      console.log('Payload', payload);
+      done(null, payload.user);
+      // User.findOne({ id: jwt_payload.sub }, (err, user) => {
+      //   if (err) {
+      //     return done(err, false);
+      //   }
+      //   if (user) {
+      //     return done(null, user);
+      //   }
+      //   return done(null, false);
+      // });
     },
   ));
 };

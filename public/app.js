@@ -111,9 +111,10 @@ function getUserByUsername(user, password) {
       type: 'POST',
       url: 'http://localhost:8080/auth/login',
       success: (data) => {
+        console.log(data);
         $('#userName').val('');
         $('#password').val('');
-        localStorage.setItem('jwToken', data.token);
+        localStorage.setItem('jwToken', data.profile.token);
         console.log('Welcome! You are now logged in.');
         res();
       },

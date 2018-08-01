@@ -70,17 +70,20 @@ app.post('/auth/signup', (req, res) => {
   });
 });
 
-const createAuthToken = (user) => {
-  return jwt.sign({ user }, JWT_SECRET, {
+const createAuthToken = user => jwt.sign({ user }, JWT_SECRET, {
   subject: user.username,
   expiresIn: JWT_EXPIRY,
   algorithm: 'HS256',
 });
-}
 
-app.post('/auth/login', passport.authenticate('local', { session: false }), (req, res) => {
+app.post('/auth/login', passport.authenticate('local', { failureRedirect: '/auth/login', session: false }), (req, res) => {
   const token = createAuthToken(req.user);
-  res.json({ token });
+  const profile = {
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    token,
+  };
+  res.json({ profile });
 });
 
 app.post('/refresh', jwtAuth, (req, res) => {
