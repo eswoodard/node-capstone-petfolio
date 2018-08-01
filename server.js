@@ -1,34 +1,38 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const session = require('express-session');
 const passport = require('passport');
+const morgan = require('morgan');
+const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const User = require('./models/user');
 
+
 require('./passport')(passport);
 
+mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb://localhost:27017/petfolio', (err) => {
-  if (err) {
-    console.log('unable to connect to mongoDb', err);
-  } else {
-    console.log('connected to mongoDb');
-  }
-});
+const {
+  PORT, DATABASE_URL, JWT_EXPIRY, JWT_SECRET,
+} = require('./config');
+
+// mongoose.connect('mongodb://localhost:27017/petfolio', (err) => {
+//   if (err) {
+//     console.log('unable to connect to mongoDb', err);
+//   } else {
+//     console.log('connected to mongoDb');
+//   }
+// });
 
 const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
-app.use(session({
-  secret: 'thesecret',
-  saveUninitialized: false,
-  resave: false,
-}));
 app.use(passport.initialize());
-app.use(passport.session());
-
+app.use(morgan('common'));
 app.use('/user', User);
+
+
+const jwtAuth = passport.authenticate('jwt', { session: false });
 
 module.exports = function (passport) {
   passport.serializeUser((user, done) => {
@@ -38,6 +42,8 @@ module.exports = function (passport) {
     done(null, user);
   });
 };
+
+app.get('/protected', jwtAuth, (req, res) => res.json(user));
 
 
 app.post('/auth/signup', (req, res) => {
@@ -64,20 +70,59 @@ app.post('/auth/signup', (req, res) => {
   });
 });
 
-app.post('/auth/login', passport.authenticate('local'), (req, res) => {
-  // const username = req.body.username;
-  // const password = req.body.password;
-  // User.findOne({
-  //   username,
-  // }).then((user) => {
-  //   console.log(user);
-  //   user.comparePassword(password, (err, isMatch) => {
-  //     if (err) throw err;
-  //     console.log(password, isMatch); // -> Password123: true
-  //   });
-  // });
+const createAuthToken = (user) => {
+  return jwt.sign({ user }, JWT_SECRET, {
+  subject: user.username,
+  expiresIn: JWT_EXPIRY,
+  algorithm: 'HS256',
+});
+}
+
+app.post('/auth/login', passport.authenticate('local', { session: false }), (req, res) => {
+  const token = createAuthToken(req.user);
+  res.json({ token });
+});
+
+app.post('/refresh', jwtAuth, (req, res) => {
   const token = jwt.sign(req.user, 'your_jwt_secret');
   res.json({ token });
 });
 
-app.listen(process.env.PORT || 8080);
+let server;
+
+function runServer() {
+  return new Promise((resolve, reject) => {
+    mongoose.connect(DATABASE_URL, (err) => {
+      if (err) {
+        return reject(err);
+      }
+      server = app
+        .listen(PORT, () => {
+          console.log(`Your app is listening on port ${PORT}`);
+          resolve();
+        })
+        .on('error', (err) => {
+          mongoose.disconnect();
+          reject(err);
+        });
+    });
+  });
+}
+
+function closeServer() {
+  return mongoose.disconnect().then(() => new Promise((resolve, reject) => {
+    console.log('Closing server');
+    server.close((err) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
+  }));
+}
+
+if (require.main === module) {
+  runServer().catch(err => console.error(err));
+}
+
+module.exports = { app, runServer, closeServer };

@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -42,15 +43,15 @@ userSchema.pre('save', function (next) {
   });
 });
 
-// userSchema.methods.validPassword = function (password) {
-//   return bcrypt.compareSync(password, this.local.password);
-// };
+userSchema.methods.apiRepr = function () {
+  return {
+    username: this.username || '',
+    firstName: this.firstName || '',
+    lastName: this.lastName || '',
+  };
+};
 
 userSchema.methods.comparePassword = function (candidatePassword, password) {
-  // bcrypt.compare(candidatePassword, password, (err, isMatch) => {
-  //   console.log(isMatch);
-  //   return isMatch;
-  // });
   return bcrypt.compareSync(candidatePassword, password);
 };
 

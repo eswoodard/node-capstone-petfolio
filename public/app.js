@@ -1,4 +1,5 @@
 
+
 function renderAppInfo() {
   $('.app-body').html(`
   <div class="app-info">
@@ -16,11 +17,11 @@ function renderSignInForm() {
   return `
    <div class="sign-in">
     <h2>Sign In</h2>
-    <form action="/auth/login" method="post" class="sign-in-form">
+    <form class="sign-in-form">
       <label for="username">Username</label>
       <input type="text" placeholder="name@domain.com" name="username" id="userName" required></br>
       <label for="password">Password</label>
-      <input type="password" placeholder="Enter Password" name="password" required></br>
+      <input type="password" placeholder="Enter Password" name="password" id="password" required></br>
       <button class = "sign-in-btn" type="submit">Login</button>
     </form>
   </div>`;
@@ -38,7 +39,7 @@ function renderCreateAccountForm() {
   return `
   <div class="create-account">
     <h2>Create Account</h2>
-    <form action="/auth/signup" method="post" class="create-account-form">
+    <form class="create-account-form">
       <label for="firstName">First Name</label>
       <input type="text" placeholder="Jane" name="firstName"></br>
       <label for="lastName">Last Name</label>
@@ -46,6 +47,7 @@ function renderCreateAccountForm() {
       <label for="username">Username</label>
       <input type="text" placeholder="name@domain.com" name="username"></br>
       <label for="password">Password</label>
+      <input type="password" placeholder="Enter password" name="password"></br>
       <button class="new-account-btn" type="submit">Create Account</button>
    </form>
  </div>`;
@@ -83,27 +85,46 @@ function submitNewAccountInfo() {
 
 function submitLogInInfo() {
   $('.sign-in-form').submit((event) => {
-    // will send post request to API to validate user credentials, return confirmation or error
     event.preventDefault();
+    // will send post request to API to validate user credentials, return confirmation or error
+    // event.preventDefault();
     const userTarget = $(event.currentTarget).find('#userName');
+    const passwordTarget = $(event.currentTarget).find('#password');
+    const password = passwordTarget.val();
     const user = userTarget.val();
-    getUserByUsername(user);
+    getUserByUsername(user, password);
   });
 }
 
-function getUserByUsername(user) {
-  for (let i = 0; i < STORE.userData.length; i++) {
-    if (user === STORE.userData[i].userName) {
-      // console.log(user);
-      // console.log(STORE.userData[i].userName);
-      console.log('they match!');
-      const data = STORE.userData[i];
-      const pets = STORE.userData[i].pets;
-      // console.log(pets);
-      renderMainPage(data);
-      renderPetList(pets);
-    }
-  }
+function getUserByUsername(user, password) {
+  const _body = {
+    username: user,
+    password,
+  };
+  const promise = new Promise((res, rej) => {
+    $.ajax({
+      contentType: 'application/json; charset=utf-8',
+      data: JSON.stringify(_body),
+      headers: {
+        accept: 'application/json; odata=verbose',
+      },
+      type: 'POST',
+      url: 'http://localhost:8080/auth/login',
+      success: (data) => {
+        $('#userName').val('');
+        $('#password').val('');
+        localStorage.setItem('jwToken', data.token);
+        console.log('Welcome! You are now logged in.');
+        res();
+      },
+      error: (error) => {
+        console.log(error);
+        rej();
+      },
+    });
+  });
+
+  return promise;
 }
 
 function renderMainPage(data) {

@@ -1,6 +1,11 @@
 const localStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 
+
+const JWT_SECRET = require('./config');
 const User = require('./models/user');
+
 
 module.exports = function (passport) {
   passport.serializeUser((user, done) => {
@@ -21,7 +26,6 @@ module.exports = function (passport) {
         const valid = doc.comparePassword(password, doc.password);
         console.log(valid);
         if (valid) {
-          // do not add password hash to session
           done(null, {
             username: doc.username,
             id: doc._id,
@@ -34,4 +38,23 @@ module.exports = function (passport) {
       }
     });
   })));
+
+  passport.use(new JwtStrategy(
+    {
+      secretOrKey: JWT_SECRET,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+      algorithms: ['HS256'],
+    },
+    (payload, done) => {
+      User.findOne({ id: jwt_payload.sub }, (err, user) => {
+        if (err) {
+          return done(err, false);
+        }
+        if (user) {
+          return done(null, user);
+        }
+        return done(null, false);
+      });
+    },
+  ));
 };
