@@ -12,7 +12,6 @@ function renderAppInfo() {
   </div>
   `);
 }
-
 function renderSignInForm() {
   return `
    <div class="sign-in">
@@ -35,51 +34,10 @@ function requestSignInForm() {
   });
 }
 
-function renderCreateAccountForm() {
-  return `
-  <div class="create-account">
-    <h2>Create Account</h2>
-    <form class="create-account-form">
-      <label for="firstName">First Name</label>
-      <input type="text" placeholder="Jane" name="firstName"></br>
-      <label for="lastName">Last Name</label>
-      <input type="text" placeholder="Doe"  name="lastName"></br>
-      <label for="username">Username</label>
-      <input type="text" placeholder="name@domain.com" name="username"></br>
-      <label for="password">Password</label>
-      <input type="password" placeholder="Enter password" name="password"></br>
-      <button class="new-account-btn" type="submit">Create Account</button>
-   </form>
- </div>`;
-}
-
 function requestCreateAccountForm() {
   $('.new-account-btn').on('click', (event) => {
     event.preventDefault();
     $('.app-body').html(renderCreateAccountForm);
-    submitNewAccountInfo();
-  });
-}
-
-function renderWelcomePage() {
-  // console.log('renderWelcomePage ran');
-  const user = STORE.userData[0];
-  return `
-    <div class="welcome-page">
-      <h3>Welcome ${user.firstName}!</h3>
-      <p>To add a pet, click on the Add Pet button below.</p>
-      <div></br>
-      <button class="add-profile-btn" type="submit">Add Pet</button>
-    </div>
- `;
-}
-
-function submitNewAccountInfo() {
-  $('.create-account-btn').on('click', (event) => {
-    // will sent post request to API, create new user account, return confirmation
-    event.preventDefault();
-    $('.app-body').html(renderWelcomePage);
-    requestCreateProfileForm();
   });
 }
 
@@ -96,15 +54,105 @@ function submitLogInInfo() {
   });
 }
 
+function renderCreateAccountForm() {
+  const createAcountForm = `
+  <div class="create-account">
+    <h2>Create Account</h2>
+    <form class="create-account-form">
+      <label  for="firstName">First Name</label>
+      <input type="text" id="firstName" placeholder="Jane" name="firstName"></br>
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" placeholder="Doe"  name="lastName"></br>
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="name@domain.com" name="username"></br>
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" name="password"></br>
+      <button class="new-account-btn" type="submit">Create Account</button>
+   </form>
+ </div>`;
+  $('.app-body').html(createAcountForm);
+  submitNewAccountInfo();
+}
+
+function submitNewAccountInfo() {
+  $('.create-account-form').submit((event) => {
+    // will sent post request to API, create new user account, return confirmation
+    event.preventDefault();
+    const body = {
+      firstName: $('#firstName').val(),
+      lastName: $('#lastName').val(),
+      username: $('#username').val(),
+      password: $('#password').val(),
+    };
+    console.log(body);
+    const settings = {
+      async: true,
+      crossDomain: true,
+      url: 'http://localhost:8080/auth/signup',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+      },
+      processData: false,
+      data: JSON.stringify(body),
+    };
+    $.ajax(settings).done((response) => {
+      console.log(response);
+      renderWelcomePage(response);
+    });
+  });
+}
+
+
+// $.ajax({
+//   contentType: 'application/jason; charset+utf-8',
+//   data: JSON.stringify(body),
+//   headers: {
+//     accept: 'application/json; odata=verbose',
+//   },
+//   type: 'POST',
+//   url: 'http://localhost:8080/auth/signup',
+//   success: (data) => {
+//     console.log(data);
+//     console.log(`Thank you ${body.firstName} ${body.lastName}!  Your account has been created.`);
+//     res();
+//   },
+//       error: (error) => {
+//         console.log(error);
+//         rej();
+//       },
+//     });
+//   });
+//   return promise;
+// });
+// $('.app-body').html(renderWelcomePage);
+// requestCreateProfileForm();
+
+function renderWelcomePage(response) {
+  console.log('renderWelcomePage ran');
+  console.log(response);
+  const welcomePage = `
+    <div class="welcome-page">
+      <h3>Welcome ${response.firstName}!</h3>
+      <p>To add a pet, click on the Add Pet button below.</p>
+      <div></br>
+      <button class="add-profile-btn" type="submit">Add Pet</button>
+    </div>
+ `;
+  $('.app-body').html(welcomePage);
+}
+
+
 function getUserByUsername(user, password) {
-  const _body = {
+  const body = {
     username: user,
     password,
   };
   const promise = new Promise((res, rej) => {
     $.ajax({
       contentType: 'application/json; charset=utf-8',
-      data: JSON.stringify(_body),
+      data: JSON.stringify(body),
       headers: {
         accept: 'application/json; odata=verbose',
       },
@@ -117,6 +165,7 @@ function getUserByUsername(user, password) {
         localStorage.setItem('jwToken', data.profile.token);
         console.log('Welcome! You are now logged in.');
         res();
+        // renderMainPage(data);
       },
       error: (error) => {
         console.log(error);
@@ -129,7 +178,7 @@ function getUserByUsername(user, password) {
 }
 
 function renderMainPage(data) {
-  // console.log(data);
+  console.log(data);
   const mainPage = `
     <div class="main-page">
       <p>Hello ${data.firstName}! Click on one of your pets below to see your pet's information and add a photo album.</p>

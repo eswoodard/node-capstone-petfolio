@@ -6,7 +6,9 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const User = require('./models/user');
+// const router = require('./router');
 
+const jsonParser = bodyParser.json();
 
 require('./passport')(passport);
 
@@ -45,8 +47,8 @@ module.exports = function (passport) {
 
 app.get('/protected', jwtAuth, (req, res) => res.json(user));
 
-
 app.post('/auth/signup', (req, res) => {
+  console.log(req.body);
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const username = req.body.username;
@@ -76,7 +78,7 @@ const createAuthToken = user => jwt.sign({ user }, JWT_SECRET, {
   algorithm: 'HS256',
 });
 
-app.post('/auth/login', passport.authenticate('local', { failureRedirect: '/auth/login', session: false }), (req, res) => {
+app.post('/auth/login', passport.authenticate('local', { session: false }), (req, res) => {
   const token = createAuthToken(req.user);
   const profile = {
     firstName: req.user.firstName,
