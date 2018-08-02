@@ -18,13 +18,6 @@ const {
   PORT, DATABASE_URL, JWT_EXPIRY, JWT_SECRET,
 } = require('./config');
 
-// mongoose.connect('mongodb://localhost:27017/petfolio', (err) => {
-//   if (err) {
-//     console.log('unable to connect to mongoDb', err);
-//   } else {
-//     console.log('connected to mongoDb');
-//   }
-// });
 
 const app = express();
 app.use(express.static('public'));
@@ -45,7 +38,27 @@ module.exports = function (passport) {
   });
 };
 
-app.get('/protected', jwtAuth, (req, res) => res.json(user));
+console.log(JWT_SECRET);
+const createAuthToken = user => jwt.sign({ user }, JWT_SECRET, {
+  subject: user.username,
+  expiresIn: JWT_EXPIRY,
+  algorithm: 'HS256',
+});
+
+app.post('/auth/login', passport.authenticate('local', { session: false }), (req, res) => {
+  const token = createAuthToken(req.user);
+  const profile = {
+    firstName: req.user.firstName,
+    lastName: req.user.lastName,
+    token,
+  };
+  res.json({ profile });
+});
+
+app.get('/protected', jwtAuth, (req, res) => {
+  console.log(req);
+  res.json(req.user);
+});
 
 app.post('/auth/signup', (req, res) => {
   console.log(req.body);
@@ -72,26 +85,10 @@ app.post('/auth/signup', (req, res) => {
   });
 });
 
-const createAuthToken = user => jwt.sign({ user }, JWT_SECRET, {
-  subject: user.username,
-  expiresIn: JWT_EXPIRY,
-  algorithm: 'HS256',
-});
-
-app.post('/auth/login', passport.authenticate('local', { session: false }), (req, res) => {
-  const token = createAuthToken(req.user);
-  const profile = {
-    firstName: req.user.firstName,
-    lastName: req.user.lastName,
-    token,
-  };
-  res.json({ profile });
-});
-
-app.post('/refresh', jwtAuth, (req, res) => {
-  const token = jwt.sign(req.user, 'your_jwt_secret');
-  res.json({ token });
-});
+// app.post('/refresh', jwtAuth, (req, res) => {
+//   const token = jwt.sign(req.user, 'your_jwt_secret');
+//   res.json({ token });
+// });
 
 let server;
 

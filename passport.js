@@ -3,7 +3,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 
-const JWT_SECRET = require('./config');
+const { JWT_SECRET } = require('./config');
 const User = require('./models/user');
 
 
@@ -15,48 +15,49 @@ module.exports = function (passport) {
     done(null, user);
   });
 
-  passport.use(new localStrategy(((username, password, done) => {
+  passport.use(new localStrategy((username, password, done) => {
     console.log(password);
     User.findOne({
       username,
-    }, (err, doc) => {
+    }, (err, user) => {
+      console.log(err, user);
       if (err) {
-        done(err);
-      } else if (doc) {
-        const valid = doc.comparePassword(password, doc.password);
-        console.log(valid);
+        return done(err);
+      } if (user) {
+        const valid = user.comparePassword(password, user.password);
+        console.log(valid, user);
         if (valid) {
-          done(null, {
-            username: doc.username,
-            id: doc._id,
+          return done(null, {
+            username: user.username,
+            id: user._id,
           });
-        } else {
-          done(null, false);
         }
-      } else {
-        done(null, false);
+        return done(null, false);
       }
+      return done(null, false);
     });
-  })));
-
+  }));
+  console.log(JWT_SECRET);
   passport.use(new JwtStrategy(
     {
       secretOrKey: JWT_SECRET,
-      jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       algorithms: ['HS256'],
     },
     (payload, done) => {
       console.log('Payload', payload);
-      done(null, payload.user);
-      // User.findOne({ id: jwt_payload.sub }, (err, user) => {
-      //   if (err) {
-      //     return done(err, false);
-      //   }
-      //   if (user) {
-      //     return done(null, user);
-      //   }
-      //   return done(null, false);
-      // });
+      User.findOne({ _id: payload.user.id }, (err, user) => {
+        if (err) {
+          return done(err, false);
+        }
+        if (user) {
+          return done(null, {
+            username: user.username,
+            id: user._id,
+          });
+        }
+        return done(null, false);
+      });
     },
   ));
 };
