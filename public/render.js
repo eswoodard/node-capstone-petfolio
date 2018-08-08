@@ -61,28 +61,28 @@ function renderWelcomePage(response) {
   $('.app-body').html(welcomePage);
 }
 
-function renderMainPage(data) {
-  console.log(data);
+function renderMainPage(user) {
+  console.log(user);
   const mainPage = `
     <div class="main-page">
-      <p>Welcome back!! Click on one of your pets below to see your pet's information and add a photo album.</p>
+      <p>Welcome back ${user.profile.firstName}!! Click on one of your pets below to see your pet's information and add a photo album.</p>
       <button class="add-profile-btn" type="submit">Add Pet</button>
     </div>
     `;
   $('.app-body').html(mainPage);
 }
 
-function renderPetList(pets) {
+function renderPetList() {
   // console.log('renderPetList ran');
-  console.log(pets);
-  const petList = pets.map(pet => `
-    <button class="pets-list" value="${pet.petName}">
-    <img class="avatar" src="${pet.petAvatar}"/>
-    <div class="text-overlay">${pet.petName}</div>
-    </button>
+  const petList = STORE.pets.map(pet => `
+    <div class="pet-list">
+      <img class="avatar" src="https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_3477.jpg">
+      <div class="text-overlay"><p>${pet.petName}</p></div>
+    </div>
     `);
+
   $('.app-body').append(petList);
-  listenForProfileButtonClick();
+  // listenForProfileButtonClick();
 }
 
 function renderPetProfile(profileInfo) {

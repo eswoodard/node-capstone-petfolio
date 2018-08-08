@@ -1,4 +1,6 @@
-
+const STORE = {
+  pets: [],
+};
 
 function requestLogInForm() {
   $('.sign-in-btn').on('click', (event) => {
@@ -10,18 +12,17 @@ function requestLogInForm() {
 
 function submitLogInForm() {
   $('.sign-in-form').submit((event) => {
+    console.log('hello');
     event.preventDefault();
     const userTarget = $(event.currentTarget).find('#userName');
     const passwordTarget = $(event.currentTarget).find('#password');
     const password = passwordTarget.val();
     const user = userTarget.val();
-
     getUserByUsername(user, password);
-    retrivePetDataFromApi();
   });
 }
 
-function retrivePetDataFromApi() {
+function retrievePetDataFromApi() {
   const token = localStorage.getItem('jwToken');
   const settings = {
     async: true,
@@ -35,44 +36,34 @@ function retrivePetDataFromApi() {
   };
   $.ajax(settings).done((response) => {
     console.log(response);
-    renderPetList(response);
+    STORE.pets = response.pets;
+    renderPetList();
   });
 }
-
 
 function getUserByUsername(user, password) {
   const body = {
     username: user,
     password,
   };
-  const promise = new Promise((res, rej) => {
-    $.ajax({
-      contentType: 'application/json; charset=utf-8',
-      data: JSON.stringify(body),
-      headers: {
-        accept: 'application/json; odata=verbose',
-      },
-      type: 'POST',
-      url: 'http://localhost:8080/auth/login',
-      success: (data) => {
-        console.log(data);
-        $('#userName').val('');
-        $('#password').val('');
-        localStorage.setItem('jwToken', data.profile.token);
-        console.log('Welcome! You are now logged in.');
-        renderMainPage(data);
-        // renderPetList(data);
-        requestCreateProfileForm();
-        res();
-      },
-      error: (error) => {
-        alert('Invalid Login Credentials');
-        rej();
-      },
-    });
+  const settings = {
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify(body),
+    headers: {
+      accept: 'application/json; odata=verbose',
+    },
+    type: 'POST',
+    url: 'http://localhost:8080/auth/login',
+  };
+  $.ajax(settings).done((response) => {
+    console.log(response);
+    $('#userName').val('');
+    $('#password').val('');
+    localStorage.setItem('jwToken', response.profile.token);
+    console.log('Welcome! You are now logged in.');
+    renderMainPage(response);
+    retrievePetDataFromApi();
   });
-
-  return promise;
 }
 
 function requestCreateAccountForm() {
@@ -104,31 +95,35 @@ function submitNewAccountInfo() {
       processData: false,
       data: JSON.stringify(body),
       error(jqXHR, textStatus, errorThrown) {
-        alert('Username already exists');
+        console.log(jqXHR, textStatus, errorThrown);
       },
     };
     $.ajax(settings).done((response) => {
       localStorage.setItem('jwToken', response.token);
       console.log(response);
       renderWelcomePage(response);
-      requestCreateProfileForm();
+      // requestCreateProfileForm();
     });
   });
 }
-// function getAllPets(ownerId) {
 
+
+// function requestCreateProfileForm() {
+//   $('.add-profile-btn').on('click', (event) => {
+//     renderCreateProfileForm();
+//     submitCreateProfileForm();
+//   });
 // }
 
-function requestCreateProfileForm() {
-  $('.add-profile-btn').on('click', (event) => {
-    event.preventDefault();
+function bindEventListeners() {
+  $(document).on('click', '.add-profile-btn', (event) => {
     renderCreateProfileForm();
-    submitCreateProfileForm();
   });
+  submitCreateProfileForm();
 }
 
 function submitCreateProfileForm() {
-  $('.submit-profile-btn').on('click', (event) => {
+  $(document).on('click', '.submit-profile-btn', (event) => {
     // will sent post request to API, create pet profile, return confirmation
     event.preventDefault();
     const token = localStorage.getItem('jwToken');
@@ -161,14 +156,15 @@ function submitCreateProfileForm() {
       processData: false,
       data: JSON.stringify(body),
       error(error) {
-        alert('Pet profile already exists');
+        console.log(error);
       },
     };
 
     $.ajax(settings).done((response) => {
       console.log(response);
       renderMainPage(response);
-      renderPetList(response);
+      STORE.pets.push(response.pets);
+      renderPetList();
     });
   });
 }
@@ -223,6 +219,7 @@ function handleAppLoad() {
   renderLandingPage();
   requestLogInForm();
   requestCreateAccountForm();
+  bindEventListeners();
 }
 
 $(handleAppLoad);

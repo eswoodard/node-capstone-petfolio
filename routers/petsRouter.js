@@ -12,7 +12,7 @@ const router = express.Router();
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 // const storage = multer.diskStorage({
-//   destination: '..public/photos',
+//   destination: '../public/photos',
 //   filename(req, file, callback) {
 //     callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
 //   },
@@ -48,7 +48,10 @@ router.post('/pets', jwtAuth, (req, res) => {
   const additionalInformation = req.body.additionalInformation;
   // const petAvatar = req.file.avatar;
   Pets.findOne({ petName }, (err, pets) => {
-    if (err) { res.status(500).send('error occured'); } else if (pets) {
+    if (err) {
+      console.log(err);
+      res.status(500).send(err);
+    } else if (pets) {
       res.status(500).send('Pet Profile already exists');
     } else {
       Pets.create({
