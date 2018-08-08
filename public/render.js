@@ -65,7 +65,7 @@ function renderMainPage(user) {
   console.log(user);
   const mainPage = `
     <div class="main-page">
-      <p>Welcome back ${user.profile.firstName}!! Click on one of your pets below to see your pet's information and add a photo album.</p>
+      <p>Welcome back!! Click on one of your pets below to see your pet's information and add a photo album.</p>
       <button class="add-profile-btn" type="submit">Add Pet</button>
     </div>
     `;
@@ -111,7 +111,7 @@ function renderCreateProfileForm() {
   const createProfileForm = `
     <div class="create-profile">
     <h2>Create New Pet Profile</h2>
-      <form action="#" class="create-profile-form">
+      <form action="#" name="profile" class="create-profile-form">
         <label for="petName">Pet Name:</label>
         <input type="text" id="petName" placeholder="Spot" name="petName"></br>
         <label for="gender">Gender:</label>
@@ -137,7 +137,7 @@ function renderCreateProfileForm() {
         <label for="additional-info">Additional Information:</label>
         <input type="text" id="additionalInformation" placeholder="More info" name="additional-info"></br>
         <label for="add-avatar">Upload Avatar:</label>
-        <input type="file" id="petAvatar" placeholder="Add Avatar" name="add-avatar"></br>
+        <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar"></br>
         <button class="submit-profile-btn">Submit</button>
       </form>
     </div>

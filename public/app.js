@@ -143,18 +143,26 @@ function submitCreateProfileForm() {
       additionalInformation: $('#additionalInformation').val(),
       petAvatar: $('#petAvatar').val(),
     };
+    // const form = $('.create-profile-form')[0];
+    console.log(body);
+    const data = new FormData(body);
+    data.append('avatar', this.new_attachments);
+    console.log(data);
     const settings = {
       async: true,
       crossDomain: true,
       url: 'http://localhost:8080/pets',
       method: 'POST',
+      enctype: 'multipart/form-data',
+      data,
+      'Content-Type': false,
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
         'Cache-Control': 'no-cache',
       },
       processData: false,
-      data: JSON.stringify(body),
+      // data: JSON.stringify(body),
       error(error) {
         console.log(error);
       },
