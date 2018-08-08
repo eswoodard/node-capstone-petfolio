@@ -29,18 +29,18 @@ router.post('/auth/login', passport.authenticate('local', { session: false }), (
       username,
       token,
     };
-    console.log(profile);
+    // console.log(profile);
     res.json({ profile });
   });
 });
 
 router.post('/auth/signup', (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const username = req.body.username;
   const password = req.body.password;
-  console.log(password);
+  // console.log(password);
   User.findOne({ username }, (err, user) => {
     if (err) { res.status(500).send('error occured'); } else if (user) {
       res.status(500).send('Username already exists');
@@ -61,7 +61,7 @@ router.post('/auth/signup', (req, res) => {
 });
 
 router.get('/protected', jwtAuth, (req, res) => {
-  console.log(req);
+  // console.log(req);
   res.json(req.user);
 });
 

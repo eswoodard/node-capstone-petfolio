@@ -15,9 +15,30 @@ function submitLogInForm() {
     const passwordTarget = $(event.currentTarget).find('#password');
     const password = passwordTarget.val();
     const user = userTarget.val();
+
     getUserByUsername(user, password);
+    retrivePetDataFromApi();
   });
 }
+
+function retrivePetDataFromApi() {
+  const token = localStorage.getItem('jwToken');
+  const settings = {
+    async: true,
+    crossDomain: true,
+    url: 'http://localhost:8080/pets',
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Cache-Control': 'no-cache',
+    },
+  };
+  $.ajax(settings).done((response) => {
+    console.log(response);
+    renderPetList(response);
+  });
+}
+
 
 function getUserByUsername(user, password) {
   const body = {
@@ -40,6 +61,7 @@ function getUserByUsername(user, password) {
         localStorage.setItem('jwToken', data.profile.token);
         console.log('Welcome! You are now logged in.');
         renderMainPage(data);
+        // renderPetList(data);
         requestCreateProfileForm();
         res();
       },
@@ -61,7 +83,7 @@ function requestCreateAccountForm() {
 }
 
 function submitNewAccountInfo() {
-  $('.create-account-form').submit((event) => {
+  $('.submit-account-form').submit((event) => {
     // will sent post request to API, create new user account, return confirmation
     event.preventDefault();
     const body = {
@@ -90,6 +112,63 @@ function submitNewAccountInfo() {
       console.log(response);
       renderWelcomePage(response);
       requestCreateProfileForm();
+    });
+  });
+}
+// function getAllPets(ownerId) {
+
+// }
+
+function requestCreateProfileForm() {
+  $('.add-profile-btn').on('click', (event) => {
+    event.preventDefault();
+    renderCreateProfileForm();
+    submitCreateProfileForm();
+  });
+}
+
+function submitCreateProfileForm() {
+  $('.submit-profile-btn').on('click', (event) => {
+    // will sent post request to API, create pet profile, return confirmation
+    event.preventDefault();
+    const token = localStorage.getItem('jwToken');
+    console.log(token);
+    const body = {
+      petName: $('#petName').val(),
+      petGender: $('#petGender').val(),
+      petSpecies: $('#petSpecies').val(),
+      petColor: $('#petColor').val(),
+      petbirthday: $('#petbirthday').val(),
+      petAge: $('#petAge').val(),
+      adoptedDate: $('#adopted-date').val(),
+      petVet: $('#petVet').val(),
+      petAllergies: $('#petAllergies').val(),
+      petMedicalCondition: $('#petMedicalCondition').val(),
+      petMedications: $('#petMedications').val(),
+      additionalInformation: $('#additionalInformation').val(),
+      petAvatar: $('#petAvatar').val(),
+    };
+    const settings = {
+      async: true,
+      crossDomain: true,
+      url: 'http://localhost:8080/pets',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Cache-Control': 'no-cache',
+      },
+      processData: false,
+      data: JSON.stringify(body),
+      error(error) {
+        alert('Pet profile already exists');
+      },
+    };
+
+    $.ajax(settings).done((response) => {
+      console.log(response);
+      renderMainPage(response);
+      renderPetList(response);
     });
   });
 }
@@ -139,22 +218,6 @@ function displayPhotoAlbum(profileInfo) {
   });
 }
 
-function requestCreateProfileForm() {
-  $('.add-profile-btn').on('click', (event) => {
-    event.preventDefault();
-    renderCreateProfileForm();
-    submitCreateProfileForm();
-  });
-}
-
-function submitCreateProfileForm() {
-  $('.submit-profile-btn').on('click', (event) => {
-    // will sent post request to API, create pet profile, return confirmation
-    event.preventDefault();
-    renderMainPage();
-    renderPetList();
-  });
-}
 
 function handleAppLoad() {
   renderLandingPage();

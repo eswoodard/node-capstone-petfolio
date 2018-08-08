@@ -31,7 +31,7 @@ function renderCreateAccountForm() {
   const createAcountForm = `
   <div class="create-account">
     <h2>Create Account</h2>
-    <form class="create-account-form">
+    <form class="submit-account-form">
       <label  for="firstName">First Name</label>
       <input type="text" id="firstName" placeholder="Jane" name="firstName" required></br>
       <label for="lastName">Last Name</label>
@@ -65,21 +65,22 @@ function renderMainPage(data) {
   console.log(data);
   const mainPage = `
     <div class="main-page">
-      <p>Welcome back ${data.profile.firstName}! Click on one of your pets below to see your pet's information and add a photo album.</p>
+      <p>Welcome back!! Click on one of your pets below to see your pet's information and add a photo album.</p>
       <button class="add-profile-btn" type="submit">Add Pet</button>
     </div>
     `;
   $('.app-body').html(mainPage);
 }
 
-function renderPetList(pet) {
+function renderPetList(pets) {
   // console.log('renderPetList ran');
-  // console.log(pet);
-  const petList = pet.map(pets => `
-    <button class="pets-list" value="${pets.name}">
-      <img class="avatar" src="${pets.avatar}"/>
-      <div class="text-overlay">${pets.name}</div>
-    </button>`);
+  console.log(pets);
+  const petList = pets.map(pet => `
+    <button class="pets-list" value="${pet.petName}">
+    <img class="avatar" src="${pet.petAvatar}"/>
+    <div class="text-overlay">${pet.petName}</div>
+    </button>
+    `);
   $('.app-body').append(petList);
   listenForProfileButtonClick();
 }
@@ -112,31 +113,31 @@ function renderCreateProfileForm() {
     <h2>Create New Pet Profile</h2>
       <form action="#" class="create-profile-form">
         <label for="petName">Pet Name:</label>
-        <input type="text" placeholder="Spot" name="petName"></br>
+        <input type="text" id="petName" placeholder="Spot" name="petName"></br>
         <label for="gender">Gender:</label>
-        <input type="text" placeholder="Male" name="gender"></br>
-        <label for="type">Type:</label>
-        <input type="text" placeholder="dog" name="type"></br>
+        <input type="text" id="petGender" placeholder="Male" name="gender"></br>
+        <label for="type">Species:</label>
+        <input type="text" id="petSpecies" placeholder="dog" name="type"></br>
         <label for="color">Color:</label>
-        <input type="text" placeholder="brown" name="color"></br>
+        <input type="text" id="petColor" placeholder="brown" name="color"></br>
         <label for="birthday">Birthday:</label>
-        <input type="text" placeholder="Aug 25" name="birthday"></br>
+        <input type="text" id="petBirthday" placeholder="Aug 25" name="birthday"></br>
         <label for="age">Age</label>:</label>
-        <input type="text" placeholder="12" name="age"></br>
+        <input type="text" id="petAge" placeholder="12" name="age"></br>
         <label for="adopted-date">Date Adopted:</label>
-        <input type="text" placeholder="Aug 25" name="adopted-date"></br>
+        <input type="text" id="adopted-date" placeholder="Aug 25" name="adopted-date"></br>
         <label for="vet">Vet:</label>
-        <input type="text" placeholder="Dr. Jones" name="vet"></br>
+        <input type="text" id="petVet" placeholder="Dr. Jones" name="vet"></br>
         <label for="allergies">Allergies:</label>
-        <input type="text" placeholder="Chicken" name="birthday"></br>
+        <input type="text" id="petAllergies" placeholder="Chicken" name="birthday"></br>
         <label for="medical-condition">Medical Condition:</label>
-        <input type="text" placeholder="Diabetes" name="medical-condition"></br>
+        <input type="text" id="petMedicalCondition"placeholder="Diabetes" name="medical-condition"></br>
         <label for="medications">Medications:</label>
-        <input type="text" placeholder="Insulin" name="medications"></br>
+        <input type="text" id="petMedications"placeholder="Insulin" name="medications"></br>
         <label for="additional-info">Additional Information:</label>
-        <input type="text" placeholder="More info" name="additional-info"></br>
+        <input type="text" id="additionalInformation" placeholder="More info" name="additional-info"></br>
         <label for="add-avatar">Upload Avatar:</label>
-        <input type="file" placeholder="Add Avatar" name="add-avatar"></br>
+        <input type="file" id="petAvatar" placeholder="Add Avatar" name="add-avatar"></br>
         <button class="submit-profile-btn">Submit</button>
       </form>
     </div>

@@ -28,6 +28,7 @@ function seedPetData() {
 
   for (let i = 1; i <= 10; i++) {
     petSeedData.push({
+      petOwner: faker.random.number(),
       petName: faker.name.firstName(),
       petGender: faker.hacker.noun(),
       petSpecies: faker.hacker.noun(),
@@ -63,6 +64,7 @@ describe('Petfolio API resource', () => {
   describe('Add Pet endpoint', () => {
     it('should add a new pet profile', () => {
       const newPetProfile = {
+        petOwner: faker.random.number(),
         petName: faker.name.firstName(),
         petGender: faker.hacker.noun(),
         petSpecies: faker.hacker.noun(),
@@ -82,12 +84,13 @@ describe('Petfolio API resource', () => {
         .send(newPetProfile)
         .then((res) => {
           expect(res).to.have.status(201);
-          espect(rest).to.be.json;
+          expect(res).to.be.json;
           expect(res.body).to.be.a('object');
           expect(res.body).to.include.keys(
-            'petName, petGender', 'PetSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'petAvatar',
+            'petOwner', 'petName', 'petGender', 'PetSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'petAvatar',
           );
           expect(res.body.id).to.not.be.null;
+          expect(res.body.petOwner).to.equal(newPetProfile.petOwner);
           expect(res.body.petName).to.equal(newPetProfile.petName);
           expect(res.body.petGender).to.equal(newPetProfile.petGender);
           expect(res.body.petSpecies).to.equal(newPetProfile.petSpecies);
@@ -104,6 +107,7 @@ describe('Petfolio API resource', () => {
           return Pets.findById(res.body.id);
         })
         .then((pets) => {
+          expect(pets.petOwner).to.equal(newPetProfile.petOwner);
           expect(pets.petName).to.equal(newPetProfile.petName);
           expect(pets.petGender).to.equal(newPetProfile.petGender);
           expect(pets.petSpecies).to.equal(newPetProfile.petSpecies);
