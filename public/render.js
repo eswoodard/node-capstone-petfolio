@@ -74,14 +74,14 @@ function renderMainPage(user) {
 
 function renderPetList() {
   const petList = STORE.pets.map(pet => `
-    <div class="pet-list">
+    <div class="pet-list" name="${pet.petName}">
       <img class="avatar" src="${pet.avatar.path.slice(7)}">
       <div class="text-overlay"><p>${pet.petName}</p></div>
     </div>
     `);
 
   $('.app-body').append(petList);
-  // listenForProfileButtonClick();
+  handleProfileButtonClick();
 }
 
 function renderPetProfile(profileInfo) {

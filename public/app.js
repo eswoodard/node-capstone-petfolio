@@ -166,35 +166,28 @@ function submitCreateProfileForm() {
   });
 }
 
-function listenForProfileButtonClick() {
-  // const selectedPet = petList[i].name;
-  $('.pets-list').click(function () {
+function handleProfileButtonClick() {
+  $('.pet-list').click(function () {
+    console.log('pet clicked');
     // event.preventDefault();
-    const petName = $(this).attr('value');
-    // console.log(petName);
+    const petName = $(this).attr('name');
+    console.log(petName);
     getPetByPetname(petName);
   });
 }
 
 function getPetByPetname(petName) {
-  console.log('getPetByPetName ran');
-  for (let i = 0; i < STORE.userData.length; i++) {
-    for (let n = 0; n < STORE.userData[i].pets.length; n++) {
-      const name = STORE.userData[i].pets[n].name;
-      if (petName === name) {
-        const petData = STORE.userData[i].pets[n];
-        console.log(petData);
-        // console.log(petName);
-        // console.log(name);
-        // console.log(pets);
-        console.log('pet names match!');
-        renderPetProfile(petData);
-        displayPhotoAlbum(petData);
-        // renderPetAlbums(petData);
-      }
+  console.log(petName);
+  STORE.pets.map((pet) => {
+    if (pet.petName === petName) {
+      console.log(pet.petName);
+      console.log(petName);
+      console.log(pet);
+      renderPetProfile(pet);
+      displayPhotoAlbum(pet);
+      renderPetAlbums(pet);
     }
-  }
-}
+  });
 
 function displayPhotoAlbum(profileInfo) {
   $('.pet-album').on('click', (event) => {

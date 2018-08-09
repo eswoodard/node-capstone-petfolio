@@ -72,5 +72,40 @@ router.post('/pets', jwtAuth, upload.single('avatar'), (req, res) => {
     });
 });
 
+router.put('pets/:id', jwtAuth, (req, res) => {
+  console.log(req);
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    res.status(400).json({
+      error: 'Request path id and request body id values must match',
+    });
+  }
+  const updated = {};
+  const updateableFields = ['petName', 'petGender', 'petSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'avatar'];
+  updateableFields.forEach((field) => {
+    if (field in req.body) {
+      updated[field] = req.body[field];
+    }
+  });
+  Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+    .then((updatedPets) => {
+      res.status(200).json({
+        petName: updatedPets.petName,
+        petGender: updatedPets.petGender,
+        petSpecies: updatedPets.petSpecies,
+        petColor: updatedPets.petColor,
+        petBirthday: updatedPets.petBirthday,
+        petAge: updatedPets.petAge,
+        dateAdopted: updatedPets.dateAdopted,
+        petVet: updatedPets.petVet,
+        petAllergies: updatedPets.petAllergies,
+        petMedicalCondition: updatedPets.petMedicalCondition,
+        petMedications: updatedPets.petMedications,
+        additionalInformation: updatedPets.additionalInformation,
+        avatar: updatedPets.avatar,
+      });
+    })
+    .catch(err => res.status(500).json({ message: err }));
+});
+
 
 module.exports = router;
