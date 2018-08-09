@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-// const multer = require('multer');
+const multer = require('multer');
 
 
 // const upload = multer({ dest: '..public/photos' });
@@ -11,13 +11,14 @@ const router = express.Router();
 
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
-// const storage = multer.diskStorage({
-//   destination: '../public/photos',
-//   filename(req, file, callback) {
-//     callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: './public/photos',
+  filename(req, file, callback) {
+    callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
+  },
+});
 
+const upload = multer({ storage });
 
 router.get('/pets', jwtAuth, (req, res) => {
   console.log(req.user.id);
@@ -28,12 +29,13 @@ router.get('/pets', jwtAuth, (req, res) => {
     })
     .catch(err => handleError(res, err));
 });
-// upload.single('avatar'),
 
-router.post('/pets', jwtAuth, (req, res) => {
-  console.log(req.user);
+
+router.post('/pets', jwtAuth, upload.single('avatar'), (req, res) => {
+  // console.log(req.user);
+  console.log(req.body);
+  console.log(req.file);
   const petOwner = req.user.id;
-  console.log(petOwner);
   const petName = req.body.petName;
   const petGender = req.body.petGender;
   const petSpecies = req.body.petSpecies;
@@ -46,47 +48,29 @@ router.post('/pets', jwtAuth, (req, res) => {
   const petMedicalCondition = req.body.petMedicalCondition;
   const petMedications = req.body.petMedications;
   const additionalInformation = req.body.additionalInformation;
-  // const petAvatar = req.file.avatar;
-  Pets.findOne({ petName }, (err, pets) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send(err);
-    } else if (pets) {
-      res.status(500).send('Pet Profile already exists');
-    } else {
-      Pets.create({
-        petOwner,
-        petName,
-        petGender,
-        petSpecies,
-        petColor,
-        petBirthday,
-        petAge,
-        dateAdopted,
-        petVet,
-        petAllergies,
-        petMedicalCondition,
-        petMedications,
-        additionalInformation,
-        // petAvatar,
-      })
-        .then((pets) => {
-          res.status(201).json({ pets });
-        }).catch((err) => {
-          res.status(500).json(err);
-        });
-    }
-  //   if (!req.file) {
-  //     console.log('no file received');
-  //     return res.send({
-  //       success: false,
-  //     });
-  //   }
-  //   console.log('file received', req.file);
-  //   return res.send({
-  //     success: true,
-  //   });
-  });
+  const avatar = { path: req.file.path };
+  Pets.create({
+    petOwner,
+    petName,
+    petGender,
+    petSpecies,
+    petColor,
+    petBirthday,
+    petAge,
+    dateAdopted,
+    petVet,
+    petAllergies,
+    petMedicalCondition,
+    petMedications,
+    additionalInformation,
+    avatar,
+  })
+    .then((pets) => {
+      res.status(201).json({ pets });
+    }).catch((err) => {
+      res.status(500).json(err);
+    });
 });
+
 
 module.exports = router;

@@ -12,7 +12,6 @@ function requestLogInForm() {
 
 function submitLogInForm() {
   $('.sign-in-form').submit((event) => {
-    console.log('hello');
     event.preventDefault();
     const userTarget = $(event.currentTarget).find('#userName');
     const passwordTarget = $(event.currentTarget).find('#password');
@@ -35,7 +34,7 @@ function retrievePetDataFromApi() {
     },
   };
   $.ajax(settings).done((response) => {
-    console.log(response);
+    // console.log(response);
     STORE.pets = response.pets;
     renderPetList();
   });
@@ -56,7 +55,7 @@ function getUserByUsername(user, password) {
     url: 'http://localhost:8080/auth/login',
   };
   $.ajax(settings).done((response) => {
-    console.log(response);
+    // console.log(response);
     $('#userName').val('');
     $('#password').val('');
     localStorage.setItem('jwToken', response.profile.token);
@@ -126,49 +125,46 @@ function submitCreateProfileForm() {
   $(document).on('click', '.submit-profile-btn', (event) => {
     // will sent post request to API, create pet profile, return confirmation
     event.preventDefault();
+    const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
-    console.log(token);
-    const body = {
-      petName: $('#petName').val(),
-      petGender: $('#petGender').val(),
-      petSpecies: $('#petSpecies').val(),
-      petColor: $('#petColor').val(),
-      petbirthday: $('#petbirthday').val(),
-      petAge: $('#petAge').val(),
-      adoptedDate: $('#adopted-date').val(),
-      petVet: $('#petVet').val(),
-      petAllergies: $('#petAllergies').val(),
-      petMedicalCondition: $('#petMedicalCondition').val(),
-      petMedications: $('#petMedications').val(),
-      additionalInformation: $('#additionalInformation').val(),
-      petAvatar: $('#petAvatar').val(),
-    };
+    const form = new FormData();
+    form.append('petName', $('#petName').val());
+    form.append('petGender', $('#petGender').val());
+    form.append('petSpecies', $('#petSpecies').val());
+    form.append('petColor', $('#petColor').val());
+    form.append('petBirthday', $('#petbirthday').val());
+    form.append('petAge', $('#petAge').val());
+    form.append('adoptedDate', $('#adopted-date').val());
+    form.append('petVet', $('#petVet').val());
+    form.append('petAllergies', $('#petAllergies').val());
+    form.append('petMedicalCondition', $('#petMedicalCondition').val());
+    form.append('petMedications', $('#petMedications').val());
+    form.append('additionalInformation', $('#additionalInformation').val());
+    form.append('avatar', file);
+
     const settings = {
       async: true,
       crossDomain: true,
       url: 'http://localhost:8080/pets',
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
         'Cache-Control': 'no-cache',
       },
       processData: false,
-      data: JSON.stringify(body),
-      error(error) {
-        console.log(error);
-      },
+      contentType: false,
+      enctype: 'multipart/form-data',
+      data: form,
     };
 
     $.ajax(settings).done((response) => {
       console.log(response);
-      renderMainPage(response);
       STORE.pets.push(response.pets);
+      renderMainPage(response);
       renderPetList();
     });
   });
 }
-
 
 function listenForProfileButtonClick() {
   // const selectedPet = petList[i].name;
