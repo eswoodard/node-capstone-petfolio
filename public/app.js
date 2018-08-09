@@ -132,9 +132,9 @@ function submitCreateProfileForm() {
     form.append('petGender', $('#petGender').val());
     form.append('petSpecies', $('#petSpecies').val());
     form.append('petColor', $('#petColor').val());
-    form.append('petBirthday', $('#petbirthday').val());
+    form.append('petBirthday', $('#petBirthday').val());
     form.append('petAge', $('#petAge').val());
-    form.append('adoptedDate', $('#adopted-date').val());
+    form.append('dateAdopted', $('#adopted-date').val());
     form.append('petVet', $('#petVet').val());
     form.append('petAllergies', $('#petAllergies').val());
     form.append('petMedicalCondition', $('#petMedicalCondition').val());
@@ -184,10 +184,11 @@ function getPetByPetname(petName) {
       console.log(petName);
       console.log(pet);
       renderPetProfile(pet);
-      displayPhotoAlbum(pet);
-      renderPetAlbums(pet);
+      // displayPhotoAlbum(pet);
+      // renderPetAlbums(pet);
     }
   });
+}
 
 function displayPhotoAlbum(profileInfo) {
   $('.pet-album').on('click', (event) => {

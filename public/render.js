@@ -84,22 +84,27 @@ function renderPetList() {
   handleProfileButtonClick();
 }
 
-function renderPetProfile(profileInfo) {
-  // console.log(profileInfo.media[0]);
+function renderPetProfile(pet) {
+  console.log(pet);
   const profile = `
   <div class="pet-profile">
-    <h2>${profileInfo.name}</h2>
-    <img src="${profileInfo.avatar}" class="avatar">
+    <h2>${pet.petName}</h2>
+    <img src="${pet.avatar.path.slice(7)}" class="avatar">
     <ul>
-      <li>Gender: ${profileInfo.gender}</li>
-      <li>Type: ${profileInfo.type}</li>
-      <li>Color: ${profileInfo.color}</li>
-      <li>Birthday: ${profileInfo.birthday}</li>
-      <li>Age: ${profileInfo.age}</li>
-      <li>Date Adopted: ${profileInfo.adopted_date}</li>
+      <li>Gender: ${pet.petGender}</li>
+      <li>Species: ${pet.petSpecies}</li>
+      <li>Color: ${pet.petColor}</li>
+      <li>Birthday: ${pet.petBirthday}</li>
+      <li>Age: ${pet.petAge}</li>
+      <li>Date Adopted: ${pet.dateAdopted}</li>
+      <li>Vet: ${pet.petVet}</li>
+      <li>Allergies: ${pet.petAllergies}</li>
+      <li>Medical Conditions: ${pet.petMedicalCondition}</li>
+      <li>Medications: ${pet.petMedications}</li>
+      <li>Additional Information: ${pet.additionalInformation}</li>
     </ul>
     <div class="photo-album-list">
-      <input class="pet-album" type=image src="${profileInfo.media[0]}"
+      <input class="pet-album" type=image src="#">
     </div
 </div>
   `;
@@ -120,15 +125,15 @@ function renderCreateProfileForm() {
         <label for="color">Color:</label>
         <input type="text" id="petColor" placeholder="brown" name="petColor"></br>
         <label for="birthday">Birthday:</label>
-        <input type="text" id="petBirthday" placeholder="Aug 25" name="petBirthday"></br>
+        <input type="date" id="petBirthday" placeholder="Aug 25" name="petBirthday"></br>
         <label for="age">Age</label>:</label>
         <input type="text" id="petAge" placeholder="12" name="petAge"></br>
         <label for="adopted-date">Date Adopted:</label>
-        <input type="text" id="adopted-date" placeholder="Aug 25" name="dateAdopted"></br>
+        <input type="date" id="adopted-date" placeholder="Aug 25" name="dateAdopted"></br>
         <label for="vet">Vet:</label>
         <input type="text" id="petVet" placeholder="Dr. Jones" name="petVet"></br>
         <label for="allergies">Allergies:</label>
-        <input type="text" id="petAllergies" placeholder="Chicken" name="petBirthday"></br>
+        <input type="text" id="petAllergies" placeholder="Chicken" name="petAllergies"></br>
         <label for="medical-condition">Medical Condition:</label>
         <input type="text" id="petMedicalCondition"placeholder="Diabetes" name="petMedicalCondition"></br>
         <label for="medications">Medications:</label>
