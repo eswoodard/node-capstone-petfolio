@@ -62,7 +62,7 @@ function renderWelcomePage(response) {
 }
 
 function renderMainPage(user) {
-  console.log(user);
+  // console.log(user);
   const mainPage = `
     <div class="main-page">
       <p>Welcome back!! Click on one of your pets below to see your pet's information and add a photo album.</p>
@@ -73,10 +73,9 @@ function renderMainPage(user) {
 }
 
 function renderPetList() {
-  // console.log('renderPetList ran');
   const petList = STORE.pets.map(pet => `
     <div class="pet-list">
-      <img class="avatar" src="https://images.dog.ceo/breeds/ridgeback-rhodesian/n02087394_3477.jpg">
+      <img class="avatar" src="${pet.avatar.path.slice(7)}">
       <div class="text-overlay"><p>${pet.petName}</p></div>
     </div>
     `);
@@ -115,27 +114,27 @@ function renderCreateProfileForm() {
         <label for="petName">Pet Name:</label>
         <input type="text" id="petName" placeholder="Spot" name="petName"></br>
         <label for="gender">Gender:</label>
-        <input type="text" id="petGender" placeholder="Male" name="gender"></br>
+        <input type="text" id="petGender" placeholder="Male" name="petGender"></br>
         <label for="type">Species:</label>
-        <input type="text" id="petSpecies" placeholder="dog" name="type"></br>
+        <input type="text" id="petSpecies" placeholder="dog" name="petSpecies"></br>
         <label for="color">Color:</label>
-        <input type="text" id="petColor" placeholder="brown" name="color"></br>
+        <input type="text" id="petColor" placeholder="brown" name="petColor"></br>
         <label for="birthday">Birthday:</label>
-        <input type="text" id="petBirthday" placeholder="Aug 25" name="birthday"></br>
+        <input type="text" id="petBirthday" placeholder="Aug 25" name="petBirthday"></br>
         <label for="age">Age</label>:</label>
-        <input type="text" id="petAge" placeholder="12" name="age"></br>
+        <input type="text" id="petAge" placeholder="12" name="petAge"></br>
         <label for="adopted-date">Date Adopted:</label>
-        <input type="text" id="adopted-date" placeholder="Aug 25" name="adopted-date"></br>
+        <input type="text" id="adopted-date" placeholder="Aug 25" name="dateAdopted"></br>
         <label for="vet">Vet:</label>
-        <input type="text" id="petVet" placeholder="Dr. Jones" name="vet"></br>
+        <input type="text" id="petVet" placeholder="Dr. Jones" name="petVet"></br>
         <label for="allergies">Allergies:</label>
-        <input type="text" id="petAllergies" placeholder="Chicken" name="birthday"></br>
+        <input type="text" id="petAllergies" placeholder="Chicken" name="petBirthday"></br>
         <label for="medical-condition">Medical Condition:</label>
-        <input type="text" id="petMedicalCondition"placeholder="Diabetes" name="medical-condition"></br>
+        <input type="text" id="petMedicalCondition"placeholder="Diabetes" name="petMedicalCondition"></br>
         <label for="medications">Medications:</label>
-        <input type="text" id="petMedications"placeholder="Insulin" name="medications"></br>
+        <input type="text" id="petMedications"placeholder="Insulin" name="petMedications"></br>
         <label for="additional-info">Additional Information:</label>
-        <input type="text" id="additionalInformation" placeholder="More info" name="additional-info"></br>
+        <input type="text" id="additionalInformation" placeholder="More info" name="additionalInformation"></br>
         <label for="add-avatar">Upload Avatar:</label>
         <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar"></br>
         <button class="submit-profile-btn">Submit</button>

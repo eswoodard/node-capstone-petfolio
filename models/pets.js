@@ -35,7 +35,7 @@ const petSchema = new mongoose.Schema({
   petMedicalCondition: String,
   petMedications: String,
   additionalInformation: String,
-  petAvatar: {
+  avatar: {
     path: { type: String },
   },
   // petAlbum: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Albums' }],

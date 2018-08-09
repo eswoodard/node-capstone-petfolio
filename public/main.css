@@ -52,7 +52,7 @@ input:focus {
 .pet-list {
   position: relative;
   text-align: center;
-  color: black;
+  color: white;;
   float: left;
   margin: .5rem;
 }
