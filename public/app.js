@@ -2,16 +2,8 @@ const STORE = {
   pets: [],
 };
 
-function requestLogInForm() {
-  $('.sign-in-btn').on('click', (event) => {
-    event.preventDefault();
-    renderLogInForm();
-    submitLogInForm();
-  });
-}
-
 function submitLogInForm() {
-  $('.sign-in-form').submit((event) => {
+  $(document).on('submit', '.sign-in-form', (event) => {
     event.preventDefault();
     const userTarget = $(event.currentTarget).find('#userName');
     const passwordTarget = $(event.currentTarget).find('#password');
@@ -22,6 +14,7 @@ function submitLogInForm() {
 }
 
 function retrievePetDataFromApi() {
+  console.log('hello');
   const token = localStorage.getItem('jwToken');
   const settings = {
     async: true,
@@ -59,10 +52,24 @@ function getUserByUsername(user, password) {
     $('#userName').val('');
     $('#password').val('');
     localStorage.setItem('jwToken', response.profile.token);
+    renderNavLinks(true);
     console.log('Welcome! You are now logged in.');
     renderMainPage(response);
     retrievePetDataFromApi();
+  }).fail((error) => {
+    console.log(error);
+    $('.login-error-msg').show();
   });
+}
+
+function renderNavLinks(isLoggedIn) {
+  if (isLoggedIn) {
+    $('#logged-out-links').hide();
+    $('#logged-in-links').show();
+  } else {
+    $('#logged-out-links').show();
+    $('#logged-in-links').hide();
+  }
 }
 
 function requestCreateAccountForm() {
@@ -101,30 +108,57 @@ function submitNewAccountInfo() {
       localStorage.setItem('jwToken', response.token);
       console.log(response);
       renderWelcomePage(response);
-      // requestCreateProfileForm();
     });
   });
 }
 
-
-// function requestCreateProfileForm() {
-//   $('.add-profile-btn').on('click', (event) => {
-//     renderCreateProfileForm();
-//     submitCreateProfileForm();
-//   });
-// }
+function renderPath(path) {
+  switch (path) {
+    case '/signin':
+      renderLogInForm();
+      break;
+    case '/signup':
+      renderCreateAccountForm();
+      break;
+    case '/logout':
+      localStorage.removeItem('jwToken');
+      renderLandingPage();
+      renderNavLinks(false);
+      break;
+    case '/petlist':
+      renderMainPage();
+      renderPetList();
+      $('.petlist-link').hide();
+      break;
+    default:
+      renderLandingPage();
+  }
+}
 
 function bindEventListeners() {
   $(document).on('click', '.add-profile-btn', (event) => {
     renderCreateProfileForm();
   });
   submitCreateProfileForm();
+  $('.nav-link').on('click', function (event) {
+    event.preventDefault();
+    const path = $(this).attr('href');
+    renderPath(path);
+    console.log(path);
+  });
+  $(document).on('click', '.sign-in-btn', (event) => {
+    event.preventDefault();
+    renderLogInForm();
+  });
+
+  submitLogInForm();
 }
 
 function submitCreateProfileForm() {
   $(document).on('click', '.submit-profile-btn', (event) => {
     // will sent post request to API, create pet profile, return confirmation
     event.preventDefault();
+
     const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
     const form = new FormData();
@@ -166,10 +200,18 @@ function submitCreateProfileForm() {
   });
 }
 
+function handlePetProfileUpdateLink(pet) {
+  $('.update-pet-link').on('click', (event) => {
+    event.preventDefault();
+    const petId = pet._id;
+    console.log(petId);
+    renderCreateProfileForm();
+  });
+}
+
 function handleProfileButtonClick() {
   $('.pet-list').click(function () {
     console.log('pet clicked');
-    // event.preventDefault();
     const petName = $(this).attr('name');
     console.log(petName);
     getPetByPetname(petName);
@@ -184,6 +226,8 @@ function getPetByPetname(petName) {
       console.log(petName);
       console.log(pet);
       renderPetProfile(pet);
+      $('.petlist-link').show();
+      handlePetProfileUpdateLink(pet);
       // displayPhotoAlbum(pet);
       // renderPetAlbums(pet);
     }
@@ -207,7 +251,6 @@ function displayPhotoAlbum(profileInfo) {
 
 function handleAppLoad() {
   renderLandingPage();
-  requestLogInForm();
   requestCreateAccountForm();
   bindEventListeners();
 }

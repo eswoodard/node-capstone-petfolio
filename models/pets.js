@@ -1,18 +1,6 @@
 const mongoose = require('mongoose');
 
 
-// const petAlbumSchema = new mongoose.Schema({
-//   pet: { type: mongoose.Schema.Types.ObjectId, ref: 'Pets', required: true },
-//   albumTitle: String,
-//   albumAvatar: {
-//     path: { type: String },
-//   },
-//   albumPhotos: [{
-//     path: { type: String },
-//     caption: { type: String },
-//   }],
-// });
-
 const petSchema = new mongoose.Schema({
 
   petOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -38,12 +26,11 @@ const petSchema = new mongoose.Schema({
   avatar: {
     path: { type: String },
   },
-  // petAlbum: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Albums' }],
+  // albums: [petAlbumSchema],
 });
 
 
-// const albums = mongoose.model('Albums', petAlbumSchema);
 const pets = mongoose.model('Pets', petSchema);
 
+
 module.exports = pets;
-// module.exports = albums;

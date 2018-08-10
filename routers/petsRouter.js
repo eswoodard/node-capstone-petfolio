@@ -1,11 +1,11 @@
 const express = require('express');
 const passport = require('passport');
 const multer = require('multer');
+const bodyParser = require('body-parser');
 
 
-// const upload = multer({ dest: '..public/photos' });
 const Pets = require('../models/pets');
-
+const Album = require('../models/albums');
 
 const router = express.Router();
 
@@ -19,6 +19,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
+// const cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'album', maxCount: 100 }]);
+
 
 router.get('/pets', jwtAuth, (req, res) => {
   console.log(req.user.id);
@@ -29,7 +31,6 @@ router.get('/pets', jwtAuth, (req, res) => {
     })
     .catch(err => handleError(res, err));
 });
-
 
 router.post('/pets', jwtAuth, upload.single('avatar'), (req, res) => {
   // console.log(req.user);
@@ -72,8 +73,9 @@ router.post('/pets', jwtAuth, upload.single('avatar'), (req, res) => {
     });
 });
 
-router.put('pets/:id', jwtAuth, (req, res) => {
-  console.log(req);
+router.put('/:id', jwtAuth, (req, res) => {
+  console.log(req.params.id);
+  console.log(req.body.id);
   if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
     res.status(400).json({
       error: 'Request path id and request body id values must match',
@@ -106,6 +108,31 @@ router.put('pets/:id', jwtAuth, (req, res) => {
     })
     .catch(err => res.status(500).json({ message: err }));
 });
+
+router.delete('/:id', jwtAuth, (req, res) => {
+  console.log(req.params.id);
+  Pets.findByIdAndRemove(req.params.id)
+    .then(() => {
+      console.log(`Deleted Pet with id \`${req.params.id}\``);
+      res.status(204).json({ Message: 'Pet successfully deleted.' });
+    });
+});
+
+// router.post('/album', jwtAuth, upload.array('photos'), (req, res) => {
+//   console.log(req);
+//   const albumTitle = req.body.albumTitle;
+//   const albumPhotos = { path: req.files.path };
+//   Album.create({
+//     // pet,
+//     albumTitle,
+//     albumPhotos,
+//   })
+//     .then((album) => {
+//       res.status(201).json({ album });
+//     }).catch((err) => {
+//       res.status(500).json(err);
+//     });
+// });
 
 
 module.exports = router;

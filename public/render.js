@@ -16,12 +16,13 @@ function renderLogInForm() {
   const signInForm = `
    <div class="sign-in">
     <h2>Sign In</h2>
+    <p class="login-error-msg" style="display: none">Uh-oh! Your Username or password are incorrect.  Please try again!</p>
     <form class="sign-in-form">
       <label for="username">Username</label>
       <input type="text" placeholder="name@domain.com" name="username" id="userName" required></br>
       <label for="password">Password</label>
       <input type="password" placeholder="Enter Password" name="password" id="password" required></br>
-      <button class = "sign-in-btn" type="submit">Login</button>
+      <button type="submit">Login</button>
     </form>
   </div>`;
   $('.app-body').html(signInForm);
@@ -70,6 +71,7 @@ function renderMainPage(user) {
     </div>
     `;
   $('.app-body').html(mainPage);
+  $('petlist').addClass('hidden');
 }
 
 function renderPetList() {
@@ -104,9 +106,12 @@ function renderPetProfile(pet) {
       <li>Additional Information: ${pet.additionalInformation}</li>
     </ul>
     <div class="photo-album-list">
-      <input class="pet-album" type=image src="#">
-    </div
-</div>
+      <button>Create Photo Album</button>
+    </div>
+    <div id="logged-in-links">
+
+    </div>
+  </div>
   `;
   $('.app-body').html(profile);
 }
@@ -147,4 +152,5 @@ function renderCreateProfileForm() {
     </div>
   `;
   $('.app-body').html(createProfileForm);
+  $('.return-to-petlist').show();
 }

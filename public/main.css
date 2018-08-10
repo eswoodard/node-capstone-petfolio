@@ -64,10 +64,22 @@ input:focus {
   font-size: 2rem;
 }
 
-.photo-album-list {
+/* .photo-album-list {
   border: 3px black solid;
-}
+} */
 
 .album-photo {
   height: 400px;
+}
+
+.login-error-msg {
+  color: red;
+}
+
+.displayed {
+  display: block;
+}
+
+.hidden {
+  display: none;
 }

@@ -17,6 +17,18 @@
 <body>
 <div class="landing-page">
   <header role="banner">
+    <nav>
+      <div id="logged-out-links">
+        <a class="nav-link" href="/signin">Sign In</a>
+        <a class="nav-link" href="/signup">Sign Up</a>
+     </div>
+     <div id="logged-in-links" style="display: none">
+      <a class="nav-link" href="/logout">Log Out</a>
+      <a class="nav-link petlist-link" style="display: none" href="/petlist">Return to My Pets</a>
+      <a class="petlist-link update-pet-link" style="display: none" href="#">Update Pet</a>
+      <a class="petlist-link delete-pet-link" style="display: none" href="#">Delete Pet</a>
+    </div>
+    </nav>
     <div class="page-title">
       <h1><a class="web-title" href="index.html">PetFolio</a></h1>
     </div>
