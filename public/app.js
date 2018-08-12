@@ -1,5 +1,6 @@
 const STORE = {
   pets: [],
+  currentPet: null,
 };
 
 function submitLogInForm() {
@@ -10,6 +11,7 @@ function submitLogInForm() {
     const password = passwordTarget.val();
     const user = userTarget.val();
     getUserByUsername(user, password);
+    $('.landing-page').removeClass('bg');
   });
 }
 
@@ -124,6 +126,7 @@ function renderPath(path) {
       localStorage.removeItem('jwToken');
       renderLandingPage();
       renderNavLinks(false);
+      $('.landing-page').addClass('bg');
       break;
     case '/petlist':
       renderMainPage();
@@ -152,8 +155,35 @@ function bindEventListeners() {
   });
 
   submitLogInForm();
+  handleProfileButtonClick();
+  handlePetProfileUpdate();
+  handlePetProfileDeleteLink();
+  submitUpdateForm();
+  handleCreateAlbumButtonClick();
 }
-
+function submitUpdateForm() {
+  $(document).on('submit', '.update-profile-form', function (event) {
+    event.preventDefault();
+    const token = localStorage.getItem('jwToken');
+    const values = $(this).serializeArray();
+    const settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:8080/pets/${STORE.currentPet._id}`,
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: values,
+    };
+    $.ajax(settings).done((response) => {
+      console.log(response);
+      findByPetNameAndReplace(response);
+      renderMainPage(response);
+      renderPetList();
+    });
+  });
+}
 function submitCreateProfileForm() {
   $(document).on('click', '.submit-profile-btn', (event) => {
     // will sent post request to API, create pet profile, return confirmation
@@ -200,39 +230,69 @@ function submitCreateProfileForm() {
   });
 }
 
-function handlePetProfileUpdateLink(pet) {
-  $('.update-pet-link').on('click', (event) => {
+function findByPetNameAndReplace(updatedPet) {
+  const index = STORE.pets.map(pet => pet.petName).indexOf(STORE.currentPet.petName);
+  STORE.pets[index] = updatedPet;
+}
+
+function handlePetProfileUpdate() {
+  $(document).on('click', '.update-pet-link', (event) => {
     event.preventDefault();
-    const petId = pet._id;
+    renderUpdateForm();
+  });
+}
+
+function handlePetProfileDeleteLink() {
+  $('.delete-pet-link').on('click', (event) => {
+    event.preventDefault();
+    const petId = STORE.currentPet._id;
+    const token = localStorage.getItem('jwToken');
     console.log(petId);
-    renderCreateProfileForm();
+
+    const settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:8080/pets/${petId}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Cache-Control': 'no-cache',
+      },
+      processData: false,
+      data: `{\n\t"id": "${petId}"\n}`,
+    };
+
+    $.ajax(settings).done((response) => {
+      renderMainPage();
+    });
   });
 }
 
 function handleProfileButtonClick() {
-  $('.pet-list').click(function () {
+  $(document).on('click', '.pet', function (event) {
     console.log('pet clicked');
     const petName = $(this).attr('name');
-    console.log(petName);
-    getPetByPetname(petName);
+    STORE.currentPet = getPetByPetname(petName);
+    console.log(STORE.currentPet);
+    renderPetProfile();
+    $('.petlist-link').show();
   });
 }
 
 function getPetByPetname(petName) {
-  console.log(petName);
-  STORE.pets.map((pet) => {
-    if (pet.petName === petName) {
-      console.log(pet.petName);
-      console.log(petName);
-      console.log(pet);
-      renderPetProfile(pet);
-      $('.petlist-link').show();
-      handlePetProfileUpdateLink(pet);
-      // displayPhotoAlbum(pet);
-      // renderPetAlbums(pet);
-    }
+  return STORE.pets.filter(pet => pet.petName === petName)[0];
+}
+
+function handleCreateAlbumButtonClick() {
+  console.log('it ran');
+  $(document).on('click', '.create-album-btn', (event) => {
+    console.log('hello');
+    event.preventDefault();
+    renderPhotoUploadForm();
   });
 }
+
 
 function displayPhotoAlbum(profileInfo) {
   $('.pet-album').on('click', (event) => {

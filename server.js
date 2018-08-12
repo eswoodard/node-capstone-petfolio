@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(morgan('common'));
 app.use('/', authRouter);
-app.use('/', petsRouter);
+app.use('/pets', petsRouter);
 
 let server;
 

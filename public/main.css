@@ -1,22 +1,79 @@
 * {
   box-sizing: border-box;
-}
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 5%;
-}
-/* div {
-  border: green 1px solid;
-} */
-h1 {
-  font-size: 4rem;
-  text-align: center;
+  margin: 0;
 }
 
-.web-title {
-  text-decoration: none;
-  color: black;
+html, body {
+  height: 100%;
 }
+
+body {
+  font-family: 'Lora', serif;
+}
+
+
+
+
+.bg {
+  float: right;
+  background-image: url("images/cat_dog.jpg");
+  height: 100%;
+  width: 61.8%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+header {
+  padding: 5px;
+  text-align: left;
+  height: 10%;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 220px;
+
+}
+
+nav {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: #8e5a33;
+  text-decoration: none;
+  padding: 15px;
+  border: black 1px solid;
+  margin-right: 20px;
+  font-size: 18px;
+  font-family: 'Nunito', sans-serif;
+
+}
+
+nav a:hover {
+  color: white;
+  background-color: #546B8F;
+}
+
+nav a.sign-up {
+  color: white;
+  background-color: #8e5a33;
+  border: black 1px solid;
+}
+
+nav a.sign-up:hover {
+
+  background-color: #5c3621;
+}
+
+
 
 .account-btns, .sign-in-form, .create-account-form, .welcome-page, .add-profile-btn {
   margin-top: 5rem;
@@ -49,7 +106,7 @@ input:focus {
   height: 200px;
 }
 
-.pet-list {
+.pet {
   position: relative;
   text-align: center;
   color: white;;
