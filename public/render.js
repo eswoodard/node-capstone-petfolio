@@ -1,12 +1,10 @@
 function renderLandingPage() {
   const landingPage = `
   <div class="landing-page-text">
-    <h2 >You love your pets.</h2>
+    <h2>You love your pets.</h2>
      <p class="app-info-text">Now you can upload, organize, and store photos and important information all in one place.</p>
       <div class="account-btns">
-         <button class="sign-in-btn button" type="submit">Sign In</button>
-         <p>Don't have an account?  Create one now:</p>
-         <button class="new-account-btn">Create New Account</button>
+         <button class="new-account-btn">Get Started</button>
        </div>
    </div>
    `;
@@ -15,35 +13,41 @@ function renderLandingPage() {
 
 function renderLogInForm() {
   const signInForm = `
-   <div class="sign-in">
-    <h2>Sign In</h2>
-    <p class="login-error-msg" style="display: none">Uh-oh! Your Username or password are incorrect.  Please try again!</p>
-    <form class="sign-in-form">
-      <label for="username">Username</label>
-      <input type="text" placeholder="name@domain.com" name="username" id="userName" required></br>
-      <label for="password">Password</label>
-      <input type="password" placeholder="Enter Password" name="password" id="password" required></br>
-      <button type="submit">Login</button>
-    </form>
+   <div class="sign-in form-container">
+
+    <fieldset>
+      <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
+      <legend>Sign In Form</legend>
+      <h2>Sign In</h2>
+      <p class="login-error-msg" style="display: none">Uh-oh! Your Username or password are incorrect.  Please try again!</p>
+      <form class="sign-in-form">
+        <input type="text" placeholder="Enter Username" name="username" id="userName" aria-label="Username"required></br>
+        <input type="password" placeholder="Enter Password" name="password" id="password" aria-label="password" required></br>
+        <button type="submit">Login</button></br>
+        <button class="cancel-btn">Cancel</button>
+      </form>
+    </fieldset>
   </div>`;
   $('.app-body').html(signInForm);
 }
 
 function renderCreateAccountForm() {
   const createAcountForm = `
-  <div class="create-account">
-    <h2>Create Account</h2>
-    <form class="submit-account-form">
-      <label  for="firstName">First Name</label>
-      <input type="text" id="firstName" placeholder="Jane" name="firstName" required></br>
-      <label for="lastName">Last Name</label>
-      <input type="text" id="lastName" placeholder="Doe"  name="lastName"> required</br>
-      <label for="username">Username</label>
-      <input type="text" id="username" placeholder="name@domain.com" name="username" required></br>
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password" name="password" required></br>
-      <button class="new-account-btn" type="submit">Create Account</button>
-   </form>
+  <div class="create-account form-container">
+    <fieldset>
+      <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
+      <legend>Sign Up Form</legend>
+      <h2>Create Account</h2>
+      <form class="submit-account-form">
+        <input type="text" id="firstName" placeholder="Enter First Name" name="firstName" aria-label="first-name"required></br>
+        <input type="text" id="lastName" placeholder="Enter Last Name"  name="lastName" aria-label="last-name" required></br>
+        <input type="text" id="username" placeholder="Enter Username" name="username" aria-label="username" required></br>
+        <input type="password" id="password" placeholder="Enter Password" name="password" aria-label="password" required></br>
+        <button class="new-account-btn" type="submit">Create Account</button></br>
+        <button class="cancel-btn">Cancel</button>
+        <p>Already registered? <a class="nav-link" href="/signin">Sign In</a></p>
+    </form>
+    </fieldset>
  </div>`;
   $('.app-body').html(createAcountForm);
   submitNewAccountInfo();

@@ -153,6 +153,10 @@ function bindEventListeners() {
     event.preventDefault();
     renderLogInForm();
   });
+  $(document).on('click', '.cancel-btn', (event) => {
+    event.preventDefault();
+    renderLandingPage();
+  });
 
   submitLogInForm();
   handleProfileButtonClick();
