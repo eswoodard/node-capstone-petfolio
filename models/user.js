@@ -43,13 +43,6 @@ userSchema.pre('save', function (next) {
   });
 });
 
-// userSchema.methods.apiRepr = function () {
-//   return {
-//     username: this.username || '',
-//     firstName: this.firstName || '',
-//     lastName: this.lastName || '',
-//   };
-// };
 
 userSchema.methods.comparePassword = function (candidatePassword, password) {
   return bcrypt.compareSync(candidatePassword, password);

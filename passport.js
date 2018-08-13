@@ -16,7 +16,7 @@ module.exports = function (passport) {
   });
 
   passport.use(new localStrategy((username, password, done) => {
-    console.log(password);
+    // console.log(password);
     User.findOne({
       username,
     }, (err, user) => {
@@ -37,7 +37,7 @@ module.exports = function (passport) {
       return done(null, false);
     });
   }));
-  console.log(JWT_SECRET);
+  // console.log(JWT_SECRET);
   passport.use(new JwtStrategy(
     {
       secretOrKey: JWT_SECRET,
@@ -45,7 +45,7 @@ module.exports = function (passport) {
       algorithms: ['HS256'],
     },
     (payload, done) => {
-      console.log('Payload', payload);
+      // console.log('Payload', payload);
       User.findOne({ _id: payload.user.id }, (err, user) => {
         if (err) {
           return done(err, false);
