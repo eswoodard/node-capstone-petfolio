@@ -1,7 +1,8 @@
 function renderLandingPage() {
   const landingPage = `
   <div class="landing-page-text">
-     <p class="app-info-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet tellus cras adipiscing. Lacus suspendisse faucibus interdum posuere lorem ipsum dolor sit amet. Dictum non consectetur a erat nam. Dictum at tempor commodo ullamcorper a lacus vestibulum sed.</p>
+    <h2 >You love your pets.</h2>
+     <p class="app-info-text">Now you can upload, organize, and store photos and important information all in one place.</p>
       <div class="account-btns">
          <button class="sign-in-btn button" type="submit">Sign In</button>
          <p>Don't have an account?  Create one now:</p>

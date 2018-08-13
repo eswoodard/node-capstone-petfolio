@@ -8,33 +8,42 @@ html, body {
 }
 
 body {
-  font-family: 'Lora', serif;
+  font-family: 'Nunito', sans-serif;
+
+  width: 100%;
 }
 
+/* .landing-page-text-bg {
+  width: 100%;
+  height: 100%;
 
-
+} */
 
 .bg {
   float: right;
-  background-image: url("images/cat_dog.jpg");
+  background-color: #cdc6be;
+  background: url("images/cat_dog4.jpg");
   height: 100%;
-  width: 61.8%;
+  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
 }
+
+
 
 header {
   padding: 5px;
   text-align: left;
-  height: 10%;
+  height: 7%;
   display: flex;
   align-items: center;
+  /* border-bottom: 4px #5c3621 solid; */
+  background-color:white;
 }
 
 .logo {
-  width: 220px;
+  width: 200px;
 
 }
 
@@ -47,30 +56,47 @@ nav {
 }
 
 nav a {
-  color: #8e5a33;
+  color: #3d4045;
   text-decoration: none;
-  padding: 15px;
+  padding: 10px;
   border: black 1px solid;
   margin-right: 20px;
   font-size: 18px;
-  font-family: 'Nunito', sans-serif;
+
 
 }
 
 nav a:hover {
   color: white;
-  background-color: #546B8F;
+  background-color: #7e6551;
 }
 
 nav a.sign-up {
   color: white;
-  background-color: #8e5a33;
+  background-color: #d19444;
   border: black 1px solid;
 }
 
 nav a.sign-up:hover {
+  background-color: #3d4045;
+}
 
-  background-color: #5c3621;
+.landing-page-text {
+  padding-top: 10%;
+}
+
+h2, .app-info-text {
+  text-align: center;
+}
+
+.app-info-text {
+  padding-top: 29px;
+  font-size: 20px;
+}
+
+h2 {
+  font-family: 'Aclonica', sans-serif;
+  font-size: 48px;
 }
 
 

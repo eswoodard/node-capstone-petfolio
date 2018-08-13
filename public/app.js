@@ -11,7 +11,7 @@ function submitLogInForm() {
     const password = passwordTarget.val();
     const user = userTarget.val();
     getUserByUsername(user, password);
-    $('.landing-page').removeClass('bg');
+    $('body').removeClass('bg');
   });
 }
 
@@ -126,7 +126,7 @@ function renderPath(path) {
       localStorage.removeItem('jwToken');
       renderLandingPage();
       renderNavLinks(false);
-      $('.landing-page').addClass('bg');
+      $('body').addClass('bg');
       break;
     case '/petlist':
       renderMainPage();
