@@ -8,34 +8,33 @@ html, body {
 }
 
 body {
-  font-family: 'Lora', serif;
+  font-family: 'Nunito', sans-serif;
+  width: 100%;
 }
-
-
 
 
 .bg {
   float: right;
-  background-image: url("images/cat_dog.jpg");
+  background-color: #cdc6be;
+  background: url("images/cat_dog4.jpg");
   height: 100%;
-  width: 61.8%;
+  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
 }
 
 header {
   padding: 5px;
   text-align: left;
-  height: 10%;
+  height: 7%;
   display: flex;
   align-items: center;
+  background-color:white;
 }
 
 .logo {
-  width: 220px;
-
+  width: 100px;
 }
 
 nav {
@@ -46,37 +45,109 @@ nav {
   align-items: center;
 }
 
-nav a {
-  color: #8e5a33;
+nav a  {
+  color: #3d4045;
   text-decoration: none;
-  padding: 15px;
+  padding: 10px;
   border: black 1px solid;
   margin-right: 20px;
   font-size: 18px;
-  font-family: 'Nunito', sans-serif;
-
+  cursor: pointer;
 }
 
 nav a:hover {
   color: white;
-  background-color: #546B8F;
+  background-color: #A49285;
 }
 
-nav a.sign-up {
+nav a.sign-up-link {
   color: white;
-  background-color: #8e5a33;
+  background-color: rgba(92, 162, 212, .8);
   border: black 1px solid;
+
 }
 
-nav a.sign-up:hover {
-
-  background-color: #5c3621;
+nav a.sign-up-link:hover {
+  background-color: #3d4045;
 }
 
+.landing-page-text {
+  padding-top: 25%;
+}
+
+h2, .app-info-text {
+  text-align: center;
+}
+
+.app-info-text {
+  padding-top: 29px;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.landing-page-text h2 {
+  font-family: 'Aclonica', sans-serif;
+  font-size: 25px;
+}
+.app-body {
+  display: flex;
+  justify-content: center;
+}
+
+.sign-in, .create-account {
+	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+	margin: 25% auto;
+	background: rgba(177, 173, 170, 0.60);
+	height: 400px;
+	width: 300px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+  top: 0;
+  text-align: center;
+}
+.create-account {
+  height: 450px;
+  width: 300px;
+}
+
+form {
+  padding-top: 1rem;
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  display: none;
+}
+
+.form-container h2 {
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+.form-container input {
+  width: 250px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  background: #eee;
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  color: #222;
+}
+::placeholder{color: #999;}
+  #container input:focus {background: rgba(0, 0, 333, 0.10);}
 
 
-.account-btns, .sign-in-form, .create-account-form, .welcome-page, .add-profile-btn {
-  margin-top: 5rem;
+.account-btns, .welcome-page, .add-profile-btn {
+  margin-top: 3rem;
   text-align: center;
 }
 input {
@@ -87,7 +158,42 @@ input {
   outline: none;
 }
 input:focus {
-  border: 3px solid black
+  border: 3px solid #999;
+}
+.form-container button, .new-account-btn {
+  padding: 10px;
+  margin-top: 5px;
+  width: 150px;
+  background-color: rgba(92, 162, 212, .6);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+
+.form-container button:hover {
+  background-color: #3d4045;
+  color: white;
+}
+
+.form-container .cancel-btn, .new-account-btn {
+  background-color: transparent;
+  width: 100px;
+  color: black;
+  border: black 1px solid;
+  margin-top: 15px;
+}
+
+.new-account-btn {
+  width: 250px;
+  height: 60px;
+  font-size: 1.3rem;
+  background: rgba(177, 173, 170, 0.70);
+  border: rgba(177, 173, 170, 0.70) solid 1px;
+}
+
+.create-account p {
+  margin-top: 2rem;
 }
 
 .placeholder-album {
@@ -131,6 +237,7 @@ input:focus {
 
 .login-error-msg {
   color: red;
+  margin-top: 1rem;
 }
 
 .displayed {
@@ -140,3 +247,4 @@ input:focus {
 .hidden {
   display: none;
 }
+

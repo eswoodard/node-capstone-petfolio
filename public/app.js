@@ -11,7 +11,7 @@ function submitLogInForm() {
     const password = passwordTarget.val();
     const user = userTarget.val();
     getUserByUsername(user, password);
-    $('.landing-page').removeClass('bg');
+    $('body').removeClass('bg');
   });
 }
 
@@ -75,14 +75,14 @@ function renderNavLinks(isLoggedIn) {
 }
 
 function requestCreateAccountForm() {
-  $('.new-account-btn').on('click', (event) => {
+  $(document).on('click', '.new-account-btn', (event) => {
     event.preventDefault();
     renderCreateAccountForm();
   });
 }
 
 function submitNewAccountInfo() {
-  $('.submit-account-form').submit((event) => {
+  $(document).on('click', '.submit-account-form', (event) => {
     // will sent post request to API, create new user account, return confirmation
     event.preventDefault();
     const body = {
@@ -126,7 +126,7 @@ function renderPath(path) {
       localStorage.removeItem('jwToken');
       renderLandingPage();
       renderNavLinks(false);
-      $('.landing-page').addClass('bg');
+      $('body').addClass('bg');
       break;
     case '/petlist':
       renderMainPage();
@@ -153,6 +153,10 @@ function bindEventListeners() {
     event.preventDefault();
     renderLogInForm();
   });
+  $(document).on('click', '.cancel-btn', (event) => {
+    event.preventDefault();
+    renderLandingPage();
+  });
 
   submitLogInForm();
   handleProfileButtonClick();
@@ -160,6 +164,8 @@ function bindEventListeners() {
   handlePetProfileDeleteLink();
   submitUpdateForm();
   handleCreateAlbumButtonClick();
+  requestCreateAccountForm();
+  submitNewAccountInfo();
 }
 function submitUpdateForm() {
   $(document).on('submit', '.update-profile-form', function (event) {
@@ -311,7 +317,6 @@ function displayPhotoAlbum(profileInfo) {
 
 function handleAppLoad() {
   renderLandingPage();
-  requestCreateAccountForm();
   bindEventListeners();
 }
 

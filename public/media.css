@@ -1,0 +1,107 @@
+/* screen sizes 540px and up */
+
+@media (min-width: 540px){
+  .logo {
+    width: 150px;
+  }
+  .account-btns, .welcome-page, .add-profile-btn {
+    margin-top: 5rem;
+  }
+  .new-account-btn {
+    width: 250px;
+    height: 60px;
+    font-size: 1.3rem;
+    background: transparent;
+    border: black 1px solid;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+
+  }
+  .new-account-btn:hover {
+    background: rgba(92, 162, 212, .6);
+    color: white;
+    border: none;
+  }
+
+  .create-account {
+    height: 600px;
+    width: 350px;
+  }
+}
+
+/* screen sizes 768px and up */
+@media (min-width: 768px) {
+  .logo {
+    width: 175px;
+  }
+  .landing-page-text h2 {
+    font-size: 48px;
+  }
+  .landing-page-text {
+    padding-top: 10%;
+  }
+  .app-info-text {
+    padding-top: 29px;
+    font-size: 20px;
+  }
+  .create-account {
+    height: 600px;
+    width: 450px;
+    margin: 20% auto;
+  }
+  .form-container h2 {
+    font-size: 2rem;
+    padding-top: 4rem;
+  }
+
+  .sign-in {
+    height: 500px;
+    width: 480px;
+  }
+}
+
+/* screen sizes 960px and up */
+
+@media (min-width: 960px) {
+
+  .logo {
+    width: 215px;
+  }
+
+  .create-account {
+    height: 700px;
+    width: 580px;
+  }
+
+  .form-container input {
+    width: 300px;
+    height: 60px;
+    transition: 0.3s linear;
+  }
+
+  .form-container button, .new-account-btn {
+    margin-top: 10px;
+    width: 250px;
+  }
+
+}
+
+/* screen sizes 1200px and up */
+
+@media (min-width: 1200px) {
+  .create-account {
+    margin: 15% auto;
+  }
+}
+
+/* screen sizes 1500px and up */
+
+@media (min-width: 1500px) {
+  .create-account {
+    margin: 12% auto;
+  }
+
+  .sign-in {
+    margin: 12% auto;
+  }
+}
