@@ -75,14 +75,14 @@ function renderNavLinks(isLoggedIn) {
 }
 
 function requestCreateAccountForm() {
-  $('.new-account-btn').on('click', (event) => {
+  $(document).on('click', '.new-account-btn', (event) => {
     event.preventDefault();
     renderCreateAccountForm();
   });
 }
 
 function submitNewAccountInfo() {
-  $('.submit-account-form').submit((event) => {
+  $(document).on('click', '.submit-account-form', (event) => {
     // will sent post request to API, create new user account, return confirmation
     event.preventDefault();
     const body = {
@@ -164,6 +164,8 @@ function bindEventListeners() {
   handlePetProfileDeleteLink();
   submitUpdateForm();
   handleCreateAlbumButtonClick();
+  requestCreateAccountForm();
+  submitNewAccountInfo();
 }
 function submitUpdateForm() {
   $(document).on('submit', '.update-profile-form', function (event) {
@@ -315,7 +317,6 @@ function displayPhotoAlbum(profileInfo) {
 
 function handleAppLoad() {
   renderLandingPage();
-  requestCreateAccountForm();
   bindEventListeners();
 }
 

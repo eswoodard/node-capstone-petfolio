@@ -50,7 +50,7 @@ function renderCreateAccountForm() {
     </fieldset>
  </div>`;
   $('.app-body').html(createAcountForm);
-  submitNewAccountInfo();
+
 }
 
 function renderWelcomePage(response) {
