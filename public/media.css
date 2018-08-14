@@ -4,7 +4,7 @@
   .logo {
     width: 150px;
   }
-  .account-btns, .welcome-page, .add-profile-btn {
+  .account-btns, .welcome-page,  {
     margin-top: 5rem;
   }
   .new-account-btn {
@@ -13,8 +13,8 @@
     font-size: 1.3rem;
     background: transparent;
     border: black 1px solid;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
+    /* -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s; */
 
   }
   .new-account-btn:hover {

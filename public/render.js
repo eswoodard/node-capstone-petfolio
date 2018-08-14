@@ -1,12 +1,14 @@
 function renderLandingPage() {
   const landingPage = `
-  <div class="landing-page-text">
-    <h2>You love your pets.</h2>
-     <p class="app-info-text">Now you can upload, organize, and store photos and important information all in one place.</p>
-      <div class="account-btns">
-         <button class="new-account-btn">Get Started</button>
-       </div>
-   </div>
+  <div class="landing-page">
+    <div class="landing-page-text">
+      <h2>You love your pets.</h2>
+      <p class="app-info-text">Now you can upload, organize, and store photos and important information all in one place.</p>
+        <div class="account-btns">
+          <button class="new-account-btn">Get Started</button>
+        </div>
+      </div>
+    </div>
    `;
   $('.app-body').html(landingPage);
 }
@@ -14,13 +16,12 @@ function renderLandingPage() {
 function renderLogInForm() {
   const signInForm = `
    <div class="sign-in form-container">
-
     <fieldset>
       <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
       <legend>Sign In Form</legend>
       <h2>Sign In</h2>
       <p class="login-error-msg" style="display: none">Uh-oh! Your Username or password are incorrect.  Please try again!</p>
-      <form class="sign-in-form">
+      <form class="sign-in-form" autocomplete="nope">
         <input type="text" placeholder="Enter Username" name="username" id="userName" aria-label="Username"required></br>
         <input type="password" placeholder="Enter Password" name="password" id="password" aria-label="password" required></br>
         <button type="submit">Login</button></br>
@@ -38,7 +39,7 @@ function renderCreateAccountForm() {
       <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
       <legend>Sign Up Form</legend>
       <h2>Create Account</h2>
-      <form class="submit-account-form">
+      <form class="submit-account-form" autocomplete="off">
         <input type="text" id="firstName" placeholder="Enter First Name" name="firstName" aria-label="first-name"required></br>
         <input type="text" id="lastName" placeholder="Enter Last Name"  name="lastName" aria-label="last-name" required></br>
         <input type="text" id="username" placeholder="Enter Username" name="username" aria-label="username" required></br>
@@ -50,7 +51,7 @@ function renderCreateAccountForm() {
     </fieldset>
  </div>`;
   $('.app-body').html(createAcountForm);
-
+  // submitNewAccountInfo();
 }
 
 function renderWelcomePage(response) {
@@ -71,22 +72,25 @@ function renderMainPage() {
   // console.log(user);
   const mainPage = `
     <div class="main-page">
-      <p>Welcome back!! Click on one of your pets below to see your pet's information and add a photo album.</p>
+      <p>Welcome to your pet page!  You can add a new pet by pressing the "Add a Pet" button.  Scroll through your existing pets and click on one to see their information or add a photo album.   </p>
       <button class="add-profile-btn" type="submit">Add Pet</button>
     </div>
     `;
   $('.app-body').html(mainPage);
-  $('petlist').addClass('hidden');
 }
 
 function renderPetList() {
   const petList = STORE.pets.map(pet => `
-    <div class="pet" name="${pet.petName}">
-      <img class="avatar" src="${pet.avatar.path.slice(7)}">
-      <div class="text-overlay"><p>${pet.petName}</p></div>
+    <div class="display-container">
+      <div class="pet fade" name="${pet.petName}">
+        <img class="avatar visible" src="${pet.avatar.path.slice(7)}">
+        <div class="caption"><p>${pet.petName}</p></div>
+      </div>
+      <a class="prev" id="navButton">&#10094;</a>
+      <a class="next" id="navButton">&#10095;</a>
     </div>
     `);
-
+  console.log(petList);
   $('.app-body').append(petList);
 }
 

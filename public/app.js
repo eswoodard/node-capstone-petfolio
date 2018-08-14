@@ -11,7 +11,7 @@ function submitLogInForm() {
     const password = passwordTarget.val();
     const user = userTarget.val();
     getUserByUsername(user, password);
-    $('body').removeClass('bg');
+    $('body').removeClass('bg').addClass('bg2');
   });
 }
 
@@ -82,7 +82,8 @@ function requestCreateAccountForm() {
 }
 
 function submitNewAccountInfo() {
-  $(document).on('click', '.submit-account-form', (event) => {
+  $(document).on('submit', '.submit-account-form', (event) => {
+    console.log('it ran');
     // will sent post request to API, create new user account, return confirmation
     event.preventDefault();
     const body = {
@@ -102,14 +103,12 @@ function submitNewAccountInfo() {
       },
       processData: false,
       data: JSON.stringify(body),
-      error(jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-      },
     };
     $.ajax(settings).done((response) => {
       localStorage.setItem('jwToken', response.token);
       console.log(response);
       renderWelcomePage(response);
+      $('body').removeClass('bg').addClass('bg2');
     });
   });
 }
@@ -126,7 +125,7 @@ function renderPath(path) {
       localStorage.removeItem('jwToken');
       renderLandingPage();
       renderNavLinks(false);
-      $('body').addClass('bg');
+      $('body').removeClass('bg2').addClass('bg');
       break;
     case '/petlist':
       renderMainPage();
@@ -159,13 +158,13 @@ function bindEventListeners() {
   });
 
   submitLogInForm();
+  submitNewAccountInfo();
   handleProfileButtonClick();
   handlePetProfileUpdate();
   handlePetProfileDeleteLink();
   submitUpdateForm();
   handleCreateAlbumButtonClick();
   requestCreateAccountForm();
-  submitNewAccountInfo();
 }
 function submitUpdateForm() {
   $(document).on('submit', '.update-profile-form', function (event) {
@@ -231,6 +230,7 @@ function submitCreateProfileForm() {
       console.log(response);
       STORE.pets.push(response.pets);
       renderMainPage(response);
+      slideShow();
       renderPetList();
     });
   });
@@ -291,13 +291,32 @@ function getPetByPetname(petName) {
 }
 
 function handleCreateAlbumButtonClick() {
-  console.log('it ran');
   $(document).on('click', '.create-album-btn', (event) => {
     console.log('hello');
     event.preventDefault();
     renderPhotoUploadForm();
   });
 }
+
+// function slideShow() {
+//   let slideIndex = 1;
+//   showSlides(slideIndex);
+
+//   function plusSlides(n) {
+//     showSlides(slideIndex += n);
+//   }
+
+//   function showSlides(n) {
+//     let i;
+//     const slides = document.getElementsByClassName('pet');
+//     if (n > slides.length) { slideIndex = 1; }
+//     if (n < 1) { slideIndex = slides.length; }
+//     for (i = 0; i < slides.length; i++) {
+//       slides[i].style.display = 'none';
+//     }
+//     slides[slideIndex - 1].style.display = 'block';
+//   }
+// }
 
 
 function displayPhotoAlbum(profileInfo) {

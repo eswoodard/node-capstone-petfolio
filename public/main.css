@@ -14,14 +14,22 @@ body {
 
 
 .bg {
-  float: right;
-  background-color: #cdc6be;
   background: url("images/cat_dog4.jpg");
   height: 100%;
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.bg2 {
+  background: url("images/seamless_paper_texture.png");
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  /* background-repeat: no-repeat;
+  background-size: cover; */
+
 }
 
 header {
@@ -55,10 +63,9 @@ nav a  {
   cursor: pointer;
 }
 
-nav a:hover {
-  color: white;
-  background-color: #A49285;
-}
+/* nav a:hover {
+  background-color: rgba(177, 173, 170, 0.60);
+} */
 
 nav a.sign-up-link {
   color: white;
@@ -90,7 +97,7 @@ h2, .app-info-text {
   font-family: 'Aclonica', sans-serif;
   font-size: 25px;
 }
-.app-body {
+.landing-page {
   display: flex;
   justify-content: center;
 }
@@ -146,7 +153,7 @@ legend {
   #container input:focus {background: rgba(0, 0, 333, 0.10);}
 
 
-.account-btns, .welcome-page, .add-profile-btn {
+.account-btns, .welcome-page  {
   margin-top: 3rem;
   text-align: center;
 }
@@ -160,7 +167,7 @@ input {
 input:focus {
   border: 3px solid #999;
 }
-.form-container button, .new-account-btn {
+.form-container button, .new-account-btn, .add-profile-btn {
   padding: 10px;
   margin-top: 5px;
   width: 150px;
@@ -208,8 +215,32 @@ input:focus {
   margin: 0 auto;
 }
 
+.main-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.main-page p {
+  margin: 30px;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.add-profile-btn {
+  margin-top: 0;
+  margin-bottom: 3rem;
+  border: black 1px solid
+}
+
+.add-profile-btn:hover {
+  background-color: #3d4045;
+  color: white;
+}
+
+
 .avatar {
-  height: 200px;
+  width: 550px;
 }
 
 .pet {
@@ -219,13 +250,81 @@ input:focus {
   float: left;
   margin: .5rem;
 }
-.text-overlay {
+/* .caption {
   position: absolute;
   top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 2rem;
+} */
+
+.display-container {
+  position: relative;
+  width: 550px;
+  padding: 0;
+  max-width:980px;
+  margin: 0 auto;
+  overflow: hidden;
 }
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev {
+  left: 8px;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.caption {
+  color: #f2f2f2;
+  font-size: 65px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+}
+
+/* .slide-show-container:not(:first-child) {
+  display: none;
+} */
+
+/* .fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+} */
 
 /* .photo-album-list {
   border: 3px black solid;
