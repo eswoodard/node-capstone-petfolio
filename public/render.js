@@ -97,29 +97,32 @@ function renderPetList() {
 function renderPetProfile() {
   const pet = STORE.currentPet;
   const profile = `
-  <div class="pet-profile">
-    <h2>${pet.petName}</h2>
-    <img src="${pet.avatar.path.slice(7)}" class="avatar">
-    <ul>
-      <li>Gender: ${pet.petGender}</li>
-      <li>Species: ${pet.petSpecies}</li>
-      <li>Color: ${pet.petColor}</li>
-      <li>Birthday: ${pet.petBirthday}</li>
-      <li>Age: ${pet.petAge}</li>
-      <li>Date Adopted: ${pet.dateAdopted}</li>
-      <li>Vet: ${pet.petVet}</li>
-      <li>Allergies: ${pet.petAllergies}</li>
-      <li>Medical Conditions: ${pet.petMedicalCondition}</li>
-      <li>Medications: ${pet.petMedications}</li>
-      <li>Additional Information: ${pet.additionalInformation}</li>
-    </ul>
-    <div class="photo-album-list">
+  <div class="pet-profile-card box-effect">
+    <div class="card-left">
+      <img src="${pet.avatar.path.slice(7)}" class="profile-avatar">
+    </div>
+    <div class="card-right">
+      <h2>${pet.petName}</h2>
+      <ul class="pet-info">
+        <li>Gender: ${pet.petGender}</li>
+        <li>Species: ${pet.petSpecies}</li>
+        <li>Color: ${pet.petColor}</li>
+        <li>Birthday: ${pet.petBirthday}</li>
+        <li>Age: ${pet.petAge}</li>
+        <li>Date Adopted: ${pet.dateAdopted}</li>
+        <li>Vet: ${pet.petVet}</li>
+        <li>Allergies: ${pet.petAllergies}</li>
+        <li>Medical Conditions: ${pet.petMedicalCondition}</li>
+        <li>Medications: ${pet.petMedications}</li>
+        <li>Additional Information: ${pet.additionalInformation}</li>
+      </ul>
       <button class="create-album-btn">Create Photo Album</button>
     </div>
-    <div id="logged-in-links">
-
-    </div>
   </div>
+  <div class="photo-album-list">
+
+  </div>
+
   `;
   $('.app-body').html(profile);
 }

@@ -183,7 +183,7 @@ input:focus {
   color: white;
 }
 
-.form-container .cancel-btn, .new-account-btn {
+.cancel-btn, .new-account-btn {
   background-color: transparent;
   width: 100px;
   color: black;
@@ -238,6 +238,100 @@ input:focus {
   color: white;
 }
 
+.pet-profile-card {
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  max-width: 850px;
+  height: 425px;
+  background: #e8e7e1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: -35%;
+  bottom: 0;
+}
+
+
+/* .box-effect:before, .box-effect:after {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  bottom: 25px;
+  left: 10px;
+  width: 50%;
+  top: 80%;
+  max-width:300px;
+  background: #777;
+  -webkit-box-shadow: 0 35px 20px #777;
+  -moz-box-shadow: 0 35px 20px #777;
+  box-shadow: 0 35px 20px #777;
+  -webkit-transform: rotate(-8deg);
+  -moz-transform: rotate(-8deg);
+  -o-transform: rotate(-8deg);
+  -ms-transform: rotate(-8deg);
+  transform: rotate(-8deg);
+}
+
+.box-effect:after {
+  -webkit-transform: rotate(8deg);
+  -moz-transform: rotate(8deg);
+  -o-transform: rotate(8deg);
+  -ms-transform: rotate(8deg);
+  transform: rotate(8deg);
+  right: 10px;
+  left: auto;
+} */
+
+.card-left {
+  width: 38.2%;
+  height: 425px;
+  float: left;
+  overflow: hidden;
+  background: transparent;
+}
+.card-right {
+  width: 61.8%;
+  height: 425px;
+  float: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.pet-info {
+  list-style-type: none;
+  font-size: 20px;
+  color: #53524e;
+  margin-top: 8px;
+}
+
+.pet-info li {
+  padding-bottom: 3px;
+}
+
+.card-right h2 {
+  color: #53524e;
+  margin-top: 5%;
+  font-family: 'aclonica', sans-serif;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: auto;
+}
+
+.create-album-btn {
+  width: 175px;
+  height: 50px;
+  margin: auto;
+  background: rgba(92, 162, 212, .8);
+
+}
+
+.create-album-btn:hover {
+  background: #53524e;
+  color: white;
+}
 
 .avatar {
   width: 550px;
