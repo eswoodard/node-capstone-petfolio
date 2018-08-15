@@ -108,7 +108,7 @@ function submitNewAccountInfo() {
     $.ajax(settings).done((response) => {
       localStorage.setItem('jwToken', response.token);
       console.log(response);
-      renderWelcomePage(response);
+      renderMainPage();
       $('body').removeClass('bg').addClass('bg2');
     });
   });

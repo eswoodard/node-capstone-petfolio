@@ -53,19 +53,19 @@ function renderCreateAccountForm() {
   $('.app-body').html(createAcountForm);
 }
 
-function renderWelcomePage(response) {
-  console.log('renderWelcomePage ran');
-  console.log(response);
-  const welcomePage = `
-    <div class="welcome-page">
-      <h3>Welcome ${response.user.firstName}!</h3>
-      <p>To add a pet, click on the Add Pet button below.</p>
-      <div></br>
-      <button class="add-profile-btn" type="submit">Add Pet</button>
-    </div>
- `;
-  $('.app-body').html(welcomePage);
-}
+// function renderWelcomePage(response) {
+//   console.log('renderWelcomePage ran');
+//   console.log(response);
+//   const welcomePage = `
+//     <div class="welcome-page">
+//       <h3>Welcome ${response.user.firstName}!</h3>
+//       <p>To add a pet, click on the Add Pet button below.</p>
+//       <div></br>
+//       <button class="add-profile-btn" type="submit">Add Pet</button>
+//     </div>
+//  `;
+//   $('.app-body').html(welcomePage);
+// }
 
 function renderMainPage() {
   // console.log(user);
