@@ -1,6 +1,7 @@
 const STORE = {
   pets: [],
   currentPet: null,
+  albums: [],
 };
 
 function submitLogInForm() {
@@ -157,6 +158,12 @@ function bindEventListeners() {
     renderLandingPage();
   });
 
+  $(document).on('click', '.cancel-profile-btn', (event) => {
+    event.preventDefault();
+    renderMainPage();
+    renderPetList();
+  });
+
   submitLogInForm();
   submitNewAccountInfo();
   handleProfileButtonClick();
@@ -166,6 +173,7 @@ function bindEventListeners() {
   handleCreateAlbumButtonClick();
   requestCreateAccountForm();
 }
+
 function submitUpdateForm() {
   $(document).on('submit', '.update-profile-form', function (event) {
     event.preventDefault();
@@ -230,7 +238,6 @@ function submitCreateProfileForm() {
       console.log(response);
       STORE.pets.push(response.pets);
       renderMainPage(response);
-      slideShow();
       renderPetList();
     });
   });

@@ -12,7 +12,6 @@ body {
   width: 100%;
 }
 
-
 .bg {
   background: url("images/cat_dog4.jpg");
   height: 100%;
@@ -27,10 +26,10 @@ body {
   height: 100%;
   width: 100%;
   background-position: center;
-  /* background-repeat: no-repeat;
-  background-size: cover; */
 
 }
+
+      /* ////Nav Bar//// */
 
 header {
   padding: 5px;
@@ -63,111 +62,24 @@ nav a  {
   cursor: pointer;
 }
 
-/* nav a:hover {
-  background-color: rgba(177, 173, 170, 0.60);
-} */
-
 nav a.sign-up-link {
   color: white;
   background-color: rgba(92, 162, 212, .8);
   border: black 1px solid;
-
 }
 
 nav a.sign-up-link:hover {
   background-color: #3d4045;
 }
 
-.landing-page-text {
-  padding-top: 25%;
-}
-
-h2, .app-info-text {
-  text-align: center;
-}
-
-.app-info-text {
-  padding-top: 29px;
-  font-size: 18px;
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.landing-page-text h2 {
-  font-family: 'Aclonica', sans-serif;
-  font-size: 25px;
-}
-.landing-page {
-  display: flex;
-  justify-content: center;
-}
-
-.sign-in, .create-account {
-	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
-	margin: 25% auto;
-	background: rgba(177, 173, 170, 0.60);
-	height: 400px;
-	width: 300px;
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	left: 0;
-  top: 0;
-  text-align: center;
-}
-.create-account {
-  height: 450px;
-  width: 300px;
-}
-
-form {
-  padding-top: 1rem;
-}
-
-fieldset {
-  border: none;
-}
-
-legend {
-  display: none;
-}
-
-.form-container h2 {
-    font-size: 1rem;
-    text-align: center;
-    padding-top: 1rem;
-}
-
-.form-container input {
-  width: 250px;
-  height: 40px;
-  display: inline-block;
-  text-align: center;
-  background: #eee;
-  padding: 1rem 2rem;
-  outline: none;
-  border: none;
-  color: #222;
-}
-::placeholder{color: #999;}
-  #container input:focus {background: rgba(0, 0, 333, 0.10);}
-
+    /* ////buttons//// */
 
 .account-btns, .welcome-page  {
   margin-top: 3rem;
   text-align: center;
 }
-input {
-  width: 40%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  border: 2px solid grey;
-  outline: none;
-}
-input:focus {
-  border: 3px solid #999;
-}
-.form-container button, .new-account-btn, .add-profile-btn {
+
+button, .new-account-btn, .add-profile-btn, .create-album-btn {
   padding: 10px;
   margin-top: 5px;
   width: 150px;
@@ -199,34 +111,6 @@ input:focus {
   border: rgba(177, 173, 170, 0.70) solid 1px;
 }
 
-.create-account p {
-  margin-top: 2rem;
-}
-
-.placeholder-album {
-  height: 200px;
-  width: 200px;
-  border: 2px solid ;
-  margin: 2rem;
-  float: left;
-}
-
-.welcome-page {
-  margin: 0 auto;
-}
-
-.main-page {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.main-page p {
-  margin: 30px;
-  padding: 20px;
-  font-size: 20px;
-}
-
 .add-profile-btn {
   margin-top: 0;
   margin-bottom: 3rem;
@@ -238,50 +122,122 @@ input:focus {
   color: white;
 }
 
+.create-album-btn {
+  /* width: 175px; */
+  /* height: 50px; */
+  margin: auto;
+  /* background: rgba(92, 162, 212, .8); */
+  border: black 1px solid;
+}
+
+.create-album-btn:hover {
+  background: #53524e;
+  color: white;
+}
+
+    /* ////forms//// */
+
+.sign-in, .create-account, .create-profile {
+	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+	margin: 25% auto;
+	background: rgba(177, 173, 170, 0.60);
+	height: 450px;
+	width: 300px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+  top: 0;
+  text-align: center;
+  overflow-y: scroll;
+}
+.create-account {
+  height: 450px;
+  width: 300px;
+}
+
+.create-profile {
+  height: 1000px;
+  width: 800px;
+}
+
+.create-profile input {
+  width: 50%;
+}
+
+
+form {
+  padding-top: 1rem;
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  display: none;
+}
+
+.form-container h2 {
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+/* .form-container input {
+  width: 250px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  background: #eee;
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  color: #222;
+} */
+
+input {
+  width: 40%;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  background: #eee;
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  color: #222;
+  border: 2px solid grey;
+  margin: 8px 0;
+}
+
+
+::placeholder{color: #999;}
+  #container input:focus {background: rgba(0, 0, 333, 0.10);}
+
+/* input {
+  width: 40%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  outline: none;
+} */
+input:focus {
+  border: 3px solid #999;
+}
+
+.create-account p {
+  margin-top: 2rem;
+}
+
+    /* ////Profile Card//// */
+
 .pet-profile-card {
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   max-width: 850px;
   height: 425px;
   background: #e8e7e1;
-  position: absolute;
-  left: 0;
-  right: 0;
   margin: auto;
-  top: -35%;
-  bottom: 0;
-}
-
-
-/* .box-effect:before, .box-effect:after {
-  z-index: -1;
-  position: absolute;
-  content: "";
-  bottom: 25px;
-  left: 10px;
-  width: 50%;
-  top: 80%;
-  max-width:300px;
-  background: #777;
-  -webkit-box-shadow: 0 35px 20px #777;
-  -moz-box-shadow: 0 35px 20px #777;
-  box-shadow: 0 35px 20px #777;
-  -webkit-transform: rotate(-8deg);
-  -moz-transform: rotate(-8deg);
-  -o-transform: rotate(-8deg);
-  -ms-transform: rotate(-8deg);
-  transform: rotate(-8deg);
-}
-
-.box-effect:after {
-  -webkit-transform: rotate(8deg);
-  -moz-transform: rotate(8deg);
-  -o-transform: rotate(8deg);
-  -ms-transform: rotate(8deg);
-  transform: rotate(8deg);
-  right: 10px;
-  left: auto;
-} */
+  margin-bottom: 5%;
+ }
 
 .card-left {
   width: 38.2%;
@@ -319,38 +275,56 @@ input:focus {
   width: 100%;
   height: auto;
 }
+    /* ////end Profile Card//// */
 
-.create-album-btn {
-  width: 175px;
-  height: 50px;
-  margin: auto;
-  background: rgba(92, 162, 212, .8);
-
+.landing-page-text {
+  padding-top: 25%;
 }
 
-.create-album-btn:hover {
-  background: #53524e;
-  color: white;
-}
-
-.avatar {
-  width: 550px;
-}
-
-.pet {
-  position: relative;
+h2, .app-info-text {
   text-align: center;
-  color: white;;
-  float: left;
-  margin: .5rem;
 }
-/* .caption {
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2rem;
-} */
+
+.app-info-text {
+  padding-top: 29px;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.landing-page-text h2 {
+  font-family: 'Aclonica', sans-serif;
+  font-size: 25px;
+}
+.landing-page {
+  display: flex;
+  justify-content: center;
+}
+
+.placeholder-album {
+  height: 200px;
+  width: 200px;
+  border: 2px solid ;
+  margin: 2rem;
+  float: left;
+}
+
+.welcome-page {
+  margin: 0 auto;
+}
+
+.main-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.main-page p {
+  margin: 30px;
+  padding: 20px;
+  font-size: 20px;
+}
+
 
 .display-container {
   position: relative;

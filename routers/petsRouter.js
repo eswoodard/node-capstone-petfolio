@@ -4,7 +4,7 @@ const multer = require('multer');
 
 
 const Pets = require('../models/pets');
-// const Album = require('../models/pets');
+const Albums = require('../models/albums');
 
 const router = express.Router();
 
@@ -118,7 +118,7 @@ router.post('/album', jwtAuth, upload.array('photos', 50), (req, res) => {
   const pet = req.body.pet;
   const albumTitle = req.body.albumTitle;
   const albumPhotos = { path: req.files.path };
-  Album.create({
+  Albums.create({
     pet,
     albumTitle,
     albumPhotos,
