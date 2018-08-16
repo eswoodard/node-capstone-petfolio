@@ -285,7 +285,7 @@ input:focus {
 .pet-info {
   list-style-type: none;
   font-size: 16px;
-  color: #53524e;
+  color: black;
   margin-top: 8px;
 }
 
