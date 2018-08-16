@@ -1,12 +1,14 @@
-const mongoose = require('mongoose');
+// ***feature will be added at later date***
 
-const petAlbumSchema = new mongoose.Schema({
-  pet: { type: String, required: true },
-  albumTitle: { type: String },
-  albumPhotos: [{
-    path: { type: String },
-  }],
-});
+// const mongoose = require('mongoose');
 
-const albums = mongoose.model('Album', petAlbumSchema);
-module.exports = albums;
+// const petAlbumSchema = new mongoose.Schema({
+//   pet: { type: String, required: true },
+//   albumTitle: { type: String },
+//   albumPhotos: [{
+//     path: { type: String },
+//   }],
+// });
+
+// const albums = mongoose.model('Album', petAlbumSchema);
+// module.exports = albums;
