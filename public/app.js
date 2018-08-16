@@ -17,7 +17,6 @@ function submitLogInForm() {
 }
 
 function retrievePetDataFromApi() {
-  console.log('hello');
   const token = localStorage.getItem('jwToken');
   const settings = {
     async: true,
@@ -30,7 +29,6 @@ function retrievePetDataFromApi() {
     },
   };
   $.ajax(settings).done((response) => {
-    // console.log(response);
     STORE.pets = response.pets;
     renderPetList();
   });
@@ -51,7 +49,6 @@ function getUserByUsername(user, password) {
     url: 'http://localhost:8080/auth/login',
   };
   $.ajax(settings).done((response) => {
-    // console.log(response);
     $('#userName').val('');
     $('#password').val('');
     localStorage.setItem('jwToken', response.profile.token);
@@ -84,7 +81,6 @@ function requestCreateAccountForm() {
 
 function submitNewAccountInfo() {
   $(document).on('submit', '.submit-account-form', (event) => {
-    console.log('it ran');
     // will sent post request to API, create new user account, return confirmation
     event.preventDefault();
     const body = {
@@ -108,7 +104,6 @@ function submitNewAccountInfo() {
     $.ajax(settings).done((response) => {
       localStorage.setItem('jwToken', response.token);
       window.initialToken = response.token;
-      console.log(response);
       renderMainPage();
       renderNavLinks(true);
       $('body').removeClass('bg').addClass('bg2');
@@ -153,7 +148,6 @@ function bindEventListeners() {
     event.preventDefault();
     const path = $(this).attr('href');
     renderPath(path);
-    console.log(path);
   });
   $(document).on('click', '.sign-in-btn', (event) => {
     event.preventDefault();
@@ -174,7 +168,6 @@ function bindEventListeners() {
     renderEditPetForm();
   });
   $(document).on('click', '.create-album-button', (event) => {
-    console.log('clicked');
     event.preventDefault();
     renderPhotoAlbum();
   });
@@ -205,7 +198,6 @@ function submitUpdateForm() {
       data: values,
     };
     $.ajax(settings).done((response) => {
-      console.log(response);
       findByPetNameAndReplace(response);
       renderMainPage(response);
       renderPetList();
@@ -220,7 +212,6 @@ function submitCreateProfileForm() {
     const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
     window.createToken = token;
-    console.log(token);
     const form = new FormData();
     form.append('petName', $('#petName').val());
     form.append('petGender', $('#petGender').val());
@@ -252,7 +243,6 @@ function submitCreateProfileForm() {
     };
 
     $.ajax(settings).done((response) => {
-      console.log(response);
       STORE.pets.push(response.pets);
       renderMainPage(response);
       renderPetList();
@@ -274,11 +264,9 @@ function handlePetProfileUpdate() {
 
 function handlePetProfileDeleteLink() {
   $(document).on('click', '.delete-pet-link', (event) => {
-    console.log('hello');
     event.preventDefault();
     const petId = STORE.currentPet._id;
     const token = localStorage.getItem('jwToken');
-    console.log(petId);
 
     const settings = {
       async: true,
@@ -305,13 +293,8 @@ function handlePetProfileDeleteLink() {
 function handleProfileButtonClick() {
   $(document).on('click', '.pet', function (event) {
     event.preventDefault();
-    console.log('pet clicked');
     const petName = $(this).attr('name');
-    console.log(petName);
     STORE.currentPet = getPetByPetname(petName);
-    console.log(STORE.currentPet);
-    // renderPetProfile();
-    // $('.petlist-link').show();
     renderEditPetForm();
   });
 }
@@ -322,7 +305,6 @@ function getPetByPetname(petName) {
 
 function handleCreateAlbumButtonClick() {
   $(document).on('click', '.create-album-btn', (event) => {
-    console.log('hello');
     event.preventDefault();
     renderPhotoUploadForm();
   });
