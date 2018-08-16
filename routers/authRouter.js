@@ -17,7 +17,7 @@ const createAuthToken = user => jwt.sign({ user }, JWT_SECRET, {
 });
 
 router.post('/auth/login', passport.authenticate('local', { session: false }), (req, res) => {
-  // console.log(req);
+  // console.log(req.user);
   User.findById(req.user.id).then((userData) => {
     const firstName = userData.firstName;
     const lastName = userData.lastName;
@@ -51,7 +51,7 @@ router.post('/auth/signup', (req, res) => {
         username,
         password,
       }).then((user) => {
-        console.log(user);
+        // console.log(user);
         const token = createAuthToken(user.serialize());
         res.status(201).json({ token, user });
       }).catch((err) => {

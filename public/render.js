@@ -118,7 +118,7 @@ function renderCreateProfileForm() {
     <legend>Create Pet Profile Form</legend>
     <h2>Create New Pet Profile</h2>
     <form name="profile" class="create-profile-form">
-      <input type="text" id="petName" placeholder="Enter Pet Name" name="petName" aria-label"pet-name"></br>
+      <input type="text" id="petName" placeholder="Enter Pet Name" name="petName" aria-label="pet-name"></br>
       <input type="text" id="petGender" placeholder="Enter Pet Gender" name="petGender" aria-label="pet-gender"></br>
       <input type="text" id="petSpecies" placeholder="Enter Pet Species" name="petSpecies" aria-label="pet-species"></br>
       <input type="text" id="petColor" placeholder="Enter Pet Color" name="petColor" aria-label="pet-color"></br>
@@ -130,8 +130,8 @@ function renderCreateProfileForm() {
       <input type="text" id="petMedicalCondition" placeholder="Enter Medical Conditions" name="petMedicalCondition" aria-label="medical-conditions"></br>
       <input type="text" id="petMedications" placeholder="Enter Medications" name="petMedications" aria-label="medications"></br>
       <input type="text" id="additionalInformation" placeholder="Enter Additional Information" name="additionalInformation" aria-label="additional-information"></br>
-      <label for="add-avatar">Upload Photo:</label></br>
-      <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar"></br>
+      <label for="avatar">Upload Photo:</label></br>
+      <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar" aria-label="avatar"></br>
       <button class="submit-profile-btn">Submit</button></br>
       <button class="cancel-btn cancel-profile-btn">Cancel</button>
     </form>
@@ -168,7 +168,7 @@ function renderUpdateForm() {
     <legend>Update Pet Profile Form</legend>
     <form action="#" name="profile" class="update-profile-form">
       <label>Pet Name:</label></br>
-      <input type="text" id="petName" placeholder="Enter Pet Name" name="petName" aria-label"pet-name" value="${STORE.currentPet.petName}"></br>
+      <input type="text" id="petName" placeholder="Enter Pet Name" name="petName" aria-label="pet-name" value="${STORE.currentPet.petName}"></br>
       <label>Pet Gender:</label></br>
       <input type="text" id="petGender" placeholder="Enter Pet Gender" name="petGender" aria-label="pet-gender" value="${STORE.currentPet.petGender}"></br>
       <label>Pet Species:</label></br>
@@ -191,8 +191,8 @@ function renderUpdateForm() {
       <input type="text" id="petMedications" placeholder="Enter Medications" name="petMedications" aria-label="medications" value="${STORE.currentPet.petMedications}"></br>
       <label>Additional Information:</label></br>
       <input type="text" id="additionalInformation" placeholder="Enter Additional Information"   aria-label="additional-information" name="additionalInformation"value="${STORE.currentPet.additionalInformation}"></br>
-      <label for="add-avatar">Upload Avatar:</label></br>
-      <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar"value="${STORE.currentPet.petAvatar}"></br>
+      <label for="avatar">Upload Avatar:</label></br>
+      <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar" aria-label="avatar" value="${STORE.currentPet.petAvatar}"></br>
       <button>Submit</button></br>
       <button class="cancel-btn cancel-update-btn">Cancel</button>
     </form>
