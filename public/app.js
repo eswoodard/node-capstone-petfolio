@@ -1,27 +1,23 @@
 const STORE = {
   pets: [],
+  currentPet: null,
+  albums: [],
 };
 
-function requestLogInForm() {
-  $('.sign-in-btn').on('click', (event) => {
-    event.preventDefault();
-    renderLogInForm();
-    submitLogInForm();
-  });
-}
-
 function submitLogInForm() {
-  $('.sign-in-form').submit((event) => {
+  $(document).on('submit', '.sign-in-form', (event) => {
     event.preventDefault();
     const userTarget = $(event.currentTarget).find('#userName');
     const passwordTarget = $(event.currentTarget).find('#password');
     const password = passwordTarget.val();
     const user = userTarget.val();
     getUserByUsername(user, password);
+    $('body').removeClass('bg').addClass('bg2');
   });
 }
 
 function retrievePetDataFromApi() {
+  console.log('hello');
   const token = localStorage.getItem('jwToken');
   const settings = {
     async: true,
@@ -59,21 +55,36 @@ function getUserByUsername(user, password) {
     $('#userName').val('');
     $('#password').val('');
     localStorage.setItem('jwToken', response.profile.token);
+    renderNavLinks(true);
     console.log('Welcome! You are now logged in.');
     renderMainPage(response);
     retrievePetDataFromApi();
+  }).fail((error) => {
+    console.log(error);
+    $('.login-error-msg').show();
   });
 }
 
+function renderNavLinks(isLoggedIn) {
+  if (isLoggedIn) {
+    $('#logged-out-links').hide();
+    $('#logged-in-links').show();
+  } else {
+    $('#logged-out-links').show();
+    $('#logged-in-links').hide();
+  }
+}
+
 function requestCreateAccountForm() {
-  $('.new-account-btn').on('click', (event) => {
+  $(document).on('click', '.new-account-btn', (event) => {
     event.preventDefault();
     renderCreateAccountForm();
   });
 }
 
 function submitNewAccountInfo() {
-  $('.submit-account-form').submit((event) => {
+  $(document).on('submit', '.submit-account-form', (event) => {
+    console.log('it ran');
     // will sent post request to API, create new user account, return confirmation
     event.preventDefault();
     const body = {
@@ -93,40 +104,113 @@ function submitNewAccountInfo() {
       },
       processData: false,
       data: JSON.stringify(body),
-      error(jqXHR, textStatus, errorThrown) {
-        console.log(jqXHR, textStatus, errorThrown);
-      },
     };
     $.ajax(settings).done((response) => {
       localStorage.setItem('jwToken', response.token);
+      window.initialToken = response.token;
       console.log(response);
-      renderWelcomePage(response);
-      // requestCreateProfileForm();
+      renderMainPage();
+      $('body').removeClass('bg').addClass('bg2');
     });
   });
 }
 
-
-// function requestCreateProfileForm() {
-//   $('.add-profile-btn').on('click', (event) => {
-//     renderCreateProfileForm();
-//     submitCreateProfileForm();
-//   });
-// }
+function renderPath(path) {
+  switch (path) {
+    case '/signin':
+      renderLogInForm();
+      break;
+    case '/signup':
+      renderCreateAccountForm();
+      break;
+    case '/logout':
+      localStorage.removeItem('jwToken');
+      renderLandingPage();
+      renderNavLinks(false);
+      $('body').removeClass('bg2').addClass('bg');
+      break;
+    case '/petlist':
+      renderMainPage();
+      renderPetList();
+      $('.petlist-link').hide();
+      break;
+    default:
+      renderLandingPage();
+  }
+}
 
 function bindEventListeners() {
   $(document).on('click', '.add-profile-btn', (event) => {
     renderCreateProfileForm();
   });
   submitCreateProfileForm();
+  $(document).on('click', '.nav-link', function (event) {
+    event.preventDefault();
+    const path = $(this).attr('href');
+    renderPath(path);
+    console.log(path);
+  });
+  $(document).on('click', '.sign-in-btn', (event) => {
+    event.preventDefault();
+    renderLogInForm();
+  });
+  $(document).on('click', '.cancel-btn', (event) => {
+    event.preventDefault();
+    renderLandingPage();
+  });
+
+  $(document).on('click', '.cancel-profile-btn', (event) => {
+    event.preventDefault();
+    renderMainPage();
+    renderPetList();
+  });
+  $(document).on('click', '.cancel-update-btn', (event) => {
+    event.preventDefault();
+    renderEditPetForm();
+  });
+
+  submitLogInForm();
+  submitNewAccountInfo();
+  handleProfileButtonClick();
+  handlePetProfileUpdate();
+  handlePetProfileDeleteLink();
+  submitUpdateForm();
+  handleCreateAlbumButtonClick();
+  requestCreateAccountForm();
 }
 
+function submitUpdateForm() {
+  $(document).on('submit', '.update-profile-form', function (event) {
+    event.preventDefault();
+    const token = localStorage.getItem('jwToken');
+    const values = $(this).serializeArray();
+    const settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:8080/pets/${STORE.currentPet._id}`,
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      data: values,
+    };
+    $.ajax(settings).done((response) => {
+      console.log(response);
+      findByPetNameAndReplace(response);
+      renderMainPage(response);
+      renderPetList();
+    });
+  });
+}
 function submitCreateProfileForm() {
   $(document).on('click', '.submit-profile-btn', (event) => {
     // will sent post request to API, create pet profile, return confirmation
     event.preventDefault();
+
     const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
+    window.createToken = token;
+    console.log(token);
     const form = new FormData();
     form.append('petName', $('#petName').val());
     form.append('petGender', $('#petGender').val());
@@ -166,29 +250,94 @@ function submitCreateProfileForm() {
   });
 }
 
+function findByPetNameAndReplace(updatedPet) {
+  const index = STORE.pets.map(pet => pet.petName).indexOf(STORE.currentPet.petName);
+  STORE.pets[index] = updatedPet;
+}
+
+function handlePetProfileUpdate() {
+  $(document).on('click', '.update-pet-link', (event) => {
+    event.preventDefault();
+    renderUpdateForm();
+  });
+}
+
+function handlePetProfileDeleteLink() {
+  $(document).on('click', '.delete-pet-link', (event) => {
+    console.log('hello');
+    event.preventDefault();
+    const petId = STORE.currentPet._id;
+    const token = localStorage.getItem('jwToken');
+    console.log(petId);
+
+    const settings = {
+      async: true,
+      crossDomain: true,
+      url: `http://localhost:8080/pets/${petId}`,
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        'Cache-Control': 'no-cache',
+      },
+      processData: false,
+      data: `{\n\t"id": "${petId}"\n}`,
+    };
+
+    $.ajax(settings).done((response) => {
+      findByPetNameAndReplace(response);
+      renderMainPage();
+      renderPetList();
+    });
+  });
+}
+
 function handleProfileButtonClick() {
-  $('.pet-list').click(function () {
+  $(document).on('click', '.pet', function (event) {
+    event.preventDefault();
     console.log('pet clicked');
-    // event.preventDefault();
     const petName = $(this).attr('name');
     console.log(petName);
-    getPetByPetname(petName);
+    STORE.currentPet = getPetByPetname(petName);
+    console.log(STORE.currentPet);
+    // renderPetProfile();
+    // $('.petlist-link').show();
+    renderEditPetForm();
   });
 }
 
 function getPetByPetname(petName) {
-  console.log(petName);
-  STORE.pets.map((pet) => {
-    if (pet.petName === petName) {
-      console.log(pet.petName);
-      console.log(petName);
-      console.log(pet);
-      renderPetProfile(pet);
-      // displayPhotoAlbum(pet);
-      // renderPetAlbums(pet);
-    }
+  return STORE.pets.filter(pet => pet.petName === petName)[0];
+}
+
+function handleCreateAlbumButtonClick() {
+  $(document).on('click', '.create-album-btn', (event) => {
+    console.log('hello');
+    event.preventDefault();
+    renderPhotoUploadForm();
   });
 }
+
+// function slideShow() {
+//   let slideIndex = 1;
+//   showSlides(slideIndex);
+
+//   function plusSlides(n) {
+//     showSlides(slideIndex += n);
+//   }
+
+//   function showSlides(n) {
+//     let i;
+//     const slides = document.getElementsByClassName('pet');
+//     if (n > slides.length) { slideIndex = 1; }
+//     if (n < 1) { slideIndex = slides.length; }
+//     for (i = 0; i < slides.length; i++) {
+//       slides[i].style.display = 'none';
+//     }
+//     slides[slideIndex - 1].style.display = 'block';
+//   }
+// }
+
 
 function displayPhotoAlbum(profileInfo) {
   $('.pet-album').on('click', (event) => {
@@ -207,8 +356,6 @@ function displayPhotoAlbum(profileInfo) {
 
 function handleAppLoad() {
   renderLandingPage();
-  requestLogInForm();
-  requestCreateAccountForm();
   bindEventListeners();
 }
 

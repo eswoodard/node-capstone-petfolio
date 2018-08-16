@@ -3,9 +3,8 @@ const passport = require('passport');
 const multer = require('multer');
 
 
-// const upload = multer({ dest: '..public/photos' });
 const Pets = require('../models/pets');
-
+const Albums = require('../models/albums');
 
 const router = express.Router();
 
@@ -20,7 +19,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.get('/pets', jwtAuth, (req, res) => {
+
+router.get('/', jwtAuth, (req, res) => {
   console.log(req.user.id);
   Pets.find({ petOwner: req.user.id })
     .then((pets) => {
@@ -30,8 +30,7 @@ router.get('/pets', jwtAuth, (req, res) => {
     .catch(err => handleError(res, err));
 });
 
-
-router.post('/pets', jwtAuth, upload.single('avatar'), (req, res) => {
+router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
   // console.log(req.user);
   console.log(req.body);
   console.log(req.file);
@@ -48,7 +47,11 @@ router.post('/pets', jwtAuth, upload.single('avatar'), (req, res) => {
   const petMedicalCondition = req.body.petMedicalCondition;
   const petMedications = req.body.petMedications;
   const additionalInformation = req.body.additionalInformation;
-  const avatar = { path: req.file.path };
+  let avatar = null;
+  if (req.file) {
+    avatar = { path: req.file.path };
+  }
+  console.log(req.body);
   Pets.create({
     petOwner,
     petName,
@@ -72,13 +75,9 @@ router.post('/pets', jwtAuth, upload.single('avatar'), (req, res) => {
     });
 });
 
-router.put('pets/:id', jwtAuth, (req, res) => {
-  console.log(req);
-  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
-    res.status(400).json({
-      error: 'Request path id and request body id values must match',
-    });
-  }
+router.put('/:id', jwtAuth, (req, res) => {
+  console.log(req.params.id);
+  console.log(req.body);
   const updated = {};
   const updateableFields = ['petName', 'petGender', 'petSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'avatar'];
   updateableFields.forEach((field) => {
@@ -87,24 +86,37 @@ router.put('pets/:id', jwtAuth, (req, res) => {
     }
   });
   Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-    .then((updatedPets) => {
-      res.status(200).json({
-        petName: updatedPets.petName,
-        petGender: updatedPets.petGender,
-        petSpecies: updatedPets.petSpecies,
-        petColor: updatedPets.petColor,
-        petBirthday: updatedPets.petBirthday,
-        petAge: updatedPets.petAge,
-        dateAdopted: updatedPets.dateAdopted,
-        petVet: updatedPets.petVet,
-        petAllergies: updatedPets.petAllergies,
-        petMedicalCondition: updatedPets.petMedicalCondition,
-        petMedications: updatedPets.petMedications,
-        additionalInformation: updatedPets.additionalInformation,
-        avatar: updatedPets.avatar,
-      });
+    .then((updatedPet) => {
+      res.status(200).json(updatedPet);
     })
-    .catch(err => res.status(500).json({ message: err }));
+    .catch(err => res.json({ message: err }));
+});
+
+router.delete('/:id', jwtAuth, (req, res) => {
+  console.log(req.params.id);
+  Pets.findByIdAndRemove(req.params.id)
+    .then(() => {
+      console.log(`Deleted Pet with id \`${req.params.id}\``);
+      res.status(204).json({ Message: 'Pet successfully deleted.' });
+    });
+});
+
+router.post('/album', jwtAuth, upload.array('photos', 50), (req, res) => {
+  console.log(req);
+  console.log(req.files);
+  const pet = req.body.pet;
+  const albumTitle = req.body.albumTitle;
+  const albumPhotos = { path: req.files.path };
+  Albums.create({
+    pet,
+    albumTitle,
+    albumPhotos,
+  })
+    .then((album) => {
+      res.status(201).json({ album });
+    }).catch((err) => {
+      res.status(500).json(err);
+    });
 });
 
 

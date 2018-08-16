@@ -12,19 +12,30 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.css">
   <link href="main.css" rel="stylesheet" type="text/css"/>
   <link rel="stylesheet" type="text/css" href="media.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Aclonica|Lora|Nunito|Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 </head>
-<body>
-<div class="landing-page">
+<body class="bg">
   <header role="banner">
-    <div class="page-title">
-      <h1><a class="web-title" href="index.html">PetFolio</a></h1>
-    </div>
-  </header>
-  <main role="main">
-    <div class="app-body container"></div>
-  </main>
 
+    <nav>
+       <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
+        <div id="logged-out-links" class="nav-links">
+          <a class="nav-link sign-in-link" href="/signin">Sign In</a>
+          <a class="nav-link sign-up-link" href="/signup">Create Account</a>
+        </div>
+        <div id="logged-in-links" style="display: none" class="nav-links">
+          <a class="nav-link" href="/logout">Log Out</a>
+          <a class="nav-link petlist-link" style="display: none" href="/petlist">Return to My Pets</a>
+          <a class="petlist-link update" style="display: none" href="#">Update Pet</a>
+          <a class="petlist-link delete" style="display: none" href="#">Delete Pet</a>
+        </div>
+    </nav>
+  </header>
+      <main role="main">
+          <div class="app-body"></div>
+          <!-- <div class="slide-show-container"></div> -->
+      </main>
 
 </body>
 <!-- <script src='data.js'></script> -->
@@ -33,3 +44,4 @@
 
 
 </html>
+

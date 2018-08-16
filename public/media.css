@@ -1,0 +1,227 @@
+/* screen sizes 540px and up */
+
+@media (min-width: 540px){
+  .logo {
+    width: 150px;
+  }
+  .account-btns, .welcome-page,  {
+    margin-top: 5rem;
+  }
+  .new-account-btn {
+    width: 250px;
+    height: 60px;
+    font-size: 1.3rem;
+    background: transparent;
+    border: black 1px solid;
+    /* -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s; */
+
+  }
+  .new-account-btn:hover {
+    background: rgba(92, 162, 212, .6);
+    color: white;
+    border: none;
+  }
+
+  .create-account {
+    height: 600px;
+    width: 350px;
+  }
+  .edit-pet-btn {
+    margin: auto;
+  }
+
+}
+
+/* screen sizes 768px and up */
+@media (min-width: 768px) {
+  .logo {
+    width: 175px;
+  }
+  .landing-page-text h2 {
+    font-size: 48px;
+  }
+  .landing-page-text {
+    padding-top: 10%;
+  }
+  .app-info-text {
+    padding-top: 29px;
+    font-size: 20px;
+  }
+  .create-account {
+    height: 600px;
+    width: 450px;
+    margin: 20% auto;
+  }
+  .form-container h2 {
+    font-size: 2rem;
+    padding-top: 4rem;
+  }
+  .sign-in {
+    height: 550px;
+    width: 480px;
+    margin: 20% auto;
+  }
+  .edit-pet h2 {
+    padding-top:2rem;
+  }
+  .main-page p {
+    font-size: 18px;
+  }
+  .create-profile, .update-profile {
+    width: 800px;
+  }
+  /* .create-profile input {
+    width: 50%;
+  } */
+  .pet-profile-card {
+    width: 600px;
+    height: 1200px;
+  }
+  .card-right {
+    width: 600px;
+    margin-left: 0;
+  }
+  .pet-info {
+    margin: auto;
+    font-size: 18px;
+  }
+  .edit-pet-btn {
+    margin: auto;
+    margin-top: 15px;
+  }
+  .create-profile, .update-profile {
+    width: 700px;
+  }
+  input {
+    width: 300px;
+    height: 60px;
+    transition: 0.3s linear;
+  }
+
+}
+
+/* screen sizes 960px and up */
+
+@media (min-width: 960px) {
+
+  .logo {
+    width: 215px;
+  }
+
+  .create-account {
+    height: 700px;
+    width: 580px;
+  }
+
+  .create-account input {
+    width: 50%;
+  }
+
+  .form-container button, .new-account-btn {
+    margin-top: 10px;
+    width: 250px;
+  }
+
+  .pet-profile-card {
+    max-width: 850px;
+    width: 850px;
+    height: 425px;
+    margin: auto;
+    margin-bottom: 5%;
+   }
+
+  .card-left {
+    width: 38.2%;
+    height: 425px;
+    float: left;
+    overflow: hidden;
+    background: transparent;
+  }
+  .card-right {
+    width: 61.8%;
+    height: 425px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pet-info {
+    list-style-type: none;
+    font-size: 20px;
+    color: #53524e;
+    margin-top: 8px;
+  }
+
+  .pet-info li {
+    padding-bottom: 3px;
+  }
+
+  .card-right h2 {
+    color: #53524e;
+    margin-top: 5%;
+    font-family: 'aclonica', sans-serif;
+  }
+
+  .profile-avatar {
+    width: 100%;
+    height: auto;
+  }
+
+.sign-up-link, .sign-in-link {
+    padding: 10px;
+  }
+
+  nav a.sign-up-link:hover {
+    background-color: #3d4045;
+  }
+  .form-container {
+    width: 900px;
+  }
+  .edit-pet {
+    width: 400px;
+  }
+  .create-profile input {
+    width: 600px;
+  }
+  .update-profile input {
+    width: 600px;
+  }
+
+  .sign-in {
+    width: 600px;
+    margin: 20% auto;
+  }
+  .create-account {
+    width: 600px;
+  }
+
+
+}
+
+/* screen sizes 1200px and up */
+
+@media (min-width: 1200px) {
+  .create-account {
+    margin: 15% auto;
+    font-size: 18px;
+  }
+}
+
+/* screen sizes 1500px and up */
+
+@media (min-width: 1500px) {
+  .create-account {
+    margin: 12% auto;
+  }
+
+  .sign-in {
+    margin: 12% auto;
+  }
+}
+
+@media (min-width: 2000px) {
+  .main-page p{
+    padding-right: 300px;
+  }
+}

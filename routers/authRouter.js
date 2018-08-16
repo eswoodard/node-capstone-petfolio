@@ -51,7 +51,8 @@ router.post('/auth/signup', (req, res) => {
         username,
         password,
       }).then((user) => {
-        const token = createAuthToken(user);
+        console.log(user);
+        const token = createAuthToken(user.serialize());
         res.status(201).json({ token, user });
       }).catch((err) => {
         res.status(500).json(err);

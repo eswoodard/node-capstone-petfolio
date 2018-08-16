@@ -1,36 +1,332 @@
 * {
   box-sizing: border-box;
+  margin: 0;
 }
+
+html, body {
+  height: 100%;
+}
+
 body {
-  font-family: 'Roboto', sans-serif;
-  margin: 5%;
-}
-/* div {
-  border: green 1px solid;
-} */
-h1 {
-  font-size: 4rem;
-  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  width: 100%;
 }
 
-.web-title {
+.bg {
+  background: url("images/cat_dog4.jpg");
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg2 {
+  background:  linear-gradient(rgba(205, 209, 214, 0.7), rgba(205, 209, 214, 0.7)), url("images/cat_dog4.jpg");
+  height: 100%;
+  width: 100%;
+  background-position: center;
+
+}
+
+      /* ////Nav Bar//// */
+
+header {
+  padding: 5px;
+  text-align: left;
+  height: 7%;
+  display: flex;
+  align-items: center;
+  background-color:white;
+}
+
+.logo {
+  width: 100px;
+}
+
+nav {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a  {
+  color: #3d4045;
   text-decoration: none;
-  color: black;
+  padding: 5px;
+  border: black 1px solid;
+  margin-right: 20px;
+  font-size: 18px;
+  cursor: pointer;
 }
 
-.account-btns, .sign-in-form, .create-account-form, .welcome-page, .add-profile-btn {
-  margin-top: 5rem;
+.sign-up-link {
+  color: white;
+  background-color: rgba(92, 162, 212, .8);
+  border: black 1px solid;
+  font-size: 15px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.sign-in-link {
+  font-size: 15px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.sign-up-link:hover {
+  background-color: #3d4045;
+}
+
+    /* ////buttons//// */
+
+.account-btns, .welcome-page  {
+  margin-top: 3rem;
   text-align: center;
 }
+
+button, .new-account-btn, .add-profile-btn, .edit-pet-btn {
+  padding: 10px;
+  margin-top: 5px;
+  width: 150px;
+  background-color: rgba(92, 162, 212, .6);
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+}
+
+.form-container button:hover {
+  background-color: #3d4045;
+  color: white;
+}
+
+.cancel-btn, .new-account-btn {
+  background-color: transparent;
+  width: 100px;
+  color: black;
+  border: black 1px solid;
+  margin-top: 15px;
+}
+
+.new-account-btn {
+  width: 250px;
+  height: 60px;
+  font-size: 1.3rem;
+  background: rgba(177, 173, 170, 0.70);
+  border: rgba(177, 173, 170, 0.70) solid 1px;
+}
+
+.add-profile-btn {
+  margin-top: 0;
+  margin-bottom: 3rem;
+  border: black 1px solid
+}
+
+.add-profile-btn:hover {
+  background-color: #3d4045;
+  color: white;
+}
+
+.edit-pet-btn {
+  /* width: 175px; */
+  /* height: 50px; */
+  margin: auto;
+  margin-top: 35px;
+  /* background: rgba(92, 162, 212, .8); */
+  border: black 1px solid;
+}
+
+.edit-pet-btn:hover {
+  background: #53524e;
+  color: white;
+}
+
+.edit-button {
+  width: 200px;
+  margin: 10px;
+}
+
+.edit-button:hover {
+  background: #53524e;
+  color: white;
+}
+
+    /* ////forms//// */
+
+    /* .sign-in, .create-account, .create-profile, .edit-pet, .update-profile */
+
+ .form-container {
+	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+	margin: auto;
+	background: rgba(177, 173, 170, 0.60);
+	height: 450px;
+	width: 300px;
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+  top: 0;
+  text-align: center;
+  /* overflow-y: scroll; */
+
+}
+.create-account {
+  height: 450px;
+  width: 300px;
+}
+
+.create-profile, .update-profile {
+  position: static;
+  height: auto;
+  width: 90%;
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+.create-profile input {
+  width: 250px;
+}
+
+
+form {
+  padding-top: 1rem;
+}
+
+fieldset {
+  border: none;
+}
+
+legend {
+  display: none;
+}
+
+.form-container h2 {
+    font-size: 1rem;
+    text-align: center;
+    padding-top: 1rem;
+}
+
+/* .form-container input {
+  width: 250px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  background: #eee;
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  color: #222;
+} */
+
 input {
+  width: 250px;
+  height: 40px;
+  display: inline-block;
+  text-align: center;
+  background: #eee;
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  color: #222;
+  border: 2px solid grey;
+  margin: 8px 0;
+}
+
+
+::placeholder{color: #999;}
+  #container input:focus {background: rgba(0, 0, 333, 0.10);}
+
+/* input {
   width: 40%;
   padding: 12px 20px;
   margin: 8px 0;
-  border: 2px solid grey;
   outline: none;
-}
+} */
 input:focus {
-  border: 3px solid black
+  border: 3px solid #999;
+}
+
+.create-account p {
+  margin-top: 2rem;
+}
+
+.edit-button-container {
+  margin-top: 30px;
+}
+
+    /* ////Profile Card//// */
+
+.pet-profile-card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  max-width: 850px;
+  width: 300px;
+  height: 850px;
+  background: rgb(177, 173, 170);
+  margin: auto;
+  margin-bottom: 5%;
+  overflow-y: scroll;
+  padding-left: 0px;
+ }
+
+.card-left {
+  float: left;
+  background: transparent;
+}
+.card-right {
+  float: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.pet-info {
+  list-style-type: none;
+  font-size: 16px;
+  color: #53524e;
+  margin-top: 8px;
+}
+
+.pet-info li {
+  padding-bottom: 3px;
+}
+
+.card-right h2 {
+  color: #53524e;
+  margin-top: 5%;
+  font-family: 'aclonica', sans-serif;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: auto;
+}
+    /* ////end Profile Card//// */
+
+.landing-page-text {
+  padding-top: 25%;
+}
+
+h2, .app-info-text {
+  text-align: center;
+}
+
+.app-info-text {
+  padding-top: 29px;
+  font-size: 18px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.landing-page-text h2 {
+  font-family: 'Aclonica', sans-serif;
+  font-size: 25px;
+}
+.landing-page {
+  display: flex;
+  justify-content: center;
 }
 
 .placeholder-album {
@@ -45,29 +341,105 @@ input:focus {
   margin: 0 auto;
 }
 
-.avatar {
-  height: 200px;
+.main-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.pet-list {
+.main-page p {
+  margin: 30px;
+  padding: 20px;
+  font-size: 18px;
+}
+
+
+.display-container {
   position: relative;
-  text-align: center;
-  color: white;;
-  float: left;
-  margin: .5rem;
-}
-.text-overlay {
-  position: absolute;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2rem;
+  width: 550px;
+  padding: 0;
+  max-width:980px;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
-.photo-album-list {
-  border: 3px black solid;
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
 }
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev {
+  left: 8px;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.caption {
+  color: #f2f2f2;
+  font-size: 65px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+}
+
+/* .slide-show-container:not(:first-child) {
+  display: none;
+} */
+
+/* .fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+} */
+
+/* .photo-album-list {
+  border: 3px black solid;
+} */
 
 .album-photo {
   height: 400px;
 }
+
+.login-error-msg {
+  color: red;
+  margin-top: 1rem;
+}
+
+.displayed {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+

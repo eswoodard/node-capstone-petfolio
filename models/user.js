@@ -43,6 +43,12 @@ userSchema.pre('save', function (next) {
   });
 });
 
+userSchema.methods.serialize = function() {
+  return {
+    id: this._id,
+    username: this.username,
+  };
+ };
 
 userSchema.methods.comparePassword = function (candidatePassword, password) {
   return bcrypt.compareSync(candidatePassword, password);
