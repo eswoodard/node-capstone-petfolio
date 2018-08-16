@@ -21,19 +21,14 @@ const upload = multer({ storage });
 
 
 router.get('/', jwtAuth, (req, res) => {
-  // console.log(req.user.id);
   Pets.find({ petOwner: req.user.id })
     .then((pets) => {
-      // console.log(pets);
       res.status(200).json({ pets });
     })
     .catch(err => handleError(res, err));
 });
 
 router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
-  // console.log(req.user);
-  // console.log(req.body);
-  // console.log(req.file);
   const petOwner = req.user.id;
   const petName = req.body.petName;
   const petGender = req.body.petGender;
@@ -51,7 +46,6 @@ router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
   if (req.file) {
     avatar = { path: req.file.path };
   }
-  // console.log(req.body);
   Pets.create({
     petOwner,
     petName,
@@ -76,8 +70,6 @@ router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
 });
 
 router.put('/:id', jwtAuth, (req, res) => {
-  // console.log(req.params.id);
-  // console.log(req.body);
   const updated = {};
   const updateableFields = ['petName', 'petGender', 'petSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'avatar'];
   updateableFields.forEach((field) => {
@@ -93,7 +85,6 @@ router.put('/:id', jwtAuth, (req, res) => {
 });
 
 router.delete('/:id', jwtAuth, (req, res) => {
-  // console.log(req.params.id);
   Pets.findByIdAndRemove(req.params.id)
     .then(() => {
       console.log(`Deleted Pet with id \`${req.params.id}\``);
@@ -102,8 +93,6 @@ router.delete('/:id', jwtAuth, (req, res) => {
 });
 
 router.post('/album', jwtAuth, upload.array('photos', 50), (req, res) => {
-  // console.log(req);
-  // console.log(req.files);
   const pet = req.body.pet;
   const albumTitle = req.body.albumTitle;
   const albumPhotos = { path: req.files.path };

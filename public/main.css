@@ -130,11 +130,8 @@ button, .new-account-btn, .add-profile-btn, .edit-pet-btn {
 }
 
 .edit-pet-btn {
-  /* width: 175px; */
-  /* height: 50px; */
   margin: auto;
   margin-top: 35px;
-  /* background: rgba(92, 162, 212, .8); */
   border: black 1px solid;
 }
 
@@ -155,8 +152,6 @@ button, .new-account-btn, .add-profile-btn, .edit-pet-btn {
 
     /* ////forms//// */
 
-    /* .sign-in, .create-account, .create-profile, .edit-pet, .update-profile */
-
  .form-container {
 	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
 	margin: auto;
@@ -169,7 +164,6 @@ button, .new-account-btn, .add-profile-btn, .edit-pet-btn {
 	left: 0;
   top: 0;
   text-align: center;
-  /* overflow-y: scroll; */
 
 }
 .create-account {
@@ -189,7 +183,6 @@ button, .new-account-btn, .add-profile-btn, .edit-pet-btn {
   width: 250px;
 }
 
-
 form {
   padding-top: 1rem;
 }
@@ -208,18 +201,6 @@ legend {
     padding-top: 1rem;
 }
 
-/* .form-container input {
-  width: 250px;
-  height: 40px;
-  display: inline-block;
-  text-align: center;
-  background: #eee;
-  padding: 1rem 2rem;
-  outline: none;
-  border: none;
-  color: #222;
-} */
-
 input {
   width: 250px;
   height: 40px;
@@ -234,16 +215,9 @@ input {
   margin: 8px 0;
 }
 
-
 ::placeholder{color: #999;}
   #container input:focus {background: rgba(0, 0, 333, 0.10);}
 
-/* input {
-  width: 40%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  outline: none;
-} */
 input:focus {
   border: 3px solid #999;
 }
@@ -398,31 +372,6 @@ h2, .app-info-text {
   width: 100%;
   text-align: center;
 }
-
-/* .slide-show-container:not(:first-child) {
-  display: none;
-} */
-
-/* .fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@-webkit-keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
-
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-} */
-
-/* .photo-album-list {
-  border: 3px black solid;
-} */
 
 .album-photo {
   height: 400px;

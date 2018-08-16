@@ -310,6 +310,13 @@ function handleCreateAlbumButtonClick() {
   });
 }
 
+function handleAppLoad() {
+  renderLandingPage();
+  bindEventListeners();
+}
+
+$(handleAppLoad);
+
 // ***feature to be added at a later date***
 
 // function displayPhotoAlbum(profileInfo) {
@@ -325,11 +332,3 @@ function handleCreateAlbumButtonClick() {
 //     $('.app-body').html(photos);
 //   });
 // }
-
-
-function handleAppLoad() {
-  renderLandingPage();
-  bindEventListeners();
-}
-
-$(handleAppLoad);

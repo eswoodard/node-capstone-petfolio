@@ -96,7 +96,6 @@ function renderPetList() {
 
 </div>
     `);
-  console.log(petList);
   $('.app-body').append(petList);
 }
 

@@ -38,7 +38,6 @@ function seedPetData() {
       petAvatar: faker.internet.avatar(),
     });
   }
-  // console.log('$$$$', petSeedData);
   return Pets.insertMany(petSeedData);
 }
 
@@ -63,20 +62,15 @@ function generateUserData() {
 
 let token;
 
-
 function authenticateUser() {
-  // console.log('xyz');
-  // console.log(app);
   return chai.request(app)
     .post('/auth/login')
     .send({ username: 'admin', password: 'password' })
     .then((res) => {
       token = res.body.profile.token;
     })
-
     .catch(err => console.log(err));
 }
-
 
 describe('Petfolio API resource', () => {
   before(() => runServer(TEST_DATABASE_URL));
@@ -87,7 +81,6 @@ describe('Petfolio API resource', () => {
   ])
     .then(([users]) => {
       user = users[0];
-      // token = jwt.sign({ user }, JWT_SECRET);
     }));
 
   afterEach(() => tearDownDb());
@@ -123,7 +116,6 @@ describe('Petfolio API resource', () => {
           .set('Accept', 'application/json')
           .set('Authorization', `Bearer ${token}`)
           .then((res) => {
-          // console.log(res);
             expect(res).to.have.status(200);
             expect(res).to.be.json;
             expect(res.body).to.be.a('array');
@@ -253,7 +245,6 @@ describe('Petfolio API resource', () => {
         .findOne()
         .then((_pets) => {
           deletedPet = _pets;
-          console.log('!!!!', deletedPet);
           return chai.request(app)
             .delete(`/pets/${deletedPet._id}`)
             .set('Authorization', `Bearer ${token}`);
