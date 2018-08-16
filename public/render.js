@@ -71,7 +71,7 @@ function renderMainPage() {
   // console.log(user);
   const mainPage = `
     <div class="main-page">
-      <p>Welcome to your pet page!  You can add a new pet by pressing the "Add a Pet" button.  Scroll through your existing pets and click on one to see their information or add a photo album.   </p>
+      <p>Welcome to your pet page!  A snapshot view of your pet is below.  Click the "Edit Pet" button to update your pet's information or add a photo album (coming soon!). You can add a new pet by clicking the "Add a Pet" button.</p>
       <button class="add-profile-btn" type="submit">Add Pet</button>
     </div>
     `;
@@ -80,9 +80,9 @@ function renderMainPage() {
 
 function renderPetList() {
   const petList = STORE.pets.map(pet => `
-  <div class="pet-profile-card box-effect">
+  <div class="pet-profile-card box-effect pet" name="${pet.petName}">
   <div class="card-left">
-    <img src="${pet.avatar.path.slice(7)}" class="profile-avatar">
+    <img src="${pet.avatar ? pet.avatar.path.slice(7) : '/images/paw-print.png'}" class="profile-avatar">
   </div>
   <div class="card-right">
     <h2>${pet.petName}</h2>
@@ -99,7 +99,7 @@ function renderPetList() {
       <li>Medications: ${pet.petMedications}</li>
       <li>Additional Information: ${pet.additionalInformation}</li>
     </ul>
-    <button class="create-album-btn">Create Album</button>
+    <button class="edit-pet-btn">Edit Pet</button>
   </div>
 </div>
 <div class="photo-album-list">
@@ -127,55 +127,78 @@ function renderCreateProfileForm() {
       <input type="text" id="adopted-date" placeholder="Enter Date Adopted" name="dateAdopted" aria-label="date-adopted"></br>
       <input type="text" id="petVet" placeholder="Enter Vet Name" name="petVet" aria-label="pet-vet"></br>
       <input type="text" id="petAllergies" placeholder="Enter Pet Allergies" name="petAllergies" aria-label="pet-allergies"></br>
-      <input type="text" id="petMedicalCondition"placeholder="Enter Medical Conditions" name="petMedicalCondition" aria-label="medical-conditions"></br>
-      <input type="text" id="petMedications"placeholder="Enter Medications" name="petMedications" aria-label="medications"></br>
+      <input type="text" id="petMedicalCondition" placeholder="Enter Medical Conditions" name="petMedicalCondition" aria-label="medical-conditions"></br>
+      <input type="text" id="petMedications" placeholder="Enter Medications" name="petMedications" aria-label="medications"></br>
       <input type="text" id="additionalInformation" placeholder="Enter Additional Information" name="additionalInformation" aria-label="additional-information"></br>
       <label for="add-avatar">Upload Photo:</label></br>
       <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar"></br>
       <button class="submit-profile-btn">Submit</button></br>
       <button class="cancel-btn cancel-profile-btn">Cancel</button>
     </form>
+  </fieldset>
 </div>
   `;
   $('.app-body').html(createProfileForm);
   $('.return-to-petlist').show();
 }
 
+function renderEditPetForm() {
+  const editPetForm = `
+  <div class="edit-pet form-container">
+    <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
+    <h2>Edit Pet Profile</h2>
+    <div class="edit-button-container">
+      <button class="update-pet-link edit-button">Update Pet Info</button>
+      <button class="delete-pet-link edit-button">Delete Pet Profile</button>
+      <button class="create-album-button edit-button">Create Photo Album</button></br>
+      <button class="cancel-btn cancel-profile-btn">Cancel</button>
+    </div>
+  </div>
+    `;
+  $('.app-body').html(editPetForm);
+}
+
 
 function renderUpdateForm() {
   const updateProfileForm = `
-    <div class="update-profile">
+  <div class="update-profile form-container">
+  <fieldset>
+    <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
     <h2>Update Pet Profile</h2>
-      <form action="#" name="profile" class="update-profile-form">
-        <label for="petName">Pet Name:</label>
-        <input type="text" id="petName" placeholder="Spot" name="petName" value="${STORE.currentPet.petName}"></br>
-        <label for="gender">Gender:</label>
-        <input type="text" id="petGender" placeholder="Male" name="petGender" value="${STORE.currentPet.petGender}"></br>
-        <label for="type">Species:</label>
-        <input type="text" id="petSpecies" placeholder="dog" name="petSpecies" value="${STORE.currentPet.petSpecies}"></br>
-        <label for="color">Color:</label>
-        <input type="text" id="petColor" placeholder="brown" name="petColor"value="${STORE.currentPet.petColor}"></br>
-        <label for="birthday">Birthday:</label>
-        <input type="date" id="petBirthday" placeholder="Aug 25" name="petBirthday"value="${STORE.currentPet.petBirthday}"></br>
-        <label for="age">Age</label>:</label>
-        <input type="text" id="petAge" placeholder="12" name="petAge"value="${STORE.currentPet.petAge}"></br>
-        <label for="adopted-date">Date Adopted:</label>
-        <input type="date" id="adopted-date" placeholder="Aug 25" name="dateAdopted"value="${STORE.currentPet.dateAdopted}"></br>
-        <label for="vet">Vet:</label>
-        <input type="text" id="petVet" placeholder="Dr. Jones" name="petVet"value="${STORE.currentPet.petVet}"></br>
-        <label for="allergies">Allergies:</label>
-        <input type="text" id="petAllergies" placeholder="Chicken" name="petAllergies"value="${STORE.currentPet.petAllergies}"></br>
-        <label for="medical-condition">Medical Condition:</label>
-        <input type="text" id="petMedicalCondition"placeholder="Diabetes" name="petMedicalCondition"value="${STORE.currentPet.petMedicalCondition}"></br>
-        <label for="medications">Medications:</label>
-        <input type="text" id="petMedications"placeholder="Insulin" name="petMedications"value="${STORE.currentPet.petMedications}"></br>
-        <label for="additional-info">Additional Information:</label>
-        <input type="text" id="additionalInformation" placeholder="More info" name="additionalInformation"value="${STORE.currentPet.additionalInformation}"></br>
-        <label for="add-avatar">Upload Avatar:</label>
-        <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar"value="${STORE.currentPet.petAvatar}"></br>
-        <button>Submit</button>
-      </form>
-    </div>
+    <legend>Update Pet Profile Form</legend>
+    <form action="#" name="profile" class="update-profile-form">
+      <label>Pet Name:</label></br>
+      <input type="text" id="petName" placeholder="Enter Pet Name" name="petName" aria-label"pet-name" value="${STORE.currentPet.petName}"></br>
+      <label>Pet Gender:</label></br>
+      <input type="text" id="petGender" placeholder="Enter Pet Gender" name="petGender" aria-label="pet-gender" value="${STORE.currentPet.petGender}"></br>
+      <label>Pet Species:</label></br>
+      <input type="text" id="petSpecies" placeholder="Enter Pet Species" name="petSpecies" aria-label="pet-species" value="${STORE.currentPet.petSpecies}"></br>
+      <label>Pet Color:</label></br>
+      <input type="text" id="petColor" placeholder="Enter Pet Color" name="petColor" aria-label="pet-color" value="${STORE.currentPet.petColor}"></br>
+      <label>Pet Birthday:</label></br>
+      <input type="text" id="petBirthday" placeholder="Enter Pet Birthday" name="petBirthday" aria-label="pet-birthday" value="${STORE.currentPet.petBirthday}"></br>
+      <label>Pet Age:</label></br>
+      <input type="text" id="petAge" placeholder="Enter Pet Age" name="petAge" aria-label="pet-age" value="${STORE.currentPet.petAge}"></br>
+      <label>Adopted Date:</label></br>
+      <input type="text" id="adopted-date" placeholder="Enter Date Adopted" name="dateAdopted" aria-label="date-adopted" value="${STORE.currentPet.dateAdopted}"></br>
+      <label>Vet Name:</label></br>
+      <input type="text" id="petVet" placeholder="Enter Vet Name" name="petVet" aria-label="pet-vet" value="${STORE.currentPet.petVet}"></br>
+      <label>Pet Allergies:</label></br>
+      <input type="text" id="petAllergies" placeholder="Enter Pet Allergies" name="petAllergies" aria-label="pet-allergies" value="${STORE.currentPet.petAllergies}"></br>
+      <label>Medical Conditions:</label></br>
+      <input type="text" id="petMedicalCondition" placeholder="Enter Medical Conditions" name="petMedicalCondition" aria-label="medical-conditions" value="${STORE.currentPet.petMedicalCondition}"></br>
+      <label>Medications:</label></br>
+      <input type="text" id="petMedications" placeholder="Enter Medications" name="petMedications" aria-label="medications" value="${STORE.currentPet.petMedications}"></br>
+      <label>Additional Information:</label></br>
+      <input type="text" id="additionalInformation" placeholder="Enter Additional Information"   aria-label="additional-information" name="additionalInformation"value="${STORE.currentPet.additionalInformation}"></br>
+      <label for="add-avatar">Upload Avatar:</label></br>
+      <input type="file" id="petAvatar" placeholder="Add Avatar" name="avatar"value="${STORE.currentPet.petAvatar}"></br>
+      <button>Submit</button></br>
+      <button class="cancel-btn cancel-update-btn">Cancel</button>
+    </form>
+    </fieldset>
+  </div>
+
   `;
   $('.app-body').html(updateProfileForm);
   $('.return-to-petlist').show();

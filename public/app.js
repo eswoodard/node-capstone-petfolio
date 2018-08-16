@@ -107,6 +107,7 @@ function submitNewAccountInfo() {
     };
     $.ajax(settings).done((response) => {
       localStorage.setItem('jwToken', response.token);
+      window.initialToken = response.token;
       console.log(response);
       renderMainPage();
       $('body').removeClass('bg').addClass('bg2');
@@ -143,7 +144,7 @@ function bindEventListeners() {
     renderCreateProfileForm();
   });
   submitCreateProfileForm();
-  $('.nav-link').on('click', function (event) {
+  $(document).on('click', '.nav-link', function (event) {
     event.preventDefault();
     const path = $(this).attr('href');
     renderPath(path);
@@ -162,6 +163,10 @@ function bindEventListeners() {
     event.preventDefault();
     renderMainPage();
     renderPetList();
+  });
+  $(document).on('click', '.cancel-update-btn', (event) => {
+    event.preventDefault();
+    renderEditPetForm();
   });
 
   submitLogInForm();
@@ -204,6 +209,8 @@ function submitCreateProfileForm() {
 
     const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
+    window.createToken = token;
+    console.log(token);
     const form = new FormData();
     form.append('petName', $('#petName').val());
     form.append('petGender', $('#petGender').val());
@@ -256,7 +263,8 @@ function handlePetProfileUpdate() {
 }
 
 function handlePetProfileDeleteLink() {
-  $('.delete-pet-link').on('click', (event) => {
+  $(document).on('click', '.delete-pet-link', (event) => {
+    console.log('hello');
     event.preventDefault();
     const petId = STORE.currentPet._id;
     const token = localStorage.getItem('jwToken');
@@ -277,19 +285,24 @@ function handlePetProfileDeleteLink() {
     };
 
     $.ajax(settings).done((response) => {
+      findByPetNameAndReplace(response);
       renderMainPage();
+      renderPetList();
     });
   });
 }
 
 function handleProfileButtonClick() {
   $(document).on('click', '.pet', function (event) {
+    event.preventDefault();
     console.log('pet clicked');
     const petName = $(this).attr('name');
+    console.log(petName);
     STORE.currentPet = getPetByPetname(petName);
     console.log(STORE.currentPet);
-    renderPetProfile();
-    $('.petlist-link').show();
+    // renderPetProfile();
+    // $('.petlist-link').show();
+    renderEditPetForm();
   });
 }
 

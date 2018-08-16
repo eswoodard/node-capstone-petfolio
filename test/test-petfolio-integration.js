@@ -3,24 +3,22 @@ const chaiHttp = require('chai-http');
 const faker = require('faker');
 const mongoose = require('mongoose');
 
+// const jwtAuth = passport.authenticate('jwt', { session: false });
+
 const expect = chai.expect;
 
 const User = require('../models/user');
 const Pets = require('../models/pets');
 const { app, runServer, closeServer } = require('../server');
-const { TEST_DATABASE_URL } = require('../config');
+const { TEST_DATABASE_URL, JWT_SECRET } = require('../config');
+
+const userCredentials = {
+  username: 'admin',
+  password: 'password',
+};
 
 chai.use(chaiHttp);
 
-// it('returned status 200 and type html', () => {
-//   chai.request('http://localhost:8080')
-//     .get('/')
-//     .end((req, res) => {
-//       expect(res).to.have.status(200);
-//       expect(res).to.have.header('content-type', 'text/html');
-//       done();
-//     });
-// });
 
 function seedPetData() {
   console.info('seeding pet info');
@@ -28,7 +26,7 @@ function seedPetData() {
 
   for (let i = 1; i <= 10; i++) {
     petSeedData.push({
-      petOwner: faker.random.number(),
+      // petOwner: faker.random.number(),
       petName: faker.name.firstName(),
       petGender: faker.hacker.noun(),
       petSpecies: faker.hacker.noun(),
@@ -52,6 +50,18 @@ function tearDownDb() {
   return mongoose.connection.dropDatabase();
 }
 
+// const authenticatedUser = request.agent(app);
+// before((done) => {
+//   authenticatedUser
+//     .post('/login')
+//     .send(userCredentials)
+//     .end((err, response) => {
+//       expect(response.statusCode).to.equal(200);
+//       done();
+//     });
+// });
+
+
 describe('Petfolio API resource', () => {
   before(() => runServer(TEST_DATABASE_URL));
 
@@ -61,10 +71,66 @@ describe('Petfolio API resource', () => {
 
   after(() => closeServer());
 
+  describe('GET endpoint', () => {
+    it('should return all existing pet profiles', () => {
+      let res;
+      return chai.request(app)
+        .get('/pets')
+        .then((_res) => {
+          res = _res;
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.lengthOf.at.least(1);
+          return Pets.count();
+        })
+        .then((count) => {
+          expect(res.body).to.have.lengthOf(count);
+        });
+    });
+
+    it('should return pet profiles with right fields', () => {
+      let resPets;
+      return chai.request(app)
+        .get('/pets')
+        .then((res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('array');
+          expect(res.body).to.have.lengthOf.at.least(1);
+
+          res.body.forEach((pets) => {
+            expect(pets).to.be.a('object');
+            expect(pets).to.include.keys(
+              'avatar', '_id', 'petName', 'petGender', 'PetSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation',
+            );
+          });
+          resPets = res.body[0];
+          return Pets.findById(resPets.id);
+        })
+        .then((pets) => {
+          expect(res.body.id).to.not.be.null;
+          // expect(res.body.petOwner).to.equal(pets.petOwner);
+          expect(res.body.petName).to.equal(pets.petName);
+          expect(res.body.petGender).to.equal(pets.petGender);
+          expect(res.body.petSpecies).to.equal(pets.petSpecies);
+          expect(res.body.petColor).to.equal(pets.petColor);
+          expect(res.body.petBirthday).to.equal(pets.petBirthday);
+          expect(res.body.petAge).to.equal(pets.petAge);
+          expect(res.body.dateAdopted).to.equal(pets.dateAdopted);
+          expect(res.body.petVet).to.equal(pets.petVet);
+          expect(res.body.petAllergies).to.equal(pets.petAllergies);
+          expect(res.body.petMedicalCondition).to.equal(pets.petMedicalCondition);
+          expect(res.body.petMedications).to.equal(pets.petMedications);
+          expect(res.body.additionalInformation).to.equal(pets.additionalInformation);
+          expect(res.body.petAvatar).to.equal(pets.avatar);
+        });
+    });
+  });
+
+
   describe('Add Pet endpoint', () => {
     it('should add a new pet profile', () => {
       const newPetProfile = {
-        petOwner: faker.random.number(),
+        // petOwner: faker.random.number(),
         petName: faker.name.firstName(),
         petGender: faker.hacker.noun(),
         petSpecies: faker.hacker.noun(),
@@ -87,10 +153,10 @@ describe('Petfolio API resource', () => {
           expect(res).to.be.json;
           expect(res.body).to.be.a('object');
           expect(res.body).to.include.keys(
-            'petOwner', 'petName', 'petGender', 'PetSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'petAvatar',
+            'petName', 'petGender', 'PetSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'avatar',
           );
           expect(res.body.id).to.not.be.null;
-          expect(res.body.petOwner).to.equal(newPetProfile.petOwner);
+          // expect(res.body.petOwner).to.equal(newPetProfile.petOwner);
           expect(res.body.petName).to.equal(newPetProfile.petName);
           expect(res.body.petGender).to.equal(newPetProfile.petGender);
           expect(res.body.petSpecies).to.equal(newPetProfile.petSpecies);
@@ -107,7 +173,7 @@ describe('Petfolio API resource', () => {
           return Pets.findById(res.body.id);
         })
         .then((pets) => {
-          expect(pets.petOwner).to.equal(newPetProfile.petOwner);
+          // expect(pets.petOwner).to.equal(newPetProfile.petOwner);
           expect(pets.petName).to.equal(newPetProfile.petName);
           expect(pets.petGender).to.equal(newPetProfile.petGender);
           expect(pets.petSpecies).to.equal(newPetProfile.petSpecies);

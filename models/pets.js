@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const petSchema = new mongoose.Schema({
 
-  petOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  petOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
   petName: {
     type: String,

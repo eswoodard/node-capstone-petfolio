@@ -47,7 +47,10 @@ router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
   const petMedicalCondition = req.body.petMedicalCondition;
   const petMedications = req.body.petMedications;
   const additionalInformation = req.body.additionalInformation;
-  const avatar = { path: req.file.path };
+  let avatar = null;
+  if (req.file) {
+    avatar = { path: req.file.path };
+  }
   console.log(req.body);
   Pets.create({
     petOwner,
@@ -83,22 +86,8 @@ router.put('/:id', jwtAuth, (req, res) => {
     }
   });
   Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-    .then((updatedPets) => {
-      res.status(200).json({
-        petName: updatedPets.petName,
-        petGender: updatedPets.petGender,
-        petSpecies: updatedPets.petSpecies,
-        petColor: updatedPets.petColor,
-        petBirthday: updatedPets.petBirthday,
-        petAge: updatedPets.petAge,
-        dateAdopted: updatedPets.dateAdopted,
-        petVet: updatedPets.petVet,
-        petAllergies: updatedPets.petAllergies,
-        petMedicalCondition: updatedPets.petMedicalCondition,
-        petMedications: updatedPets.petMedications,
-        additionalInformation: updatedPets.additionalInformation,
-        avatar: updatedPets.avatar,
-      });
+    .then((updatedPet) => {
+      res.status(200).json(updatedPet);
     })
     .catch(err => res.json({ message: err }));
 });
