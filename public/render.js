@@ -7,7 +7,11 @@ function renderLandingPage() {
         <div class="account-btns">
           <button class="new-account-btn">Get Started</button>
         </div>
+      <div class="demo">
+        <p>Demo Username: demo</p>
+        <p>Demo Password: password</p>
       </div>
+     </div>
     </div>
    `;
   $('.app-body').html(landingPage);
@@ -39,6 +43,7 @@ function renderCreateAccountForm() {
       <img alt="petfolio-logo" src="/images/color_logo_transparent.png" class="logo">
       <legend>Sign Up Form</legend>
       <h2>Create Account</h2>
+      <p class="create-account-error-msg" style="display: none">Uh-oh! Username already exists!  Please choose another Username.</p>
       <form class="submit-account-form">
         <input type="text" id="firstName" placeholder="Enter First Name" name="firstName" aria-label="first-name"required></br>
         <input type="text" id="lastName" placeholder="Enter Last Name"  name="lastName" aria-label="last-name" required></br>
@@ -53,22 +58,7 @@ function renderCreateAccountForm() {
   $('.app-body').html(createAcountForm);
 }
 
-// function renderWelcomePage(response) {
-//   console.log('renderWelcomePage ran');
-//   console.log(response);
-//   const welcomePage = `
-//     <div class="welcome-page">
-//       <h3>Welcome ${response.user.firstName}!</h3>
-//       <p>To add a pet, click on the Add Pet button below.</p>
-//       <div></br>
-//       <button class="add-profile-btn" type="submit">Add Pet</button>
-//     </div>
-//  `;
-//   $('.app-body').html(welcomePage);
-// }
-
 function renderMainPage() {
-  // console.log(user);
   const mainPage = `
     <div class="main-page">
       <p>Welcome to your pet page!  A snapshot view of your pet is below.  Click the "Edit Pet" button to update your pet's information or add a photo album (coming soon!). You can add a new pet by clicking the "Add a Pet" button.</p>
@@ -204,19 +194,30 @@ function renderUpdateForm() {
   $('.return-to-petlist').show();
 }
 
-function renderPhotoUploadForm() {
-  const photoUploadForm = `
-  <form name="photo-upload" class = "photo-upload">
-    <label for="album-name">Album Name</label>
-    <input type="text" id="album-name" name="album-name"></br>
-    <label for="photo-upload">Upload Photos</label>
-    <input type="file"  id="pet-photos" name="pet-photos"></br>
-    <button>Upload Now</button>`;
-  $('.app-body').html(photoUploadForm);
-}
-
 function renderPhotoAlbum() {
   const photoAlbum = `
-  <div class="photo-album">
-    `;
+    <div class ="future-feature">
+      <p>This feature will be added in the next release.  Thank you for your patience.</p>
+      <button class="cancel-btn cancel-album-btn">Cancel</button>
+    </div>`;
+  $('.app-body').html(photoAlbum);
 }
+
+// ****Future Feature to be added later****
+
+// function renderPhotoUploadForm() {
+//   const photoUploadForm = `
+//   <form name="photo-upload" class = "photo-upload">
+//     <label for="album-name">Album Name</label>
+//     <input type="text" id="album-name" name="album-name"></br>
+//     <label for="photo-upload">Upload Photos</label>
+//     <input type="file"  id="pet-photos" name="pet-photos"></br>
+//     <button>Upload Now</button>`;
+//   $('.app-body').html(photoUploadForm);
+// }
+
+// function renderPhotoAlbum() {
+//   const photoAlbum = `
+//   <div class="photo-album">
+//     `;
+// }

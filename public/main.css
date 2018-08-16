@@ -116,8 +116,6 @@ button, .new-account-btn, .add-profile-btn, .edit-pet-btn {
   width: 250px;
   height: 60px;
   font-size: 1.3rem;
-  background: rgba(177, 173, 170, 0.70);
-  border: rgba(177, 173, 170, 0.70) solid 1px;
 }
 
 .add-profile-btn {
@@ -175,7 +173,7 @@ button, .new-account-btn, .add-profile-btn, .edit-pet-btn {
 
 }
 .create-account {
-  height: 450px;
+  height: 550px;
   width: 300px;
 }
 
@@ -430,7 +428,27 @@ h2, .app-info-text {
   height: 400px;
 }
 
-.login-error-msg {
+.future-feature {
+  text-align: center;
+}
+
+.future-feature p{
+
+margin-top: 200px;
+font-size: 16px;
+}
+
+.cancel-album-btn {
+  margin-top: 40px;
+}
+
+.demo {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.login-error-msg, .create-account-error-msg {
   color: red;
   margin-top: 1rem;
 }

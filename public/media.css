@@ -29,6 +29,7 @@
   }
   .edit-pet-btn {
     margin: auto;
+    margin-top: 25px;
   }
 
 }
@@ -49,7 +50,7 @@
     font-size: 20px;
   }
   .create-account {
-    height: 600px;
+    height: 750px;
     width: 450px;
     margin: 20% auto;
   }
@@ -88,7 +89,8 @@
   }
   .edit-pet-btn {
     margin: auto;
-    margin-top: 15px;
+    margin-top: 20px;
+
   }
   .create-profile, .update-profile {
     width: 700px;
@@ -97,6 +99,9 @@
     width: 300px;
     height: 60px;
     transition: 0.3s linear;
+  }
+  future-feature p {
+    font-size: 20px;
   }
 
 }
@@ -110,7 +115,6 @@
   }
 
   .create-account {
-    height: 700px;
     width: 580px;
   }
 
@@ -192,6 +196,9 @@
   }
   .create-account {
     width: 600px;
+  }
+  .edit-pet-btn {
+    margin: auto;
   }
 
 

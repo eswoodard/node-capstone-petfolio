@@ -110,8 +110,13 @@ function submitNewAccountInfo() {
       window.initialToken = response.token;
       console.log(response);
       renderMainPage();
+      renderNavLinks(true);
       $('body').removeClass('bg').addClass('bg2');
-    });
+    })
+      .fail((error) => {
+        console.log(error);
+        $('.create-account-error-msg').show();
+      });
   });
 }
 
@@ -167,6 +172,11 @@ function bindEventListeners() {
   $(document).on('click', '.cancel-update-btn', (event) => {
     event.preventDefault();
     renderEditPetForm();
+  });
+  $(document).on('click', '.create-album-button', (event) => {
+    console.log('clicked');
+    event.preventDefault();
+    renderPhotoAlbum();
   });
 
   submitLogInForm();
@@ -318,40 +328,21 @@ function handleCreateAlbumButtonClick() {
   });
 }
 
-// function slideShow() {
-//   let slideIndex = 1;
-//   showSlides(slideIndex);
+// ***feature to be added at a later date***
 
-//   function plusSlides(n) {
-//     showSlides(slideIndex += n);
-//   }
-
-//   function showSlides(n) {
-//     let i;
-//     const slides = document.getElementsByClassName('pet');
-//     if (n > slides.length) { slideIndex = 1; }
-//     if (n < 1) { slideIndex = slides.length; }
-//     for (i = 0; i < slides.length; i++) {
-//       slides[i].style.display = 'none';
-//     }
-//     slides[slideIndex - 1].style.display = 'block';
-//   }
+// function displayPhotoAlbum(profileInfo) {
+//   $('.pet-album').on('click', (event) => {
+//     event.preventDefault();
+//     const item = profileInfo.media;
+//     console.log(item);
+//     const photos = item.map(items => `
+//     <div class="photo-album">
+//       <img class="album-photo" src="${items}">
+//     </div>`);
+//     console.log(photos);
+//     $('.app-body').html(photos);
+//   });
 // }
-
-
-function displayPhotoAlbum(profileInfo) {
-  $('.pet-album').on('click', (event) => {
-    event.preventDefault();
-    const item = profileInfo.media;
-    console.log(item);
-    const photos = item.map(items => `
-    <div class="photo-album">
-      <img class="album-photo" src="${items}">
-    </div>`);
-    console.log(photos);
-    $('.app-body').html(photos);
-  });
-}
 
 
 function handleAppLoad() {
