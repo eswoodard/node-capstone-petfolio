@@ -269,6 +269,8 @@ function submitCreateProfileForm() {
 function findByPetNameAndReplace(updatedPet) {
   const index = STORE.pets.map(pet => pet.petName).indexOf(STORE.currentPet.petName);
   STORE.pets[index] = updatedPet;
+  renderMainPage();
+  renderPetList();
 }
 
 // displays the update pet profile form
@@ -301,8 +303,8 @@ function handlePetProfileDeleteLink() {
 
     $.ajax(settings).done((response) => {
       findByPetNameAndReplace(response);
-      renderMainPage();
-      renderPetList();
+      // renderMainPage();
+      // renderPetList();
     });
   });
 }
