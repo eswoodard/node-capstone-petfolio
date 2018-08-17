@@ -219,10 +219,9 @@ function submitUpdateForm() {
   });
 }
 
-// POST request to API to create new pet profile
+// POST request to API to create new pet profile and return confirmation
 function submitCreateProfileForm() {
   $(document).on('click', '.submit-profile-btn', (event) => {
-    // will sent post request to API, create pet profile, return confirmation
     event.preventDefault();
 
     const file = document.getElementById('petAvatar').files[0];
