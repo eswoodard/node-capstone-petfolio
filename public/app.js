@@ -21,7 +21,7 @@ function retrievePetDataFromApi() {
   const settings = {
     async: true,
     crossDomain: true,
-    url: 'http://localhost:8080/pets',
+    url: '/pets',
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ function getUserByUsername(user, password) {
       accept: 'application/json; odata=verbose',
     },
     type: 'POST',
-    url: 'http://localhost:8080/auth/login',
+    url: '/auth/login',
   };
   $.ajax(settings).done((response) => {
     $('#userName').val('');
@@ -92,7 +92,7 @@ function submitNewAccountInfo() {
     const settings = {
       async: true,
       crossDomain: true,
-      url: 'http://localhost:8080/auth/signup',
+      url: '/auth/signup',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ function submitUpdateForm() {
     const settings = {
       async: true,
       crossDomain: true,
-      url: `http://localhost:8080/pets/${STORE.currentPet._id}`,
+      url: `/pets/${STORE.currentPet._id}`,
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -230,7 +230,7 @@ function submitCreateProfileForm() {
     const settings = {
       async: true,
       crossDomain: true,
-      url: 'http://localhost:8080/pets',
+      url: '/pets',
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
@@ -271,7 +271,7 @@ function handlePetProfileDeleteLink() {
     const settings = {
       async: true,
       crossDomain: true,
-      url: `http://localhost:8080/pets/${petId}`,
+      url: `/pets/${petId}`,
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
