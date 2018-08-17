@@ -4,6 +4,7 @@ const STORE = {
   albums: [],
 };
 
+// handles user login and passes values on to be authenticated
 function submitLogInForm() {
   $(document).on('submit', '.sign-in-form', (event) => {
     event.preventDefault();
@@ -16,6 +17,7 @@ function submitLogInForm() {
   });
 }
 
+// get request to retrieve stored pet data
 function retrievePetDataFromApi() {
   const token = localStorage.getItem('jwToken');
   const settings = {
@@ -34,6 +36,7 @@ function retrievePetDataFromApi() {
   });
 }
 
+// receives user data from login in and posts to API, receives token and sets it to local storage
 function getUserByUsername(user, password) {
   const body = {
     username: user,
@@ -62,6 +65,7 @@ function getUserByUsername(user, password) {
   });
 }
 
+// renders navigation links in the DOM
 function renderNavLinks(isLoggedIn) {
   if (isLoggedIn) {
     $('#logged-out-links').hide();
@@ -72,13 +76,14 @@ function renderNavLinks(isLoggedIn) {
   }
 }
 
+// displays account creation form
 function requestCreateAccountForm() {
   $(document).on('click', '.new-account-btn', (event) => {
     event.preventDefault();
     renderCreateAccountForm();
   });
 }
-
+// pulls user data from account creation form and posts to API for account creation
 function submitNewAccountInfo() {
   $(document).on('submit', '.submit-account-form', (event) => {
     // will sent post request to API, create new user account, return confirmation
@@ -115,6 +120,7 @@ function submitNewAccountInfo() {
   });
 }
 
+// handles navigation via nav links
 function renderPath(path) {
   switch (path) {
     case '/signin':
@@ -139,6 +145,7 @@ function renderPath(path) {
   }
 }
 
+// binds all event listeners
 function bindEventListeners() {
   $(document).on('click', '.add-profile-btn', (event) => {
     renderCreateProfileForm();
@@ -172,6 +179,12 @@ function bindEventListeners() {
     renderPhotoAlbum();
   });
 
+  $(document).on('click', 'cancel-album-btn', (event) => {
+    event.preventDefault();
+    renderMainPage();
+    renderPetList();
+  });
+
   submitLogInForm();
   submitNewAccountInfo();
   handleProfileButtonClick();
@@ -182,6 +195,7 @@ function bindEventListeners() {
   requestCreateAccountForm();
 }
 
+// submits pet update to API via PUT request and returns updated pet profile
 function submitUpdateForm() {
   $(document).on('submit', '.update-profile-form', function (event) {
     event.preventDefault();
@@ -204,6 +218,8 @@ function submitUpdateForm() {
     });
   });
 }
+
+// POST request to API to create new pet profile
 function submitCreateProfileForm() {
   $(document).on('click', '.submit-profile-btn', (event) => {
     // will sent post request to API, create pet profile, return confirmation
@@ -250,18 +266,20 @@ function submitCreateProfileForm() {
   });
 }
 
+// locates selected pet and updates STORE.currentPet
 function findByPetNameAndReplace(updatedPet) {
   const index = STORE.pets.map(pet => pet.petName).indexOf(STORE.currentPet.petName);
   STORE.pets[index] = updatedPet;
 }
 
+// displays the update pet profile form
 function handlePetProfileUpdate() {
   $(document).on('click', '.update-pet-link', (event) => {
     event.preventDefault();
     renderUpdateForm();
   });
 }
-
+// /sends DELETE request to API to remove selected pet
 function handlePetProfileDeleteLink() {
   $(document).on('click', '.delete-pet-link', (event) => {
     event.preventDefault();
@@ -290,6 +308,7 @@ function handlePetProfileDeleteLink() {
   });
 }
 
+// identifies selected pet and displays menu with profile edit options
 function handleProfileButtonClick() {
   $(document).on('click', '.pet', function (event) {
     event.preventDefault();
@@ -298,11 +317,11 @@ function handleProfileButtonClick() {
     renderEditPetForm();
   });
 }
-
+// locates selected pet in STORE
 function getPetByPetname(petName) {
   return STORE.pets.filter(pet => pet.petName === petName)[0];
 }
-
+// will display option to upload photo album once feature is added
 function handleCreateAlbumButtonClick() {
   $(document).on('click', '.create-album-btn', (event) => {
     event.preventDefault();
