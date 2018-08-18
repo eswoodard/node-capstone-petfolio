@@ -69,14 +69,18 @@ router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
     });
 });
 
-router.put('/:id', jwtAuth, (req, res) => {
+router.put('/:id', jwtAuth, upload.single('avatar'), (req, res) => {
   const updated = {};
-  const updateableFields = ['petName', 'petGender', 'petSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation', 'avatar'];
+  const updateableFields = ['petName', 'petGender', 'petSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation'];
   updateableFields.forEach((field) => {
     if (field in req.body) {
       updated[field] = req.body[field];
     }
   });
+  // let avatar = null;
+  if (req.file) {
+    updated['avatar'] = { path: req.file.path };
+  }
   Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
     .then((updatedPet) => {
       res.status(200).json(updatedPet);

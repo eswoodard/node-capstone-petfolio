@@ -199,17 +199,36 @@ function bindEventListeners() {
 function submitUpdateForm() {
   $(document).on('submit', '.update-profile-form', function (event) {
     event.preventDefault();
+    const petId = STORE.currentPet._id;
+    const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
-    const values = $(this).serializeArray();
+    const form= new FormData();
+    form.append('petName', $('#petName').val());
+    form.append('petGender', $('#petGender').val());
+    form.append('petSpecies', $('#petSpecies').val());
+    form.append('petColor', $('#petColor').val());
+    form.append('petBirthday', $('#petBirthday').val());
+    form.append('petAge', $('#petAge').val());
+    form.append('dateAdopted', $('#adopted-date').val());
+    form.append('petVet', $('#petVet').val());
+    form.append('petAllergies', $('#petAllergies').val());
+    form.append('petMedicalCondition', $('#petMedicalCondition').val());
+    form.append('petMedications', $('#petMedications').val());
+    form.append('additionalInformation', $('#additionalInformation').val());
+    form.append('avatar', file);
     const settings = {
       async: true,
       crossDomain: true,
-      url: `/pets/${STORE.currentPet._id}`,
+      url: `/pets/${petId}`,
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${token}`,
+        'Cache-Control': 'no-cache',
       },
-      data: values,
+      processData: false,
+      contentType: false,
+      enctype: 'multipart/form-data',
+      data: form,
     };
     $.ajax(settings).done((response) => {
       findByPetNameAndReplace(response);
@@ -226,7 +245,6 @@ function submitCreateProfileForm() {
 
     const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
-    window.createToken = token;
     const form = new FormData();
     form.append('petName', $('#petName').val());
     form.append('petGender', $('#petGender').val());
