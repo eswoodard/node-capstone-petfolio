@@ -13,8 +13,8 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 const storage = multer.diskStorage({
   destination: './public/photos',
   filename(req, file, callback) {
-    // callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
-    callback(null, `${file.fieldname}_${file.originalname}`);
+    callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
+    // callback(null, `${file.fieldname}_${file.originalname}`);
   },
 });
 
