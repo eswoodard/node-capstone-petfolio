@@ -147,7 +147,7 @@ function renderPath(path) {
 }
 
 function resetStore() {
-  STORE.pets = [];
+  STORE.pets = [],
   currentPet = null;
 }
 
@@ -203,7 +203,7 @@ function bindEventListeners() {
 
 // submits pet update to API via PUT request and returns updated pet profile
 function submitUpdateForm() {
-  $(document).on('submit', '.update-profile-form', function (event) {
+  $(document).on('submit', '.update-profile-form', (event) => {
     event.preventDefault();
     const petId = STORE.currentPet._id;
     const file = document.getElementById('petAvatar').files[0];
