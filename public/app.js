@@ -1,7 +1,7 @@
 const STORE = {
   pets: [],
   currentPet: null,
-  albums: [],
+  // albums: [],
 };
 
 // handles user login and passes values on to be authenticated
@@ -131,6 +131,7 @@ function renderPath(path) {
       break;
     case '/logout':
       localStorage.removeItem('jwToken');
+      resetStore();
       renderLandingPage();
       renderNavLinks(false);
       $('body').removeClass('bg2').addClass('bg');
@@ -143,6 +144,11 @@ function renderPath(path) {
     default:
       renderLandingPage();
   }
+}
+
+function resetStore() {
+  STORE.pets = [];
+  currentPet = null;
 }
 
 // binds all event listeners
