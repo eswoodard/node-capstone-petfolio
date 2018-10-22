@@ -208,7 +208,7 @@ function submitUpdateForm() {
     const petId = STORE.currentPet._id;
     const file = document.getElementById('petAvatar').files[0];
     const token = localStorage.getItem('jwToken');
-    const form= new FormData();
+    const form = new FormData();
     form.append('petName', $('#petName').val());
     form.append('petGender', $('#petGender').val());
     form.append('petSpecies', $('#petSpecies').val());
@@ -283,6 +283,7 @@ function submitCreateProfileForm() {
 
     $.ajax(settings).done((response) => {
       STORE.pets.push(response.pets);
+      console.log(STORE.pets);
       renderMainPage(response);
       renderPetList();
     });
