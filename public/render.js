@@ -72,7 +72,7 @@ function renderPetList() {
   const petList = STORE.pets.map(pet => `
   <div class="pet-profile-card box-effect pet" name="${pet.petName}">
   <div class="card-left">
-    <img src="${pet.avatar ? pet.avatar.path.slice(7) : '/images/paw-print.png'}" class="profile-avatar">
+    <img src="${pet.avatar ? pet.avatar.path : '/images/paw-print.png'}" class="profile-avatar">
   </div>
   <div class="card-right">
     <h2>${pet.petName}</h2>
