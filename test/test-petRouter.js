@@ -149,47 +149,47 @@ describe('Petfolio API resource', () => {
     });
   });
 
-  describe('Add POST endpoint', () => {
-    it('should add a new pet profile', () => {
-      const newPetProfile = {
-        petName: faker.name.firstName(),
-        petGender: faker.hacker.noun(),
-        petSpecies: faker.hacker.noun(),
-        petColor: faker.hacker.adjective(),
-        petBirthday: faker.lorem.words(),
-        petAge: faker.lorem.words(),
-        dateAdopted: faker.lorem.words(),
-        petVet: faker.company.companyName(),
-        petAllergies: faker.lorem.words(),
-        petMedicalCondition: faker.lorem.sentence(),
-        petMedications: faker.lorem.word(),
-        additionalInformation: faker.lorem.sentences(),
-      };
-      return chai.request(app)
-        .post('/pets')
-        .set('Authorization', `Bearer ${token}`)
-        .send(newPetProfile)
-        .then((res) => {
-          expect(res).to.have.status(201);
-          expect(res).to.be.json;
-          expect(res.body).to.be.a('object');
-          expect(res.body.id).to.not.be.null;
-          expect(res.body.pets.petName).to.equal(newPetProfile.petName);
-          expect(res.body.pets.petGender).to.equal(newPetProfile.petGender);
-          expect(res.body.pets.petSpecies).to.equal(newPetProfile.petSpecies);
-          expect(res.body.pets.petColor).to.equal(newPetProfile.petColor);
-          expect(res.body.pets.petBirthday).to.equal(newPetProfile.petBirthday);
-          expect(res.body.pets.petAge).to.equal(newPetProfile.petAge);
-          expect(res.body.pets.dateAdopted).to.equal(newPetProfile.dateAdopted);
-          expect(res.body.pets.petVet).to.equal(newPetProfile.petVet);
-          expect(res.body.pets.petAllergies).to.equal(newPetProfile.petAllergies);
-          expect(res.body.pets.petMedicalCondition).to.equal(newPetProfile.petMedicalCondition);
-          expect(res.body.pets.petMedications).to.equal(newPetProfile.petMedications);
-          expect(res.body.pets.additionalInformation).to.equal(newPetProfile.additionalInformation);
-          return Pets.findById(res.body.id);
-        });
-    });
-  });
+  // describe('Add POST endpoint', () => {
+  //   it('should add a new pet profile', () => {
+  //     const newPetProfile = {
+  //       petName: faker.name.firstName(),
+  //       petGender: faker.hacker.noun(),
+  //       petSpecies: faker.hacker.noun(),
+  //       petColor: faker.hacker.adjective(),
+  //       petBirthday: faker.lorem.words(),
+  //       petAge: faker.lorem.words(),
+  //       dateAdopted: faker.lorem.words(),
+  //       petVet: faker.company.companyName(),
+  //       petAllergies: faker.lorem.words(),
+  //       petMedicalCondition: faker.lorem.sentence(),
+  //       petMedications: faker.lorem.word(),
+  //       additionalInformation: faker.lorem.sentences(),
+  //     };
+  //     return chai.request(app)
+  //       .post('/pets')
+  //       .set('Authorization', `Bearer ${token}`)
+  //       .send(newPetProfile)
+  //       .then((res) => {
+  //         expect(res).to.have.status(201);
+  //         expect(res).to.be.json;
+  //         expect(res.body).to.be.a('object');
+  //         expect(res.body.id).to.not.be.null;
+  //         expect(res.body.pets.petName).to.equal(newPetProfile.petName);
+  //         expect(res.body.pets.petGender).to.equal(newPetProfile.petGender);
+  //         expect(res.body.pets.petSpecies).to.equal(newPetProfile.petSpecies);
+  //         expect(res.body.pets.petColor).to.equal(newPetProfile.petColor);
+  //         expect(res.body.pets.petBirthday).to.equal(newPetProfile.petBirthday);
+  //         expect(res.body.pets.petAge).to.equal(newPetProfile.petAge);
+  //         expect(res.body.pets.dateAdopted).to.equal(newPetProfile.dateAdopted);
+  //         expect(res.body.pets.petVet).to.equal(newPetProfile.petVet);
+  //         expect(res.body.pets.petAllergies).to.equal(newPetProfile.petAllergies);
+  //         expect(res.body.pets.petMedicalCondition).to.equal(newPetProfile.petMedicalCondition);
+  //         expect(res.body.pets.petMedications).to.equal(newPetProfile.petMedications);
+  //         expect(res.body.pets.additionalInformation).to.equal(newPetProfile.additionalInformation);
+  //         return Pets.findById(res.body.id);
+  //       });
+  //   });
+  // });
 
   describe('Add PUT endpoint', () => {
     it('should update profile based on fields sent', () => {
