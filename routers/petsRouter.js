@@ -104,13 +104,15 @@ router.put('/:id', jwtAuth, upload.single('avatar'), (req, res) => {
   if (req.file) {
     cloudinary.uploader.upload(req.file.path, (result) => {
       updated.avatar = result.secure_url;
-    });
-  }
-  Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
-    .then((updatedPet) => {
-      res.status(200).json(updatedPet);
     })
-    .catch(err => res.json({ message: err }));
+      .then(() => {
+        Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
+          .then((updatedPet) => {
+            res.status(200).json(updatedPet);
+          })
+          .catch(err => res.json({ message: err }));
+      });
+  }
 });
 
 router.delete('/:id', jwtAuth, (req, res) => {
