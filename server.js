@@ -8,12 +8,14 @@ const authRouter = require('./routers/authRouter');
 const petsRouter = require('./routers/petsRouter');
 
 require('./passport')(passport);
+require('dotenv').config();
 
 mongoose.Promise = global.Promise;
 
 const {
   PORT, DATABASE_URL,
 } = require('./config');
+
 console.log(DATABASE_URL);
 
 const app = express();

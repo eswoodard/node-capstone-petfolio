@@ -1,6 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const multer = require('multer');
+const cloudinary = require('cloudinary');
 
 
 const Pets = require('../models/pets');
@@ -11,14 +12,27 @@ const router = express.Router();
 const jwtAuth = passport.authenticate('jwt', { session: false });
 
 const storage = multer.diskStorage({
-  destination: './public/photos',
+  // destination: './public/photos',
   filename(req, file, callback) {
     callback(null, `${file.fieldname}_${Date.now()}_${file.originalname}`);
     // callback(null, `${file.fieldname}_${file.originalname}`);
   },
 });
 
+// const imageFilter = function (req, file, cb) {
+//   if (!file.orginalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+//     return cb(new Error('Only image files are allowed!'), false);
+//   }
+//   cb(null, true);
+// };
+
 const upload = multer({ storage });
+
+cloudinary.config({
+  cloud_name: 'dfbskmph0',
+  api_key: 336568559356671,
+  api_secret: '1mbUOL9r425G9S-lGc1Avyn2Yf8',
+});
 
 
 router.get('/', jwtAuth, (req, res) => {
@@ -30,6 +44,7 @@ router.get('/', jwtAuth, (req, res) => {
 });
 
 router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
+  console.log('***', req.file);
   const petOwner = req.user.id;
   const petName = req.body.petName;
   const petGender = req.body.petGender;
@@ -45,29 +60,36 @@ router.post('/', jwtAuth, upload.single('avatar'), (req, res) => {
   const additionalInformation = req.body.additionalInformation;
   let avatar = null;
   if (req.file) {
-    avatar = { path: req.file.path };
+    console.log('hello');
+    cloudinary.uploader.upload(req.file.path, (result) => {
+      console.log('!!!', result.secure_url);
+      avatar = { path: result.secure_url };
+    })
+      .then(() => {
+        Pets.create({
+          petOwner,
+          petName,
+          petGender,
+          petSpecies,
+          petColor,
+          petBirthday,
+          petAge,
+          dateAdopted,
+          petVet,
+          petAllergies,
+          petMedicalCondition,
+          petMedications,
+          additionalInformation,
+          avatar,
+        })
+          .then((pets) => {
+            console.log('&&&', pets);
+            res.status(201).json({ pets });
+          }).catch((err) => {
+            res.status(500).json(err);
+          });
+      });
   }
-  Pets.create({
-    petOwner,
-    petName,
-    petGender,
-    petSpecies,
-    petColor,
-    petBirthday,
-    petAge,
-    dateAdopted,
-    petVet,
-    petAllergies,
-    petMedicalCondition,
-    petMedications,
-    additionalInformation,
-    avatar,
-  })
-    .then((pets) => {
-      res.status(201).json({ pets });
-    }).catch((err) => {
-      res.status(500).json(err);
-    });
 });
 
 router.put('/:id', jwtAuth, upload.single('avatar'), (req, res) => {
@@ -80,7 +102,9 @@ router.put('/:id', jwtAuth, upload.single('avatar'), (req, res) => {
   });
   // let avatar = null;
   if (req.file) {
-    updated['avatar'] = { path: req.file.path };
+    cloudinary.uploader.upload(req.file.path, (result) => {
+      updated.avatar = result.secure_url;
+    });
   }
   Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
     .then((updatedPet) => {
