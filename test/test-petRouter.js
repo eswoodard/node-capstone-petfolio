@@ -35,7 +35,7 @@ function seedPetData() {
       petMedicalCondition: faker.lorem.sentence(),
       petMedications: faker.lorem.words(),
       additionalInformation: faker.lorem.sentences(),
-      // avatar: faker.image.imageUrl(),
+      avatar: { path: faker.system.fileName() },
     });
   }
   return Pets.insertMany(petSeedData);
@@ -124,7 +124,7 @@ describe('Petfolio API resource', () => {
             res.body.forEach((pets) => {
               expect(pets).to.be.a('object');
               expect(pets).to.include.keys(
-                '_id', 'petName', 'petGender', 'PetSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation',
+                'avatar', '_id', 'petName', 'petGender', 'PetSpecies', 'petColor', 'petBirthday', 'petAge', 'dateAdopted', 'petVet', 'petAllergies', 'petMedicalCondition', 'petMedications', 'additionalInformation',
               );
             });
             resPets = res.body[0];
@@ -144,7 +144,7 @@ describe('Petfolio API resource', () => {
             expect(res.body.petMedicalCondition).to.equal(pets.petMedicalCondition);
             expect(res.body.petMedications).to.equal(pets.petMedications);
             expect(res.body.additionalInformation).to.equal(pets.additionalInformation);
-            // expect(res.body.avatar).to.equal(pets.avatar);
+            expect(res.body.avatar.path).to.equal(pets.avatar.path);
           }));
     });
   });
@@ -164,7 +164,7 @@ describe('Petfolio API resource', () => {
   //       petMedicalCondition: faker.lorem.sentence(),
   //       petMedications: faker.lorem.word(),
   //       additionalInformation: faker.lorem.sentences(),
-  //       // avatar: faker.image.imageUrl(),
+  //       avatar: { path: faker.system.fileName() },
   //     };
   //     return chai.request(app)
   //       .post('/pets')
@@ -188,7 +188,7 @@ describe('Petfolio API resource', () => {
   //         expect(res.body.pets.petMedicalCondition).to.equal(newPetProfile.petMedicalCondition);
   //         expect(res.body.pets.petMedications).to.equal(newPetProfile.petMedications);
   //         expect(res.body.pets.additionalInformation).to.equal(newPetProfile.additionalInformation);
-  //         expect(res.body.pets.avatar).to.equal(newPetProfile.avatar);
+  //         expect(res.body.pets.avatar.path).to.equal(newPetProfile.avatar.path);
   //         return Pets.findById(res.body.id);
   //       });
   //   });
@@ -209,7 +209,7 @@ describe('Petfolio API resource', () => {
   //       petMedicalCondition: faker.lorem.sentence(),
   //       petMedications: faker.lorem.word(),
   //       additionalInformation: faker.lorem.sentences(),
-  //       // avatar: faker.image.imageUrl(),
+  //       avatar: { path: faker.system.fileName() },
   //     };
   //     return Pets
   //       .findOne()
@@ -237,7 +237,7 @@ describe('Petfolio API resource', () => {
   //         post.petMedicalCondition.should.equal(updatedPetProfile.petMedicalCondition);
   //         post.petMedications.should.equal(updatedPetProfile.petMedications);
   //         post.additionalInformation.should.equal(updatedPetProfile.additionalInformation);
-  //         // post.avatar.should.equal(updatedPetProfile.avatar);
+  //         post.avatar.path.should.equal(updatedPetProfile.avatar.path);
   //       });
   //   });
   // });

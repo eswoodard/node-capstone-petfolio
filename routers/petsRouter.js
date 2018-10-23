@@ -126,18 +126,34 @@ router.delete('/:id', jwtAuth, (req, res) => {
 });
 
 router.post('/album', jwtAuth, upload.array('photos', 50), (req, res) => {
+  const photos = req.files;
+  console.log('***', photos);
   const pet = req.body.pet;
   const albumTitle = req.body.albumTitle;
-  const albumPhotos = { path: req.files.path };
-  Albums.create({
-    pet,
-    albumTitle,
-    albumPhotos,
-  })
-    .then((album) => {
-      res.status(201).json({ album });
-    }).catch((err) => {
-      res.status(500).json(err);
+  const albumPhotos = [];
+  const paths = photos.map((photo) => {
+    console.log('!!!', photo);
+    return cloudinary.uploader.upload(photo.path, ((result) => {
+      console.log('%%%', result.secure_url);
+      return result.secure_url;
+    }));
+  });
+  console.log('###', paths);
+  Promise.all(paths)
+    .then((response) => {
+      response.map(path => albumPhotos.push(path.secure_url));
+      console.log('///', albumPhotos);
+    })
+    .then(() => {
+      Albums.create({
+        pet,
+        albumTitle,
+        albumPhotos,
+      })
+        .then((album) => {
+          res.status(201).json({ album });
+        })
+        .catch(err => res.json({ message: err }));
     });
 });
 
