@@ -103,11 +103,13 @@ router.put('/:id', jwtAuth, upload.single('avatar'), (req, res) => {
   // let avatar = null;
   if (req.file) {
     cloudinary.uploader.upload(req.file.path, (result) => {
-      updated.avatar = result.secure_url;
+      updated.avatar = { path: result.secure_url };
+      console.log('fff', updated.avatar);
     })
       .then(() => {
         Pets.findByIdAndUpdate(req.params.id, { $set: updated }, { new: true })
           .then((updatedPet) => {
+            console.log('yyy', updatedPet);
             res.status(200).json(updatedPet);
           })
           .catch(err => res.json({ message: err }));
